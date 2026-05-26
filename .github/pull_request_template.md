@@ -11,4 +11,4 @@
 
 - What did the AI produce? Were you satisfied with the output?
 - Did you have to make any changes to the AI's output? If so, what were they?
-- Did you learn anything new from the AI's output?
+- Did you learn anything new from the AI's output
