@@ -1,0 +1,160 @@
+.qr-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(7, 17, 31, 0.86);
+    backdrop-filter: blur(14px);
+    transition: opacity 0.35s ease;
+}
+
+.qr-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.qr-card {
+    width: min(100%, 360px);
+    padding: 22px;
+    border-radius: 22px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.qr-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.qr-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.join-link {
+    display: block;
+    margin: 14px 0 10px;
+    color: var(--accent-soft);
+    font-size: 0.72rem;
+    word-break: break-all;
+    text-decoration: none;
+}
+
+.join-link:hover {
+    color: var(--accent);
+}
+
+.overlay-note {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(34, 197, 94, 0.1);
+    color: #d1fae5;
+    font-size: 0.85rem;
+}
+
+#qr img {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    margin: 10px auto 0;
+    display: block;
+    border-radius: 14px;
+    background: white;
+    padding: 10px;
+}
+
+.installation-card {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.emoji-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: auto;
+    /* allow interacting with stickers */
+    overflow: hidden;
+}
+
+.emoji-bubble {
+    position: absolute;
+    bottom: 16px;
+    font-size: clamp(2rem, 7vw, 4rem);
+    line-height: 1;
+    text-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    animation: emoji-rise 2.4s ease-out forwards;
+}
+
+/* persistent stickers */
+.sticker {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 6px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    will-change: left, top;
+}
+
+.sticker:active {
+    cursor: grabbing;
+}
+
+@keyframes emoji-rise {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.7);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate3d(var(--drift, 0), -120%, 0) scale(1.18);
+        opacity: 0;
+    }
+}
+
+.emoji-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.emoji-bubble {
+    position: absolute;
+    bottom: 16px;
+    font-size: clamp(2rem, 7vw, 4rem);
+    line-height: 1;
+    text-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    animation: emoji-rise 2.4s ease-out forwards;
+}
+
+@keyframes emoji-rise {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.7);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate3d(var(--drift, 0), -120%, 0) scale(1.18);
+        opacity: 0;
+    }
+}

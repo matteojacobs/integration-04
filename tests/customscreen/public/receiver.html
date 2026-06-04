@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Screen - Host</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/receiver.css">
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>Custom Screen</h1>
+        <span class="badge">Host</span>
+    </header>
+
+    <div id="statusBar">Status: Initializing...</div>
+
+    <main class="screen">
+        <div class="video-grid">
+            <article class="video-card installation-card">
+                <span class="video-label">Installation screen</span>
+                <video id="myCamera" playsinline autoplay muted></video>
+                <div id="emojiLayer" class="emoji-layer" aria-live="polite"></div>
+            </article>
+        </div>
+
+        <div class="camera-panel">Scan the QR code to connect your phone directly to this installation screen. Use the
+            emoji buttons on your phone to decorate the screen in real time.</div>
+    </main>
+
+    <div id="qrOverlay" class="qr-overlay">
+        <div class="qr-card">
+            <h2 id="qrTitle">Scan to connect</h2>
+            <p>The phone joins immediately and sends emoji overlays back to the installation screen.</p>
+            <div id="qr"></div>
+            <a id="url" href="" target="_blank" class="join-link"></a>
+            <div id="overlayStatus" class="overlay-note">Waiting for someone to scan...</div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"
+        integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw=="
+        crossorigin="anonymous"></script>
+    <script>
+        const $statusBar = document.getElementById('statusBar');
+        const $qrOverlay = document.getElementById('qrOverlay');
+        const $qrTitle = document.getElementById('qrTitle');
+        const $overlayStatus = document.getElementById('overlayStatus');
+        const $myCamera = document.getElementById('myCamera');
+        const $emojiLayer = document.getElementById('emojiLayer');
+
+        let socket = null;
+        let peer = null;
+        let myStream = null;
+
+        const setStatus = (msg) => {
+            $statusBar.textContent = `Status: ${msg}`;
+        };
+
+        const showOverlay = (title, message) => {
+            $qrOverlay.classList.remove('hidden');
+            $qrTitle.textContent = title;
+            $overlayStatus.textContent = message;
+        };
+
+        const hideOverlay = () => {
+            $qrOverlay.classList.add('hidden');
+        };
+
+        // stickers storage
+        const stickers = {};
+
+        const createStickerElement = ({ id, emoji, x = 50, y = 50, size = 10 }) => {
+            if (!id) id = `s${Date.now()}${Math.floor(Math.random() * 999)}`;
+            if (stickers[id]) return stickers[id];
+
+            const el = document.createElement('div');
+            el.className = 'sticker';
+            el.dataset.id = id;
+            el.textContent = emoji;
+            el.style.left = `${x}%`;
+            el.style.top = `${y}%`;
+            el.style.fontSize = `${size}vmin`;
+            el.style.transform = 'translate(-50%, -50%)';
+            el.style.position = 'absolute';
+            el.style.touchAction = 'none';
+
+            // pointer drag logic
+            let dragging = false;
+            const rect = () => $emojiLayer.getBoundingClientRect();
+
+            const onPointerMove = (ev) => {
+                if (!dragging) return;
+                const r = rect();
+                const nx = ((ev.clientX - r.left) / r.width) * 100;
+                const ny = ((ev.clientY - r.top) / r.height) * 100;
+                el.style.left = `${Math.min(100, Math.max(0, nx))}%`;
+                el.style.top = `${Math.min(100, Math.max(0, ny))}%`;
+            };
+
+            const onPointerUp = (ev) => {
+                if (!dragging) return;
+                dragging = false;
+                el.releasePointerCapture(ev.pointerId);
+                // notify remote peer of move
+                if (peer && peer.connected && !peer.destroyed) {
+                    const r = rect();
+                    const nx = ((ev.clientX - r.left) / r.width) * 100;
+                    const ny = ((ev.clientY - r.top) / r.height) * 100;
+                    peer.send(JSON.stringify({ type: 'move', id: id, x: Math.min(100, Math.max(0, nx)), y: Math.min(100, Math.max(0, ny)) }));
+                }
+                window.removeEventListener('pointermove', onPointerMove);
+                window.removeEventListener('pointerup', onPointerUp);
+            };
+
+            el.addEventListener('pointerdown', (ev) => {
+                ev.preventDefault();
+                dragging = true;
+                el.setPointerCapture(ev.pointerId);
+                window.addEventListener('pointermove', onPointerMove);
+                window.addEventListener('pointerup', onPointerUp);
+            });
+
+            $emojiLayer.appendChild(el);
+            stickers[id] = el;
+            return el;
+        };
+
+        const removeSticker = (id) => {
+            const el = stickers[id];
+            if (!el) return;
+            el.remove();
+            delete stickers[id];
+        };
+
+        const handleData = (raw) => {
+            let msg;
+            try {
+                msg = JSON.parse(raw.toString());
+            } catch (error) {
+                return;
+            }
+
+            if (msg.type === 'emoji' && msg.emoji) {
+                // backward compatibility: create a sticker
+                createStickerElement({ id: msg.id, emoji: msg.emoji, x: msg.x || 50, y: msg.y || 50, size: msg.size || 12 });
+            }
+
+            if (msg.type === 'place') {
+                createStickerElement({ id: msg.id, emoji: msg.emoji, x: msg.x || 50, y: msg.y || 50, size: msg.size || 12 });
+            }
+
+            if (msg.type === 'move' && msg.id) {
+                const el = stickers[msg.id];
+                if (el) {
+                    el.style.left = `${msg.x}%`;
+                    el.style.top = `${msg.y}%`;
+                }
+            }
+
+            if (msg.type === 'remove' && msg.id) {
+                removeSticker(msg.id);
+            }
+        };
+
+        const createPeer = (peerId) => {
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+
+            peer = new SimplePeer({
+                initiator: true,
+                trickle: false,
+                stream: myStream,
+                config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
+            });
+
+            peer.on('signal', data => socket.emit('signal', peerId, data));
+            peer.on('connect', () => {
+                setStatus('Connected.');
+                hideOverlay();
+            });
+            peer.on('data', handleData);
+            peer.on('error', err => setStatus('Connection error: ' + err.message));
+            peer.on('close', () => {
+                setStatus('Phone disconnected.');
+                showOverlay('Scan to reconnect', 'The QR code is ready for another phone.');
+            });
+        };
+
+        const initSocket = () => {
+            socket = io.connect();
+
+            socket.on('connect', () => {
+                const hostId = socket.id;
+                const phoneUrl = `${window.location.protocol}//${window.location.host}/sender.html?hostId=${hostId}`;
+                const url = document.getElementById('url');
+                url.href = phoneUrl;
+                url.textContent = phoneUrl;
+
+                const qr = qrcode(0, 'L');
+                qr.addData(phoneUrl);
+                qr.make();
+                document.getElementById('qr').innerHTML = qr.createImgTag(5);
+
+                setStatus('Ready. Share the QR code to connect a phone.');
+            });
+
+            socket.on('peer-joined', (peerId) => {
+                setStatus('Phone scanned. Starting the peer connection...');
+                $overlayStatus.textContent = 'Connecting...';
+                createPeer(peerId);
+            });
+
+            socket.on('signal', (myId, signal) => {
+                console.log('Receiver got signal for', myId);
+                if (!peer) {
+                    // create peer targeting the sender if we haven't yet
+                    createPeer(myId);
+                }
+
+                if (peer) {
+                    peer.signal(signal);
+                }
+            });
+
+            socket.on('disconnect', () => {
+                setStatus('Disconnected from the signaling server.');
+                showOverlay('Disconnected from signaling server. QR ready after reconnect.');
+            });
+        };
+
+        const init = async () => {
+            try {
+                myStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                $myCamera.srcObject = myStream;
+                setStatus('Camera ready. Waiting for a phone scan.');
+                initSocket();
+            } catch (err) {
+                setStatus('Camera access failed: ' + err.message);
+                showOverlay('Camera access needed', 'Allow camera permissions and reload the page.');
+            }
+        };
+
+        init();
+    </script>
+</body>
+
+</html>

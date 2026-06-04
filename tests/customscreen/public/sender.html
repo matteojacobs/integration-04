@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Screen - Phone</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/sender.css">
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>Custom Screen</h1>
+        <span class="badge">Phone</span>
+    </header>
+
+    <div id="statusBar">Status: Initializing...</div>
+
+    <div id="connectingOverlay" class="connecting-overlay">
+        <div class="spinner"></div>
+        <div>
+            <h2>Connecting to host</h2>
+            <p>Scan the QR code on your computer to view the installation screen and send emojis back to it.</p>
+        </div>
+    </div>
+
+    <main class="screen">
+        <div class="video-grid">
+            <article class="video-card installation-card">
+                <span class="video-label">Installation screen</span>
+                <video id="otherCamera" playsinline autoplay muted></video>
+                <div id="stickerLayer" class="sticker-layer" aria-hidden="false"></div>
+            </article>
+        </div>
+
+        <section class="emoji-panel" aria-label="Emoji controls">
+            <p>Tap an emoji to place it on the installation screen.</p>
+            <div class="emoji-grid">
+                <button class="emoji-btn" type="button" data-emoji="✨">✨</button>
+                <button class="emoji-btn" type="button" data-emoji="💖">💖</button>
+                <button class="emoji-btn" type="button" data-emoji="🔥">🔥</button>
+                <button class="emoji-btn" type="button" data-emoji="🎈">🎈</button>
+                <button class="emoji-btn" type="button" data-emoji="🌈">🌈</button>
+                <button class="emoji-btn" type="button" data-emoji="👀">👀</button>
+            </div>
+            <div id="emojiStatus" class="emoji-status">Waiting to connect...</div>
+        </section>
+
+        <div class="camera-panel">The phone stays camera-free. It only shows the installation feed and the emoji
+            controls.</div>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+    <script>
+        const $statusBar = document.getElementById('statusBar');
+        const $connectingOverlay = document.getElementById('connectingOverlay');
+        const $otherCamera = document.getElementById('otherCamera');
+        const $stickerLayer = document.getElementById('stickerLayer');
+        const $emojiStatus = document.getElementById('emojiStatus');
+
+        let socket = null;
+        let peer = null;
+
+        const setStatus = (msg) => {
+            $statusBar.textContent = `Status: ${msg}`;
+        };
+
+        const showOverlay = (message) => {
+            $connectingOverlay.classList.remove('hidden');
+            $connectingOverlay.innerHTML = `
+                <div class="spinner"></div>
+                <div>
+                    <h2>Connecting to host</h2>
+                    <p>${message}</p>
+                </div>
+            `;
+        };
+
+        const hideOverlay = () => {
+            $connectingOverlay.classList.add('hidden');
+        };
+
+        // sticker placement flow: select an emoji, then tap the video to place
+        let selectedEmoji = null;
+        const stickers = {};
+
+        const createStickerElement = ({ id, emoji, x = 50, y = 50, size = 10 }) => {
+            if (!id) id = `s${Date.now()}${Math.floor(Math.random() * 999)}`;
+            if (stickers[id]) return stickers[id];
+
+            const el = document.createElement('div');
+            el.className = 'sticker';
+            el.dataset.id = id;
+            el.textContent = emoji;
+            el.style.left = `${x}%`;
+            el.style.top = `${y}%`;
+            el.style.fontSize = `${size}vmin`;
+            el.style.transform = 'translate(-50%, -50%)';
+            el.style.position = 'absolute';
+            el.style.touchAction = 'none';
+
+            // allow dragging on phone too
+            let dragging = false;
+            const rect = () => $stickerLayer.getBoundingClientRect();
+
+            const onPointerMove = (ev) => {
+                if (!dragging) return;
+                const r = rect();
+                const nx = ((ev.clientX - r.left) / r.width) * 100;
+                const ny = ((ev.clientY - r.top) / r.height) * 100;
+                el.style.left = `${Math.min(100, Math.max(0, nx))}%`;
+                el.style.top = `${Math.min(100, Math.max(0, ny))}%`;
+            };
+
+            const onPointerUp = (ev) => {
+                if (!dragging) return;
+                dragging = false;
+                el.releasePointerCapture(ev.pointerId);
+                if (peer && peer.connected && !peer.destroyed) {
+                    const r = rect();
+                    const nx = ((ev.clientX - r.left) / r.width) * 100;
+                    const ny = ((ev.clientY - r.top) / r.height) * 100;
+                    peer.send(JSON.stringify({ type: 'move', id: id, x: Math.min(100, Math.max(0, nx)), y: Math.min(100, Math.max(0, ny)) }));
+                }
+                window.removeEventListener('pointermove', onPointerMove);
+                window.removeEventListener('pointerup', onPointerUp);
+            };
+
+            el.addEventListener('pointerdown', (ev) => {
+                ev.preventDefault();
+                dragging = true;
+                el.setPointerCapture(ev.pointerId);
+                window.addEventListener('pointermove', onPointerMove);
+                window.addEventListener('pointerup', onPointerUp);
+            });
+
+            $stickerLayer.appendChild(el);
+            stickers[id] = el;
+            return el;
+        };
+
+        const removeSticker = (id) => {
+            const el = stickers[id];
+            if (!el) return;
+            el.remove();
+            delete stickers[id];
+        };
+
+        const sendPlace = (id, emoji, xPct, yPct, size = 12) => {
+            if (!peer || peer.destroyed || !peer.connected) {
+                $emojiStatus.textContent = 'Connect first, then place a sticker.';
+                return;
+            }
+
+            const msg = { type: 'place', id, emoji, x: xPct, y: yPct, size };
+            peer.send(JSON.stringify(msg));
+            // create locally so it appears instantly
+            createStickerElement({ id, emoji, x: xPct, y: yPct, size });
+            $emojiStatus.textContent = `Placed ${emoji}`;
+        };
+
+        const wireEmojiButtons = () => {
+            document.querySelectorAll('.emoji-btn').forEach((button) => {
+                button.addEventListener('click', () => {
+                    selectedEmoji = button.dataset.emoji;
+                    $emojiStatus.textContent = `Selected ${selectedEmoji} — tap the video to place`;
+                });
+            });
+
+            // tap on video to place at that coordinate
+            $otherCamera.addEventListener('click', (ev) => {
+                if (!selectedEmoji) return;
+                const rect = $otherCamera.getBoundingClientRect();
+                const xPct = ((ev.clientX - rect.left) / rect.width) * 100;
+                const yPct = ((ev.clientY - rect.top) / rect.height) * 100;
+                const id = `s${Date.now()}${Math.floor(Math.random() * 999)}`;
+                sendPlace(id, selectedEmoji, Math.min(100, Math.max(0, xPct)), Math.min(100, Math.max(0, yPct)), 12);
+                selectedEmoji = null;
+            });
+        };
+
+        const createPeer = (targetId) => {
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+
+            peer = new SimplePeer({
+                initiator: false,
+                trickle: false,
+                config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
+            });
+
+            peer.on('signal', data => socket.emit('signal', targetId, data));
+            peer.on('connect', () => console.log('sender peer connected'));
+            peer.on('stream', (stream) => { console.log('sender got stream'); });
+            peer.on('data', (raw) => {
+                let msg;
+                try {
+                    msg = JSON.parse(raw.toString());
+                } catch (e) {
+                    return;
+                }
+
+                if (msg.type === 'place') {
+                    createStickerElement({ id: msg.id, emoji: msg.emoji, x: msg.x || 50, y: msg.y || 50, size: msg.size || 12 });
+                }
+
+                if (msg.type === 'move' && msg.id) {
+                    const el = stickers[msg.id];
+                    if (el) {
+                        el.style.left = `${msg.x}%`;
+                        el.style.top = `${msg.y}%`;
+                    }
+                }
+
+                if (msg.type === 'remove' && msg.id) {
+                    removeSticker(msg.id);
+                }
+            });
+            peer.on('connect', () => {
+                setStatus('Connected.');
+                $emojiStatus.textContent = 'Tap an emoji to decorate the screen.';
+                hideOverlay();
+            });
+            peer.on('stream', stream => {
+                $otherCamera.srcObject = stream;
+                // ensure autoplay on iOS by keeping muted
+                $otherCamera.muted = true;
+                $otherCamera.play().catch(() => { });
+                console.log('sender: attached stream to video');
+            });
+            peer.on('error', err => {
+                setStatus('Connection error: ' + err.message);
+                showOverlay('A connection error happened. Please scan the QR code again.');
+            });
+            peer.on('close', () => {
+                setStatus('Connection lost.');
+                showOverlay('The link dropped. Scan the QR code again to reconnect.');
+                // clear stickers & selection
+                selectedEmoji = null;
+                Object.keys(stickers).forEach(id => removeSticker(id));
+            });
+        };
+
+        const initSocket = () => {
+            socket = io.connect();
+
+            socket.on('connect', () => {
+                const params = new URLSearchParams(window.location.search);
+                const hostId = params.get('hostId');
+
+                if (!hostId) {
+                    setStatus('Invalid QR link.');
+                    showOverlay('This link is missing the host id. Scan the QR code again.');
+                    return;
+                }
+
+                setStatus('Joining host...');
+                console.log('Sender connected, joining hostId=', hostId, 'socketId=', socket.id);
+                socket.emit('join', hostId);
+                // create peer immediately so the offer/answer exchange starts and
+                // the host's video stream can arrive as soon as possible
+                createPeer(hostId);
+            });
+
+            socket.on('signal', (_, signal, senderId) => {
+                if (!peer) {
+                    createPeer(senderId);
+                }
+
+                if (peer) {
+                    peer.signal(signal);
+                }
+            });
+
+            socket.on('disconnect', () => {
+                setStatus('Disconnected from the signaling server.');
+                showOverlay('Disconnected from the signaling server. Reload and scan QR again.');
+            });
+        };
+
+        const init = () => {
+            setStatus('Connecting to host...');
+            wireEmojiButtons();
+            initSocket();
+        };
+
+        init();
+    </script>
+</body>
+
+</html>
