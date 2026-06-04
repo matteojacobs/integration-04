@@ -181,22 +181,29 @@
             });
         };
 
+        let signalQueue = [];
+        let hasRemoteDescription = false;
+
         const createPeer = (targetId) => {
+            console.log('PHONE: Creating peer for target:', targetId);
             if (peer) {
+                console.log('PHONE: Destroying existing peer');
                 peer.destroy();
                 peer = null;
             }
+            signalQueue = [];
+            hasRemoteDescription = false;
 
             peer = new SimplePeer({
                 initiator: false,
-                trickle: false,
-                config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
+                trickle: true
             });
 
             peer.on('signal', data => {
                 if (!peer || peer.destroyed) {
                     return;
                 }
+                console.log('PHONE PEER: Generated signal:', data.type || 'candidate');
                 socket.emit('signal', targetId, data);
             });
             peer.on('data', (raw) => {
@@ -227,21 +234,45 @@
                 }
             });
             peer.on('connect', () => {
+                console.log('PHONE PEER: Connected!');
                 setStatus('Connected.');
                 $emojiStatus.textContent = 'Tap an emoji, then tap the video to place it.';
                 hideOverlay();
             });
             peer.on('stream', stream => {
+                console.log('PHONE PEER: Received video stream:', stream);
                 $otherCamera.srcObject = stream;
                 $otherCamera.muted = true;
-                $otherCamera.play().catch(() => { });
-                $emojiStatus.textContent = 'Installation screen is live.';
+                
+                const tryPlay = () => {
+                    $otherCamera.play()
+                        .then(() => {
+                            console.log('PHONE PEER: Video playing successfully');
+                            $emojiStatus.textContent = 'Installation screen is live.';
+                            // Clean up listeners on success
+                            document.removeEventListener('click', tryPlay);
+                            document.removeEventListener('touchstart', tryPlay);
+                        })
+                        .catch((err) => {
+                            console.error('PHONE PEER: Video play failed:', err);
+                            $emojiStatus.textContent = 'Tap anywhere on the screen to start the video stream.';
+                        });
+                };
+
+                // Try autoplay immediately
+                tryPlay();
+
+                // Fallback for iOS / Low Power Mode block
+                document.addEventListener('click', tryPlay);
+                document.addEventListener('touchstart', tryPlay);
             });
             peer.on('error', err => {
+                console.error('PHONE PEER: Error:', err);
                 setStatus('Connection error: ' + err.message);
                 showOverlay('A connection error happened. Scan the QR code again to reconnect.');
             });
             peer.on('close', () => {
+                console.log('PHONE PEER: Closed');
                 setStatus('Connection lost.');
                 showOverlay('The link dropped. Scan the QR code again to reconnect.');
                 // clear stickers & selection
@@ -263,21 +294,41 @@
                     return;
                 }
 
+                console.log('PHONE SOCKET: Connected. Joining host:', hostId);
                 setStatus('Joining host...');
                 socket.emit('join', hostId);
                 createPeer(hostId);
             });
 
             socket.on('signal', (_, signal, senderId) => {
+                console.log('PHONE SOCKET: Received signal from:', senderId, 'Type:', signal.type || 'candidate');
                 if (!peer || peer.destroyed) {
+                    console.log('PHONE SOCKET: No peer exists, creating one');
                     createPeer(senderId);
                 }
 
                 if (peer && !peer.destroyed) {
                     try {
-                        peer.signal(signal);
+                        if (signal.type === 'offer' || signal.type === 'answer') {
+                            console.log('PHONE PEER: Signaling SDP', signal.type);
+                            hasRemoteDescription = true;
+                            peer.signal(signal);
+                            console.log('PHONE PEER: Processing queue of length:', signalQueue.length);
+                            signalQueue.forEach(sig => {
+                                try { peer.signal(sig); } catch(e) { console.error('PHONE PEER: Error playing queued signal:', e); }
+                            });
+                            signalQueue = [];
+                        } else {
+                            if (hasRemoteDescription) {
+                                console.log('PHONE PEER: Signaling candidate');
+                                peer.signal(signal);
+                            } else {
+                                console.log('PHONE PEER: Queueing candidate');
+                                signalQueue.push(signal);
+                            }
+                        }
                     } catch (error) {
-                        console.log('Ignoring signal for stale peer:', error.message);
+                        console.error('PHONE PEER: Signal error:', error);
                     }
                 }
             });

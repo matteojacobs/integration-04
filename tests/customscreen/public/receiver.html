@@ -174,29 +174,41 @@
             }
         };
 
+        let signalQueue = [];
+        let hasRemoteDescription = false;
+
         const createPeer = (peerId) => {
+            console.log('HOST: Creating peer for target:', peerId);
             if (peer) {
+                console.log('HOST: Destroying existing peer');
                 peer.destroy();
                 peer = null;
             }
+            signalQueue = [];
+            hasRemoteDescription = false;
 
             peer = new SimplePeer({
                 initiator: true,
-                trickle: false,
-                stream: myStream,
-                config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
+                trickle: true,
+                stream: myStream
             });
 
             peer.on('signal', data => {
+                console.log('HOST PEER: Generated signal:', data.type || 'candidate');
                 socket.emit('signal', peerId, data);
             });
             peer.on('connect', () => {
+                console.log('HOST PEER: Connected!');
                 setStatus('Connected.');
                 hideOverlay();
             });
             peer.on('data', handleData);
-            peer.on('error', err => setStatus('Connection error: ' + err.message));
+            peer.on('error', err => {
+                console.error('HOST PEER: Error:', err);
+                setStatus('Connection error: ' + err.message);
+            });
             peer.on('close', () => {
+                console.log('HOST PEER: Closed');
                 setStatus('Phone disconnected.');
                 showOverlay('Scan to reconnect', 'The QR code is ready for another phone.');
             });
@@ -221,19 +233,43 @@
             });
 
             socket.on('peer-joined', (peerId) => {
+                console.log('HOST SOCKET: Peer joined:', peerId);
                 setStatus('Phone scanned. Starting the peer connection...');
                 $overlayStatus.textContent = 'Connecting...';
                 createPeer(peerId);
             });
 
-            socket.on('signal', (myId, signal) => {
+            socket.on('signal', (myId, signal, senderId) => {
+                const targetPeerId = senderId || myId;
+                console.log('HOST SOCKET: Received signal from:', targetPeerId, 'Type:', signal.type || 'candidate');
                 if (!peer) {
-                    // create peer targeting the sender if we haven't yet
-                    createPeer(myId);
+                    console.log('HOST SOCKET: No peer exists, creating one');
+                    createPeer(targetPeerId);
                 }
 
                 if (peer) {
-                    peer.signal(signal);
+                    try {
+                        if (signal.type === 'offer' || signal.type === 'answer') {
+                            console.log('HOST PEER: Signaling SDP', signal.type);
+                            hasRemoteDescription = true;
+                            peer.signal(signal);
+                            console.log('HOST PEER: Processing queue of length:', signalQueue.length);
+                            signalQueue.forEach(sig => {
+                                try { peer.signal(sig); } catch(e) { console.error('HOST PEER: Error playing queued signal:', e); }
+                            });
+                            signalQueue = [];
+                        } else {
+                            if (hasRemoteDescription) {
+                                console.log('HOST PEER: Signaling candidate');
+                                peer.signal(signal);
+                            } else {
+                                console.log('HOST PEER: Queueing candidate');
+                                signalQueue.push(signal);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('HOST PEER: Signal error:', error);
+                    }
                 }
             });
 
