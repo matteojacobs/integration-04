@@ -82,7 +82,7 @@
             $connectingOverlay.classList.add('hidden');
         };
 
-        // sticker placement flow: select an emoji, then tap the video to place
+        // sticker placement flow: select an emoji, then tap the video to place.
         let selectedEmoji = null;
         const stickers = {};
 
@@ -244,7 +244,7 @@
                 console.log('PHONE PEER: Received video stream:', stream);
                 $otherCamera.srcObject = stream;
                 $otherCamera.muted = true;
-                
+
                 const tryPlay = () => {
                     $otherCamera.play()
                         .then(() => {
@@ -316,7 +316,7 @@
                             peer.signal(signal);
                             console.log('PHONE PEER: Processing queue of length:', signalQueue.length);
                             signalQueue.forEach(sig => {
-                                try { peer.signal(sig); } catch(e) { console.error('PHONE PEER: Error playing queued signal:', e); }
+                                try { peer.signal(sig); } catch (e) { console.error('PHONE PEER: Error playing queued signal:', e); }
                             });
                             signalQueue = [];
                         } else {
