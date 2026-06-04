@@ -169,10 +169,11 @@
                 });
             });
 
-            // tap on video to place at that coordinate
-            $otherCamera.addEventListener('click', (ev) => {
+            // tap on sticker layer to place at that coordinate
+            $stickerLayer.addEventListener('click', (ev) => {
                 if (!selectedEmoji) return;
-                const rect = $otherCamera.getBoundingClientRect();
+                if (ev.target !== $stickerLayer) return;
+                const rect = $stickerLayer.getBoundingClientRect();
                 const xPct = ((ev.clientX - rect.left) / rect.width) * 100;
                 const yPct = ((ev.clientY - rect.top) / rect.height) * 100;
                 const id = `s${Date.now()}${Math.floor(Math.random() * 999)}`;
