@@ -16,12 +16,11 @@
     </header>
 
     <div id="statusBar">Status: Initializing...</div>
-
     <div id="connectingOverlay" class="connecting-overlay">
         <div class="spinner"></div>
         <div>
             <h2>Connecting to host</h2>
-            <p>Scan the QR code on your computer to view the installation screen and send emojis back to it.</p>
+            <p>Scan the QR code on your computer to view the installation screen and send stickers back to it.</p>
         </div>
     </div>
 
@@ -62,6 +61,7 @@
 
         let socket = null;
         let peer = null;
+        let hostId = null;
 
         const setStatus = (msg) => {
             $statusBar.textContent = `Status: ${msg}`;
@@ -193,10 +193,16 @@
                 config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
             });
 
-            peer.on('signal', data => socket.emit('signal', targetId, data));
-            peer.on('connect', () => console.log('sender peer connected'));
-            peer.on('stream', (stream) => { console.log('sender got stream'); });
+            peer.on('signal', data => {
+                if (!peer || peer.destroyed) {
+                    return;
+                }
+                socket.emit('signal', targetId, data);
+            });
             peer.on('data', (raw) => {
+                if (!peer || peer.destroyed) {
+                    return;
+                }
                 let msg;
                 try {
                     msg = JSON.parse(raw.toString());
@@ -222,19 +228,18 @@
             });
             peer.on('connect', () => {
                 setStatus('Connected.');
-                $emojiStatus.textContent = 'Tap an emoji to decorate the screen.';
+                $emojiStatus.textContent = 'Tap an emoji, then tap the video to place it.';
                 hideOverlay();
             });
             peer.on('stream', stream => {
                 $otherCamera.srcObject = stream;
-                // ensure autoplay on iOS by keeping muted
                 $otherCamera.muted = true;
                 $otherCamera.play().catch(() => { });
-                console.log('sender: attached stream to video');
+                $emojiStatus.textContent = 'Installation screen is live.';
             });
             peer.on('error', err => {
                 setStatus('Connection error: ' + err.message);
-                showOverlay('A connection error happened. Please scan the QR code again.');
+                showOverlay('A connection error happened. Scan the QR code again to reconnect.');
             });
             peer.on('close', () => {
                 setStatus('Connection lost.');
@@ -250,7 +255,7 @@
 
             socket.on('connect', () => {
                 const params = new URLSearchParams(window.location.search);
-                const hostId = params.get('hostId');
+                hostId = params.get('hostId');
 
                 if (!hostId) {
                     setStatus('Invalid QR link.');
@@ -259,20 +264,21 @@
                 }
 
                 setStatus('Joining host...');
-                console.log('Sender connected, joining hostId=', hostId, 'socketId=', socket.id);
                 socket.emit('join', hostId);
-                // create peer immediately so the offer/answer exchange starts and
-                // the host's video stream can arrive as soon as possible
                 createPeer(hostId);
             });
 
             socket.on('signal', (_, signal, senderId) => {
-                if (!peer) {
+                if (!peer || peer.destroyed) {
                     createPeer(senderId);
                 }
 
-                if (peer) {
-                    peer.signal(signal);
+                if (peer && !peer.destroyed) {
+                    try {
+                        peer.signal(signal);
+                    } catch (error) {
+                        console.log('Ignoring signal for stale peer:', error.message);
+                    }
                 }
             });
 

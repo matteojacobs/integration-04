@@ -16,6 +16,7 @@
     </header>
 
     <div id="statusBar">Status: Initializing...</div>
+    <div id="diagHost" style="padding:8px 16px;font-size:0.8rem;color:#333"></div>
 
     <main class="screen">
         <div class="video-grid">
@@ -59,6 +60,12 @@
 
         const setStatus = (msg) => {
             $statusBar.textContent = `Status: ${msg}`;
+        };
+
+        const updateDiagHost = (text) => {
+            const d = document.getElementById('diagHost');
+            if (d) d.textContent = text;
+            console.log('HOST DIAG:', text);
         };
 
         const showOverlay = (title, message) => {
@@ -180,7 +187,9 @@
                 config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
             });
 
-            peer.on('signal', data => socket.emit('signal', peerId, data));
+            peer.on('signal', data => {
+                socket.emit('signal', peerId, data);
+            });
             peer.on('connect', () => {
                 setStatus('Connected.');
                 hideOverlay();
@@ -218,7 +227,6 @@
             });
 
             socket.on('signal', (myId, signal) => {
-                console.log('Receiver got signal for', myId);
                 if (!peer) {
                     // create peer targeting the sender if we haven't yet
                     createPeer(myId);
