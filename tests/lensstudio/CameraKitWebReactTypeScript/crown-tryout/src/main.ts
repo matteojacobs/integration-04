@@ -10,15 +10,17 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
   const session = await cameraKit.createSession({ liveRenderTarget });
   const mediaStream = await navigator.mediaDevices.getUserMedia({
     video: true,
+    audio: false,
   });
 
   await session.setSource(mediaStream);
-  await session.play();
-
+  //await session.setFPSLimit(30);
+  
   const lens = await cameraKit.lensRepository.loadLens(
     'ca448eb7-93b0-474a-a73f-133770fa064f',
     '381ce689-4be4-41ac-8b15-107b9d37999d'
   );
 
   await session.applyLens(lens);
+  await session.play();
 })();
