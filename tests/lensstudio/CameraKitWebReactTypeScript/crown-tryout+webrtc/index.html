@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Screen - Host (Snap Camera Kit)</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/receiver.css">
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>Custom Screen</h1>
+        <span class="badge">Host</span>
+    </header>
+
+    <div id="statusBar">Status: Initializing...</div>
+
+    <main class="screen">
+        <div class="video-grid">
+            <!-- position: relative wrapper so the absolute qr-overlay positions correctly -->
+            <article class="video-card installation-card" style="position: relative;">
+                <span class="video-label">Installation screen (Snap Camera Kit)</span>
+                <canvas id="canvas" style="width: 100%; aspect-ratio: 9/16; object-fit: cover; background: #000; display: block;"></canvas>
+                <div id="emojiLayer" class="emoji-layer" aria-live="polite"></div>
+
+                <!-- QR overlay lives INSIDE the video card so position:absolute lands correctly -->
+                <div id="qrOverlay" class="qr-overlay">
+                    <div class="qr-card">
+                        <h2 id="qrTitle">Scan to connect</h2>
+                        <p>The phone joins immediately and sends emoji overlays back to the installation screen.</p>
+                        <div id="qr"></div>
+                        <a id="url" href="" target="_blank" class="join-link"></a>
+                        <div id="overlayStatus" class="overlay-note">Connecting to signaling server...</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="camera-panel">Scan the QR code to connect your phone directly to this installation screen. Use the
+            emoji buttons on your phone to decorate the screen in real time.</div>
+    </main>
+
+    <!-- CDN scripts to avoid Vite Node polyfill issues with simple-peer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"
+        integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw=="
+        crossorigin="anonymous"></script>
+
+    <!-- TypeScript entrypoint -->
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
