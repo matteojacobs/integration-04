@@ -15,7 +15,7 @@ const POV_LENSES: PovLens[] = [
   },
   {
     name: 'Raver-test',
-    lensId: 'a0d06037-3f07-47bf-b181-e679afbda85d',
+    lensId: '30ddf0a1-e6ac-4ce6-beaf-0c9622361526',
     povText: 'You came for a citytrip and accidentally saw the sunrise twice.',
   },
 ];
