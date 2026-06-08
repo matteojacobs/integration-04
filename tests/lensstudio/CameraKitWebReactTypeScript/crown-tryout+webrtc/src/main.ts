@@ -264,11 +264,11 @@ declare const qrcode: any;
     try {
         setStatus('Initializing Snap Camera Kit...');
         const cameraKit = await bootstrapCameraKit({
-            apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzgwNjcxNjY0LCJzdWIiOiI5ZWY0MGRhNC00MTE2LTRhYzQtYTA5ZC1hN2ZhM2YzMmY3ODl-U1RBR0lOR343MWMzYTBmNC02NTcxLTRlZmItOGM1OS02MmZiOGMwYzhhNWYifQ.Jk60HZ2FzcuF4OlxJwlPs7ptviVNHEQ2YBY1H-B3j7k',
+            apiToken: import .meta.env.VITE_API_KEY,
         });
 
         const session = await cameraKit.createSession({ liveRenderTarget });
-        
+
         // Capture webcam stream as input to Camera Kit
         myStream = await navigator.mediaDevices.getUserMedia({
             video: true,
@@ -280,13 +280,14 @@ declare const qrcode: any;
 
         // Load and apply the Crown Tryout Lens
         const lens = await cameraKit.lensRepository.loadLens(
-            'ca448eb7-93b0-474a-a73f-133770fa064f',
-            '381ce689-4be4-41ac-8b15-107b9d37999d'
+         import.meta.env.VITE_LENS_ID,
+         import.meta.env.VITE_GROUP_ID
+            
         );
         await session.applyLens(lens);
 
         setStatus('Camera ready. Waiting for a phone scan.');
-        
+
         // Setup Socket and WebRTC signaling once camera is ready
         initSocket();
     } catch (err: any) {

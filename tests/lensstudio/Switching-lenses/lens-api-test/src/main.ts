@@ -1,4 +1,7 @@
-import { bootstrapCameraKit, type CameraKit, type CameraKitSession } from '@snap/camera-kit';
+import {
+  bootstrapCameraKit, type CameraKit, type CameraKitSession, type RemoteApiRequest,
+  type RemoteApiResponse
+} from '@snap/camera-kit';
 
 type PovLens = {
   name: string;
@@ -25,10 +28,34 @@ let session: CameraKitSession;
 
 let currentIndex = 0;
 let isSwitching = false;
+let showPants = false;
 
 const API_TOKEN = import.meta.env.VITE_API_KEY;
 const groupID = import.meta.env.VITE_GROUP_ID;
+const OUTFIT_API_SPEC_ID = import.meta.env.VITE_OUTFIT_API_SPEC_ID;
 
+
+function createOutfitApiService() {
+  return {
+    apiSpecId: OUTFIT_API_SPEC_ID,
+
+    getRequestHandler(request: RemoteApiRequest) {
+      const endpoint = (request as any).endpointId ?? (request as any).endpoint;
+
+      if (endpoint !== 'get_outfit_state') return undefined;
+
+      return (reply: (response: RemoteApiResponse) => void) => {
+        const body = JSON.stringify({ showPants });
+        console.log('Remote API reply:', body);
+        reply({
+          status: 'success',
+          metadata: {},
+          body: new TextEncoder().encode(body).buffer,
+        });
+      };
+    },
+  };
+}
 
 async function initCameraKit() {
   cameraKit = await bootstrapCameraKit({
@@ -51,7 +78,8 @@ async function createCameraSession() {
 
   session = await cameraKit.createSession({
     liveRenderTarget: canvas,
-  });
+    remoteApiServices: [createOutfitApiService()],
+  } as any);
 }
 
 async function setupCameraSource() {
@@ -115,6 +143,19 @@ function setupKeyboardControls() {
   });
 }
 
+function setupPantsButton() {
+  const button = document.getElementById('pantsButton');
+  if (!button) return;
+
+  button.addEventListener('click', async () => {
+    showPants = !showPants;
+    button.classList.toggle('active', showPants);
+    // Re-applying the lens triggers OnStartEvent in Lens Studio,
+    // which calls requestOutfitState again and picks up the new showPants value
+    await applyCurrentLens();
+  });
+}
+
 async function startApp() {
   await initCameraKit();
   await createCameraSession();
@@ -125,6 +166,7 @@ async function startApp() {
   await session.play();
 
   setupKeyboardControls();
+  setupPantsButton();
 }
 
 startApp().catch((error) => {

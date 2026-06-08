@@ -1,1 +1,6 @@
 *.crt
+
+node_modules
+dist
+localhost.key
+.env
