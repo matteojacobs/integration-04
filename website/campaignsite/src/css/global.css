@@ -26,12 +26,21 @@
 .hero {
     height: 100vh;
     background: #1E1E1E;
-}
-
-.hero__title {
-    font-size: 5rem;
-    color: antiquewhite;
     display: grid;
     grid-template-columns: 1/1/1/1;
     grid-template-rows: 1/1/1/1;
+}
+
+.hero__title {
+    font-size: 6.7rem;
+    color: antiquewhite;
+    grid-area: 1/1/1/1;
+    align-self: flex-end;
+    background: #1E1E1E;
+    padding: 1rem 2rem;
+}
+
+.hero__image {
+    grid-area: 1/1/1/1;
+    
 }
