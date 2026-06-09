@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Eater&family=Jolly+Lodger&family=Nosifer&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/index.css">
+  <link rel="stylesheet" href="/src/css/global.css">
+</head>
+
+<body>
+  <div class="welcome" id="welcome">
+    <h1 class="welcome__title">Welcome to WebRTC</h1>
+    <p class="welcome__sub">Scan the qr code with your phone to start the experience</p>
+    <a class="welcome__url " id="url" href=""></a>
+    <div class="welcome__qr" id="qr"></div>
+  </div>
+  <div class="game hidden" id="game">
+    <picture>
+      <source srcset="/src/assets/room.avif" type="image/avif">
+      <img src="/src/assets/room.png" alt="Haunted room" class="room">
+    </picture>
+
+    <div class="objects">
+      <picture class="ghost" id="ghost">
+        <source srcset="/src/assets/ghost.avif" type="image/avif">
+        <img src="/src/assets/ghost.png" alt="Ghost apparition" class="ghost" width="790">
+      </picture>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+ <script type="module" src="/src/js/script.js"></script>
+</body>
+
+</html>
