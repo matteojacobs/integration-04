@@ -35,22 +35,58 @@ const groupID = import.meta.env.VITE_GROUP_ID;
 const OUTFIT_API_SPEC_ID = import.meta.env.VITE_OUTFIT_API_SPEC_ID;
 
 
+
+// function createOutfitApiService() {
+//   return {
+//     apiSpecId: OUTFIT_API_SPEC_ID,
+
+//     getRequestHandler(request: RemoteApiRequest) {
+//       const endpoint = (request as any).endpointId ?? (request as any).endpoint;
+
+//       if (endpoint !== 'get_outfit_state') return undefined;
+
+//       return (reply: (response: RemoteApiResponse) => void) => {
+//         const body = JSON.stringify({ showPants });
+//         console.log('Remote API reply:', body);
+//         reply({
+//           status: 'success',
+//           metadata: {},
+//           body: new TextEncoder().encode(body).buffer,
+//         });
+//       };
+//     },
+//   };
+// }
+
 function createOutfitApiService() {
+  console.log('API spec ID:', OUTFIT_API_SPEC_ID)
   return {
     apiSpecId: OUTFIT_API_SPEC_ID,
 
-    getRequestHandler(request: RemoteApiRequest) {
-      const endpoint = (request as any).endpointId ?? (request as any).endpoint;
 
-      if (endpoint !== 'get_outfit_state') return undefined;
+    getRequestHandler(request: RemoteApiRequest) {
+      console.log('API spec ID:', OUTFIT_API_SPEC_ID)
+      console.log('Remote API request received:', request);
+
+      const endpoint =
+        (request as any).endpointId ??
+        (request as any).endpoint;
+
+      if (endpoint !== 'get_outfit_state') {
+        console.warn('Unknown endpoint:', endpoint);
+        return undefined;
+      }
 
       return (reply: (response: RemoteApiResponse) => void) => {
         const body = JSON.stringify({ showPants });
+        const encodedBody = new TextEncoder().encode(body);
+
         console.log('Remote API reply:', body);
+
         reply({
           status: 'success',
           metadata: {},
-          body: new TextEncoder().encode(body).buffer,
+          body: encodedBody.buffer,
         });
       };
     },
@@ -150,9 +186,9 @@ function setupPantsButton() {
   button.addEventListener('click', async () => {
     showPants = !showPants;
     button.classList.toggle('active', showPants);
-    // Re-applying the lens triggers OnStartEvent in Lens Studio,
-    // which calls requestOutfitState again and picks up the new showPants value
-    await applyCurrentLens();
+    button.textContent = showPants ? 'Hide pants' : '👖';
+
+    console.log('showPants changed to:', showPants);
   });
 }
 
@@ -164,6 +200,7 @@ async function startApp() {
   await applyCurrentLens();
 
   await session.play();
+  console.log('Session services:', (session as any).remoteApiServices);
 
   setupKeyboardControls();
   setupPantsButton();
