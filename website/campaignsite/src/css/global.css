@@ -1,0 +1,46 @@
+:root {}
+
+
+.nav__list {
+    margin-top: 5rem;
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-self: center;
+}
+
+.nav__item {
+    background: #545CAB;
+    padding: 1rem 2rem;
+}
+
+.nav__item--active {
+    background: #1E1E1E;
+}
+
+.nav__link {
+    text-decoration: none;
+    color: white;
+}
+
+.hero {
+    height: 100vh;
+    background: #1E1E1E;
+    display: grid;
+    grid-template-columns: 1/1/1/1;
+    grid-template-rows: 1/1/1/1;
+}
+
+.hero__title {
+    font-size: 6.7rem;
+    color: antiquewhite;
+    grid-area: 1/1/1/1;
+    align-self: flex-end;
+    background: #1E1E1E;
+    padding: 1rem 2rem;
+}
+
+.hero__image {
+    grid-area: 1/1/1/1;
+    
+}
