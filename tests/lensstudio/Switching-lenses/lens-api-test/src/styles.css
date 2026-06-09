@@ -1,0 +1,48 @@
+#pantsButton {
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid transparent;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  width: 10rem;
+}
+
+#canvas {
+  transform: scaleX(-1);
+  z-index: -5;
+}
+
+#pantsButton.active {
+  border-color: white;
+}
+
+#povText {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  max-width: 25rem;
+  color: black;
+  z-index: 10;
+}
+
+#povTitle {
+  z-index: 10;
+  position: absolute;
+  top: 0.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  max-width: 25rem;
+  color: black;
+  font-weight: bold;
+}
