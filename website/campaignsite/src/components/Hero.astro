@@ -1,3 +1,16 @@
-<section>
-    
+---
+import { Image } from "astro:assets";
+import HeroImg1 from "../assets/Hero-img-1.png";
+---
+
+<section class="hero">
+    <Image
+        src={HeroImg1}
+        alt="Hero"
+        decoding="async"
+        loading="lazy"
+        inferSize
+        format="avif"
+    />
+    <h1 class="hero__title">AntwerPOV</h1>
 </section>
