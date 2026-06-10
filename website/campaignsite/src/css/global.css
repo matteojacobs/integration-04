@@ -1,46 +1,207 @@
-:root {}
+:root {
+    /* Colors */
+    --color-primary: #545CAB;
+    --color-dark: #1E1E1E;
+    --color-accent-green: #B7EA63;
+    --color-accent-pink: #FF70E8;
+    --color-blue: #545CAB;
+    --color-light-text: whitesmoke;
+    --color-light-text-alt: antiquewhite;
+    --color-white: white;
+
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-s: 1rem;
+    --space-m: 2rem;
+    --space-l: 5rem;
+    --space-xl: 5rem;
+
+    /* Font Variables */
+    --font-family-serif: var(--font-family-serif);
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--font-family-serif);
+    line-height: 1.5;
+    /* padding: var(--space-l) var(--space-s) var(--space-s); */
+    color: var(--color-grey);
+    background: var(--color-background);
+}
 
 
+img,
+Image {
+    height: auto;
+    max-width: 100%;
+}
+
+.visually-hidden {
+    display: none;
+}
+
+/* Navigation */
 .nav__list {
-    margin-top: 5rem;
+    margin-top: var(--space-xl);
     position: absolute;
     display: flex;
     flex-flow: row nowrap;
     justify-self: center;
 }
 
-.nav__item {
-    background: #545CAB;
-    padding: 1rem 2rem;
-}
+.nav__item {}
 
-.nav__item--active {
-    background: #1E1E1E;
-}
+.nav__item--active {}
 
 .nav__link {
+    background: var(--color-primary);
+    padding: var(--space-xs) var(--space-xl);
     text-decoration: none;
-    color: white;
+    color: var(--color-white);
+    text-transform: uppercase;
 }
 
+.nav__link--active {
+    background: var(--color-dark);
+    color: var(--color-accent-green);
+}
+
+.nav__link--active::backdrop {}
+
+
+/* Hero stuff */
 .hero {
     height: 100vh;
-    background: #1E1E1E;
+    background: var(--color-dark);
     display: grid;
     grid-template-columns: 1/1/1/1;
     grid-template-rows: 1/1/1/1;
+    overflow: hidden;
 }
 
 .hero__title {
     font-size: 6.7rem;
-    color: antiquewhite;
+    color: var(--color-light-text-alt);
     grid-area: 1/1/1/1;
-    align-self: flex-end;
-    background: #1E1E1E;
-    padding: 1rem 2rem;
 }
 
 .hero__image {
     grid-area: 1/1/1/1;
-    
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.hero__bottom {
+    padding: var(--space-s) var(--space-m);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    grid-area: 1/1/1/1;
+    align-items: center;
+    align-self: flex-end;
+    background: var(--color-dark);
+}
+
+/* Intro thingies */
+.intro {
+    padding: var(--space-l) var(--space-l);
+    background: var(--color-dark);
+}
+
+.intro__content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--space-m);
+}
+
+.intro__title {
+    font-size: 3.5rem;
+    color: var(--color-light-text);
+}
+
+.intro__title--highlight {
+    color: var(--color-accent-pink);
+}
+
+.intro__subtitle {
+    font-size: 1.75rem;
+}
+
+.intro__text {
+    color: var(--color-light-text);
+    max-width: 55ch;
+    font-size: 1.25rem;
+}
+
+.intro__button {
+    text-align: center;
+}
+
+/* Meet POVS */
+.meet {}
+
+.meet__title {
+    font-size: 3.5rem;
+    color: var(--color-dark);
+}
+
+.meet__title--highlight {
+    color: var(--color-blue);
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--space-m);
+    padding: var(--space-s) var(--space-l);
+    background: var(--color-dark);
+    color: var(--color-light-text);
+}
+
+.footer__title {
+    font-size: 6.7rem;
+}
+
+.footer__subtitle {}
+
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__links {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.footer__link {
+    text-decoration: none;
+    color: var(--color-light-text);
+}
+
+.footer__socials {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: var(--space-s);
+}
+
+/* Utitlity classes */
+.button {
+    background: var(--color-accent-green);
+    padding: var(--space-xs) var(--space-m);
+    text-decoration: none;
+    max-width: 20rem;
+    font-size: 1.5rem;
+    color: var(--color-dark);
 }
