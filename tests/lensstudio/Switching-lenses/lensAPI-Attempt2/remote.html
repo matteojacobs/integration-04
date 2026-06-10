@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC lens studio</title>
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/remote.css">
+</head>
+
+<body>
+  <div class="explanation" id="explanation">
+    <h1 class="explanation__title">AntwerPOV</h1>
+    <button id="connectButton" class="start-button">Start</button>
+  </div>
+  <div class="container">
+    <p class="button" id="lightButton">Toggle light 💡</p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+  <script type="module" src="/src/js/remote.ts"></script>
+</body>
+
+</html>
