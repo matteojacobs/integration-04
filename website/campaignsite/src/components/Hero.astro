@@ -1,18 +1,45 @@
 ---
 import { Image } from "astro:assets";
 import HeroImg1 from "../assets/Hero-img-1.png";
+import HeroImg2 from "../assets/Hero-img-2.png";
+import HeroImg3 from "../assets/Hero-img-3.png";
 ---
 
 <section class="hero">
-    <Image
-        src={HeroImg1}
-        alt="Hero"
-        class="hero__image"
-        decoding="async"
-        loading="lazy"
-        inferSize
-        format="avif"
-    />
+    <div class="hero__carousel">
+        <Image
+            src={HeroImg1}
+            alt="Hero"
+            class="hero__image hero__image--active"
+            decoding="async"
+            loading="lazy"
+            inferSize
+            format="avif"
+        />
+        <Image
+            src={HeroImg2}
+            alt="Hero"
+            class="hero__image"
+            decoding="async"
+            loading="lazy"
+            inferSize
+            format="avif"
+        />
+        <Image
+            src={HeroImg3}
+            alt="Hero"
+            class="hero__image"
+            decoding="async"
+            loading="lazy"
+            inferSize
+            format="avif"
+        />
+    </div>
+    <div class="carousel__nav">
+        <div class="carousel__dot carousel__dot--active"></div>
+        <div class="carousel__dot"></div>
+        <div class="carousel__dot"></div>
+    </div>
     <div class="hero__bottom">
         <h1 class="hero__title">AntwerPOV</h1>
         <a class="button" href="">Click this button</a>
