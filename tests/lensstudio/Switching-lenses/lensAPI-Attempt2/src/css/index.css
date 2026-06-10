@@ -1,0 +1,132 @@
+:root {
+  --bg: #07030f;
+  --card: rgba(255, 255, 255, 0.08);
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.7);
+  --accent: #ff3d6e;
+  --accent-2: #ffd166;
+  --shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.35);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+  background: rgba(7, 3, 15, 0.95);
+}
+
+.welcome__title {
+  margin: 0;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.9;
+}
+
+.welcome__sub {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--muted);
+}
+
+.welcome__url {
+  max-width: 35rem;
+  margin: 0 auto;
+  color: var(--accent-2);
+  font-size: 0.9rem;
+}
+
+.welcome__qr {
+  width: fit-content;
+  margin: 1rem auto 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.welcome__qr img {
+  display: block;
+  width: min(14rem, 55vw);
+  height: auto;
+}
+
+.container {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+#canvas {
+  width: min(78rem, 92vw);
+  height: min(44rem, 72vh);
+  display: block;
+  object-fit: cover;
+  background: #fcfcfc;
+  box-shadow: var(--shadow);
+  transform: scaleX(-1);
+}
+
+#povTitle {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.55rem 1rem;
+  color: #07030f;
+  background: var(--accent-2);
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  font-weight: 800;
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+#povText {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 1rem 1.25rem;
+  color: var(--text);
+  font-size: clamp(1.2rem, 3vw, 2.4rem);
+  line-height: 1.08;
+  text-align: center;
+}
+
+.lights {
+  position: absolute;
+  right: 78%;
+  bottom: 8%;
+  z-index: 15;
+  padding: 1rem 1.2rem;
+  color: #07030f;
+  background: #5a16e0;
+}
+
+.lights__Text {
+  margin: 0;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.hidden {
+  visibility: hidden;
+}
