@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC lens studio</title>
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/index.css">
+</head>
+
+<body>
+  <div class="welcome" id="welcome">
+    <p class="welcome__sub">Scan the qr code with the Ipad</p>
+    <a class="welcome__url " id="url" href=""></a>
+    <div class="welcome__qr" id="qr"></div>
+  </div>
+  <div class="container">
+    <p id="povTitle">POV</p>
+    <div id="povText">POV is loading...</div>
+    <div id="lights" class="lights hidden">
+      <p class="lights__Text">Spotlight has been added</p>
+    </div>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+  <script type="module" src="/src/desktop/script-webrtc.ts"></script>
+</body>
+
+</html>
