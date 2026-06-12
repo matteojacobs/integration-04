@@ -23,7 +23,7 @@ const POV_LENSES: PovLens[] = [
   {
     name: 'Main Character',
     lensId: import.meta.env.VITE_LENS_ID_1,
-    povText: 'your confidence increased by 100% when you left Antwerp station',
+    povText: 'you are the main character',
   },
   {
     name: 'Raver-test',
@@ -297,7 +297,7 @@ async function setupCameraSource() {
   const mediaStream = await navigator.mediaDevices.getUserMedia({
     video: {
       width: { ideal: 1000 },
-      height: { ideal: 600 },
+      height: { ideal: 1300 },
       frameRate: { ideal: 30, max: 30 },
     },
     audio: false,
