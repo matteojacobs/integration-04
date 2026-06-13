@@ -12,11 +12,51 @@
 <body>
   <div class="explanation" id="explanation">
     <h1 class="explanation__title">AntwerPOV</h1>
-    <button id="connectButton" class="start-button">Start</button>
+    <button id="connectButton" class="start-button">Start connection</button>
   </div>
-  <div class="container">
-    <p class="button" id="lightButton">Toggle light 💡</p>
-  </div>
+
+  <section class="screen hidden" id="screenStart">
+    <h1>AntwerPOV</h1>
+    <button id="startPovButton">Tap to improve your POV</button>
+  </section>
+
+  <section class="screen hidden" id="screenHome">
+    <h2>Customize your POV</h2>
+
+    <button id="goAccessoriesButton">Add extra accessories</button>
+    <button id="goBackgroundsButton">Pick a background</button>
+    <button id="goRouteButton">Get a route</button>
+    <button id="goPictureButton">Capture this POV</button>
+  </section>
+
+  <section class="screen hidden" id="screenAccessories">
+    <button class="backButton">←</button>
+    <h2>Add extra accessories</h2>
+    <div id="accessoryList"></div>
+  </section>
+
+  <section class="screen hidden" id="screenBackgrounds">
+    <button class="backButton">←</button>
+    <h2>Pick a background</h2>
+    <div id="backgroundList"></div>
+  </section>
+
+  <section class="screen hidden" id="screenPicture">
+    <button class="backButton">←</button>
+    <h2>Capture this POV</h2>
+    <button id="captureButton">Capture</button>
+  </section>
+
+  <section class="screen hidden" id="screenPictureTaken">
+    <h2>Keep this POV?</h2>
+  </section>
+
+  <section class="screen hidden" id="screenRoute">
+    <button class="backButton">←</button>
+    <h2>Get a route</h2>
+    <p id="routeLabel"></p>
+  </section>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
   <script type="module" src="/src/remote/remote-webrtc.ts"></script>

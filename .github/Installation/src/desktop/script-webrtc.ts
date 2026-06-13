@@ -46,7 +46,6 @@ type SignalData = {
 };
 
 const $url = document.getElementById("url") as HTMLAnchorElement;
-const $lights = document.getElementById("lights") as HTMLElement;
 const $qr = document.getElementById("qr") as HTMLElement;
 const $welcome = document.getElementById("welcome") as HTMLElement;
 
@@ -63,7 +62,7 @@ const servers: RTCConfiguration = {
 };
 
 const init = (): void => {
-  if (!$url || !$lights || !$qr) {
+  if (!$url || !$qr) {
     console.error("DESKTOP missing HTML element");
     return;
   }
@@ -144,6 +143,7 @@ const answerPeerOffer = (offer: SignalData, peerId: string): void => {
   peer.on("connect", () => {
     console.log("DESKTOP data channel connected!");
     $welcome?.classList.add("hidden");
+    onRemoteConnected?.();
   });
 
   peer.on("data", (data: Uint8Array) => {
@@ -217,6 +217,12 @@ export function sendCurrentPovToRemote(pov: Pov) {
       lensState,
     })
   );
+}
+
+let onRemoteConnected: (() => void) | null = null;
+
+export function setOnRemoteConnected(callback: () => void) {
+  onRemoteConnected = callback;
 }
 
 init();

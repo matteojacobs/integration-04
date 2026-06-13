@@ -16,7 +16,7 @@ import {
   type RemoteApiService,
 } from "@snap/camera-kit";
 
-import { sendCurrentPovToRemote } from "./script-webrtc";
+import { sendCurrentPovToRemote, setOnRemoteConnected } from "./script-webrtc";
 
 let cameraKit: CameraKit;
 let session: CameraKitSession;
@@ -173,6 +173,9 @@ async function startApp() {
   await createCameraSession();
   await setupCameraSource();
   resetLensStateForPov(currentIndex);
+  setOnRemoteConnected(() => {
+    sendCurrentPovToRemote(POVS[currentIndex]);
+  });
 
   await applyCurrentLens();
 

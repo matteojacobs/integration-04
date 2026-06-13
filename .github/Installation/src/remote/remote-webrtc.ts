@@ -1,14 +1,36 @@
 import { io, Socket } from "socket.io-client";
 
-type OnMessage = {
-  type: "lightsYes";
-};
+import type { Pov } from "../data/povs";
+import type { LensState } from "../state/lensState";
 
-type OffMessage = {
-  type: "lightsNo";
-};
+type RemoteToDesktopMessage =
+  | {
+    type: "toggleExtraAccessory";
+    accessoryId: string;
+  }
+  | {
+    type: "selectBackground";
+    backgroundId: string;
+  }
+  | {
+    type: "captureMoment";
+  }
+  | {
+    type: "getRoute";
+  };
 
-type PeerMessage = OnMessage | OffMessage;
+type DesktopToRemoteMessage =
+  | {
+    type: "povChanged";
+    pov: Pov;
+    lensState: LensState;
+  }
+  | {
+    type: "lensStateChanged";
+    lensState: LensState;
+  };
+
+type PeerMessage = RemoteToDesktopMessage | DesktopToRemoteMessage;
 
 type SignalData = {
   type?: string;
@@ -16,12 +38,24 @@ type SignalData = {
   [key: string]: unknown;
 };
 
+type RemoteScreen =
+  | "connect"
+  | "start"
+  | "home"
+  | "accessories"
+  | "backgrounds"
+  | "picture"
+  | "pictureTaken"
+  | "route";
+
+let currentScreen: RemoteScreen = "connect";
+let currentPov: Pov | null = null;
+let currentLensState: LensState | null = null;
+
 const $connectButton = document.getElementById("connectButton") as HTMLButtonElement | null;
-const $lightButton = document.getElementById("lightButton") as HTMLElement | null;
 const $explanation = document.getElementById("explanation") as HTMLElement | null;
 const $startButton = document.getElementById("connectButton") as HTMLButtonElement | null;
 
-let lightsVisible = false;
 
 let socket: Socket;
 let peer: any = null;
@@ -41,7 +75,7 @@ const init = (): void => {
     return;
   }
 
-  if (!$connectButton || !$lightButton || !$explanation || !$startButton) {
+  if (!$connectButton || !$explanation || !$startButton) {
     console.error("REMOTE missing HTML element");
     return;
   }
@@ -53,7 +87,7 @@ const init = (): void => {
     callPeer();
   });
 
-  $lightButton.addEventListener("click", handleClickLights);
+  checkButtons();
 };
 
 const initSocket = (): void => {
@@ -109,13 +143,25 @@ const callPeer = (): void => {
     console.log("REMOTE data channel connected!");
 
     $explanation?.classList.add("hidden");
-
+    showScreen("start");
   });
 
   peer.on("data", (data: Uint8Array) => {
     const message = parsePeerMessage(data);
 
     if (!message) return;
+    if (message.type === "povChanged") {
+      currentPov = message.pov;
+      currentLensState = message.lensState;
+
+      console.log("Current POV:", currentPov.name);
+      renderCurrentPovControls();
+    }
+
+    if (message.type === "lensStateChanged") {
+      currentLensState = message.lensState;
+      renderCurrentPovControls();
+    }
 
     console.log("REMOTE received:", message);
   });
@@ -132,18 +178,6 @@ const callPeer = (): void => {
     $explanation?.classList.remove("hidden");
   });
 };
-
-
-const handleClickLights = (): void => {
-  lightsVisible = !lightsVisible;
-
-  if (lightsVisible) {
-    sendToPeer({ type: "lightsYes" });
-  } else {
-    sendToPeer({ type: "lightsNo" });
-  }
-};
-
 
 const sendToPeer = (message: PeerMessage): void => {
   if (!peer || !peer.connected) {
@@ -173,5 +207,137 @@ function getUrlParameter(name: string): string | false {
     ? false
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+
+
+// -------------- screen info -=----------
+
+const screens: Record<RemoteScreen, HTMLElement | null> = {
+  connect: document.getElementById("screenConnect"),
+  start: document.getElementById("screenStart"),
+  home: document.getElementById("screenHome"),
+  accessories: document.getElementById("screenAccessories"),
+  backgrounds: document.getElementById("screenBackgrounds"),
+  picture: document.getElementById("screenPicture"),
+  pictureTaken: document.getElementById("screenPictureTaken"),
+  route: document.getElementById("screenRoute"),
+};
+
+function showScreen(screen: RemoteScreen) {
+  currentScreen = screen;
+
+  Object.values(screens).forEach((screenElement) => {
+    screenElement?.classList.add("hidden");
+  });
+
+  screens[screen]?.classList.remove("hidden");
+}
+
+function renderCurrentPovControls() {
+  renderAccessories();
+  renderBackgrounds();
+  renderRoute();
+}
+
+function renderAccessories() {
+  const list = document.getElementById("accessoryList");
+
+  if (!list || !currentPov) return;
+
+  list.innerHTML = "";
+
+  currentPov.extraAccessories.forEach((accessory) => {
+    const button = document.createElement("button");
+    button.textContent = accessory.label;
+
+    const isActive =
+      currentLensState?.extraAccessories[accessory.id] === true;
+
+    button.classList.toggle("is-active", isActive);
+
+    button.addEventListener("click", () => {
+      sendToPeer({
+        type: "toggleExtraAccessory",
+        accessoryId: accessory.id,
+      });
+    });
+
+    list.appendChild(button);
+  });
+}
+
+function renderBackgrounds() {
+  const list = document.getElementById("backgroundList");
+
+  if (!list || !currentPov) return;
+
+  list.innerHTML = "";
+
+  currentPov.backgrounds.forEach((background) => {
+    const button = document.createElement("button");
+    button.textContent = background.label;
+
+    const isActive =
+      currentLensState?.activeBackgroundId === background.id;
+
+    button.classList.toggle("is-active", isActive);
+
+    button.addEventListener("click", () => {
+      sendToPeer({
+        type: "selectBackground",
+        backgroundId: background.id,
+      });
+    });
+
+    list.appendChild(button);
+  });
+}
+
+function renderRoute() {
+  const routeLabel = document.getElementById("routeLabel");
+
+  if (!routeLabel || !currentPov) return;
+
+  routeLabel.textContent = `${currentPov.routeLabel} route`;
+}
+
+const checkButtons = () => {
+  document.getElementById("startPovButton")?.addEventListener("click", () => {
+    showScreen("home");
+  });
+
+  document.getElementById("goAccessoriesButton")?.addEventListener("click", () => {
+    renderAccessories();
+    showScreen("accessories");
+  });
+
+  document.getElementById("goBackgroundsButton")?.addEventListener("click", () => {
+    renderBackgrounds();
+    showScreen("backgrounds");
+  });
+
+  document.getElementById("goRouteButton")?.addEventListener("click", () => {
+    sendToPeer({ type: "getRoute" });
+    renderRoute();
+    showScreen("route");
+  });
+
+  document.getElementById("goPictureButton")?.addEventListener("click", () => {
+    showScreen("picture");
+  });
+
+  document.getElementById("captureButton")?.addEventListener("click", () => {
+    sendToPeer({ type: "captureMoment" });
+    showScreen("pictureTaken");
+  });
+
+  document.querySelectorAll(".backButton").forEach((button) => {
+    button.addEventListener("click", () => {
+      showScreen("home");
+    });
+  });
+}
+
+
 
 init();
