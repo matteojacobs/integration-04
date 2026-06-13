@@ -302,7 +302,7 @@ function renderRoute() {
 }
 
 const checkButtons = () => {
-  document.getElementById("startPovButton")?.addEventListener("click", () => {
+  document.getElementById("screenStart")?.addEventListener("click", () => {
     showScreen("home");
   });
 

@@ -5,19 +5,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebRTC lens studio</title>
+  <link rel="stylesheet" href="https://use.typekit.net/gxf5vfe.css">
   <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/global.css">
   <link rel="stylesheet" href="/src/css/remote.css">
 </head>
 
 <body>
   <div class="explanation" id="explanation">
     <h1 class="explanation__title">AntwerPOV</h1>
-    <button id="connectButton" class="start-button">Start connection</button>
+    <button id="connectButton" class="connect__button">Start connection</button>
   </div>
 
-  <section class="screen hidden" id="screenStart">
-    <h1>AntwerPOV</h1>
-    <button id="startPovButton">Tap to improve your POV</button>
+  <section class="screen__start hidden" id="screenStart">
+    <div class="start__info">
+      <h1 class="start__title">AntwerPOV</h1>
+      <div class="start__action">
+      <p class="start__button" id="startPovButton">Tap to improve your <span class="bacalar">POV</span></p>
+      <img class="start__tap" src="./src/assets/remote/tap.png" alt="tap icon" width="125">
+      </div>
+    </div>
+    <div class="start__background">
+      <img class="background__bubble1" src="./src/assets/remote/purple-balloon.svg" alt="pixel balloon" width="130">
+      <img class="background__bubble2" src="./src/assets/remote/whitr.png" alt="pixel balloon" width="143">
+      <img class="background__bubble3" src="./src/assets/remote/green.png" alt="pixel balloon" width="105">
+    </div>
   </section>
 
   <section class="screen hidden" id="screenHome">

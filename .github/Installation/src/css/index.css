@@ -1,19 +1,9 @@
-:root {
-  --bg: #07030f;
-  --card: rgba(255, 255, 255, 0.08);
-  --text: #ffffff;
-  --muted: rgba(255, 255, 255, 0.7);
-  --accent: #ff3d6e;
-  --accent-2: #ffd166;
-  --shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.35);
-}
-
 body {
   min-height: 100vh;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   color: var(--text);
-  background: var(--bg);
+  background: var(--black);
   overflow: hidden;
 }
 
@@ -29,22 +19,18 @@ body {
   background: rgba(7, 3, 15, 0.95);
 }
 
-.welcome__title {
-  margin: 0;
-  font-size: clamp(2.5rem, 7vw, 6rem);
-  line-height: 0.9;
-}
-
 .welcome__sub {
   margin: 0;
   font-size: 2rem;
-  color: var(--muted);
+  color: var(--white);
+  font-family: "Sun Antwerpen";
+  font-style: 800;
 }
 
 .welcome__url {
   max-width: 35rem;
   margin: 0 auto;
-  color: var(--accent-2);
+  color: var(--pink);
   font-size: 0.9rem;
 }
 
@@ -52,9 +38,8 @@ body {
   width: fit-content;
   margin: 1rem auto 0;
   padding: 1rem;
-  background: white;
+  background: var(--white);
   border-radius: 1.25rem;
-  box-shadow: var(--shadow);
 }
 
 .welcome__qr img {
@@ -71,32 +56,28 @@ body {
   padding: 2rem;
 }
 
-#canvas {
-  width: 1000px;
-  height: 600px;
+.canvas {
   display: block;
   object-fit: cover;
-  background: #fcfcfc;
-  box-shadow: var(--shadow);
+  background: var(--white);
   transform: scaleX(-1);
 }
 
-#povTitle {
+.POV__title {
   position: absolute;
   top: 2rem;
   left: 50%;
   z-index: 10;
-  transform: translateX(-50%);
   margin: 0;
   padding: 0.55rem 1rem;
-  color: #07030f;
-  background: var(--accent-2);
-  font-size: clamp(1rem, 2vw, 1.6rem);
-  font-weight: 800;
-  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.2);
+  color: var(--white);
+  font-family: var(--font-bacalar);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  font-style: normal;
 }
 
-#povText {
+.POV__text {
   position: absolute;
   top: 5rem;
   left: 50%;
@@ -104,27 +85,11 @@ body {
   transform: translateX(-50%);
   margin: 0;
   padding: 1rem 1.25rem;
-  color: var(--text);
-  font-size: clamp(1.2rem, 3vw, 2.4rem);
+  color: var(--white);
+  font-family: "Antwerpen";
+  font-size: var(--text-xl);
   line-height: 1.08;
   text-align: center;
-}
-
-.lights {
-  position: absolute;
-  right: 78%;
-  bottom: 8%;
-  z-index: 15;
-  padding: 1rem 1.2rem;
-  color: #07030f;
-  background: #5a16e0;
-}
-
-.lights__Text {
-  margin: 0;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 700;
 }
 
 .hidden {

@@ -1,0 +1,55 @@
+:root {
+  /* colors */
+  --antwerp-red: #BE283E;
+  --green: #B4FF00;
+  --green-soft: #B7EA63; 
+  --white: #FCFCFC;
+  --black: #121111;
+  --more-black: #161616;
+  --orange: #FF6500;
+  --pink: #FF70E8;
+  --blue-l: #4DB8FF;
+  --blue-d: #0099FF;
+  --purple: #4B6DD2;
+
+  /* text */
+  --font-bacalar: "bacalar-regular";
+  
+  --text-l: 3rem;
+  --text-xl: 4rem;
+  --text-xxl: 8rem;
+
+  /* spacing */
+}
+
+@font-face {
+  font-family: "Antwerpen";
+  src: url(../assets/typefaces/Antwerpen-Regular.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sun Antwerpen";
+  src: url(../assets/typefaces/SunAntwerpen_500.woff2) format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sun Antwerpen";
+  src: url(../assets/typefaces/SunAntwerpen_700.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
