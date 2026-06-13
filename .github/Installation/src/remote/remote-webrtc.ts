@@ -240,29 +240,44 @@ function renderCurrentPovControls() {
 }
 
 function renderAccessories() {
-  const list = document.getElementById("accessoryList");
 
-  if (!list || !currentPov) return;
+  if (!currentPov) return;
 
-  list.innerHTML = "";
+  const cards = document.querySelectorAll<HTMLButtonElement>(".accessory-card");
 
-  currentPov.extraAccessories.forEach((accessory) => {
-    const button = document.createElement("button");
-    button.textContent = accessory.label;
+  cards.forEach((card, index) => {
+    const accessory = currentPov?.extraAccessories[index];
+
+    if (!accessory) {
+      card.classList.add("hidden");
+      return;
+    }
+
+    card.classList.remove("hidden");
+
+    const label = card.querySelector<HTMLElement>(".accessory-card__label");
+    const img = card.querySelector<HTMLImageElement>(".accessory-card__img");
+
+    if (label) {
+      label.textContent = accessory.label;
+    }
+
+    if (img) {
+      img.src = accessory.icon ?? "./src/assets/remote/placeholder.webp";
+      img.alt = accessory.label;
+    }
 
     const isActive =
       currentLensState?.extraAccessories[accessory.id] === true;
 
-    button.classList.toggle("is-active", isActive);
+    card.classList.toggle("is-active", isActive);
 
-    button.addEventListener("click", () => {
+    card.onclick = () => {
       sendToPeer({
         type: "toggleExtraAccessory",
         accessoryId: accessory.id,
       });
-    });
-
-    list.appendChild(button);
+    };
   });
 }
 

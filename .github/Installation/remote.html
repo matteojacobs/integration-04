@@ -17,7 +17,7 @@
     <button id="connectButton" class="connect__button">Start connection</button>
   </div>
 
-  <section class="screen__start hidden" id="screenStart">
+  <section class="screen screen__start hidden" id="screenStart">
     <div class="start__info">
       <h1 class="start__title">AntwerPOV</h1>
       <div class="start__action">
@@ -34,22 +34,46 @@
 
   <section class="home screen hidden" id="screenHome">
     <h2 class="home__title">Customize your POV</h2>
-    <div id="goAccessoriesButton" class="home__button"></div>
-      <p class="button__text">Add extra <span class="button__text--green">accessories</span></button>
-      <img class="button__img" src="./src/assets/remote/acc-icon.png" alt="edit icon" width="104">
+    <div class="home__grid">
+        <div id="goAccessoriesButton" class="home__button">
+          <p class="button__text">Add extra <span class="button__text--green">accessories</span></p>
+          <img class="button__img" src="./src/assets/remote/acc-icon.png" alt="edit icon" width="140" height="104">
+        </div>
+        <div id="goBackgroundsButton" class="home__button">
+          <p class="button__text">Pick a <span class="button__text--green">background</span></p>
+          <img class="button__img" src="./src/assets/remote/bg-icon.png" alt="backround icon" width="140" height="104">
+        </div>
+        <div  id="goRouteButton" class="home__button">
+          <p class="button__text">Get a <span class="button__text--green">route</span><p> 
+          <img class="button__img" src="./src/assets/remote/location-icon.png" alt="location icon" width="140" height="104">
+        </div>
+        <div id="goPictureButton" class="home__button">
+          <p class="button__text">Gapture this <span class="button__text--green">POV</span></p>
+          <img class="button__img" src="./src/assets/remote/img-icon.png" alt="camera icon" width="140" height="104">
+        </div>
     </div>
-    <div id="goBackgroundsButton" class="home__button"></div>
-     <p class="button__text">Pick a <span class="button__text--green">background</span></button>
-     <img class="button__img" src="./src/assets/remote/bg-icon.png" alt="edit icon" width="86">
-    </div>
-    <button id="goRouteButton">Get a route</button>
-    <button id="goPictureButton">Capture this POV</button>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
   </section>
 
-  <section class="screen hidden" id="screenAccessories">
-    <button class="backButton">←</button>
-    <h2>Add extra accessories</h2>
-    <div id="accessoryList"></div>
+  <section class="accessories screen hidden" id="screenAccessories">
+    <div class="accessories__header">
+        <h2 class="accessories__title">Add extra accessories</h2>
+        <p class="accessories__subtitle">Upgrade the look, give your POV more attitude</p>
+    </div>
+    <button class="backButton">
+          <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
+    </button>
+    <div class="accessories__list" id="accessoryList">
+      <button class="accessory-card">
+        <img class="accessory-card__img" src="./src/assets/remote/accessory.png" alt="accessory">
+        <span class="accessory-card__label">Accessory 1</span>
+      </button>
+      <button class="accessory-card">
+        <img class="accessory-card__img" src="./src/assets/remote/accessory.png" alt="accessory">
+        <span class="accessory-card__label">Accessory 1</span>
+      </button>
+    </div>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
   </section>
 
   <section class="screen hidden" id="screenBackgrounds">

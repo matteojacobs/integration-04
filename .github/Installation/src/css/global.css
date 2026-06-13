@@ -2,10 +2,11 @@
   /* colors */
   --antwerp-red: #BE283E;
   --green: #B4FF00;
-  --green-soft: #B7EA63; 
+  --green-soft: #B7EA63;
   --white: #FCFCFC;
   --black: #121111;
   --more-black: #161616;
+  --soft-black: #1E1E1E;
   --orange: #FF6500;
   --pink: #FF70E8;
   --blue-l: #4DB8FF;
@@ -14,12 +15,21 @@
 
   /* text */
   --font-bacalar: "bacalar-regular";
-  
+  --text-s: 1.5rem;
+  /*24*/
+  --text-m: 2rem;
+  /*32*/
   --text-l: 3rem;
+  /*48*/
   --text-xl: 4rem;
+  /*64*/
   --text-xxl: 8rem;
+  /*128*/
 
   /* spacing */
+  --sp-m: 2rem;
+  --sp-xl: 3.75rem;
+  --sp-xl2: 4.3rem;
 }
 
 @font-face {

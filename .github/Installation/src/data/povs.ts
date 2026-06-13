@@ -27,8 +27,8 @@ export const POVS: Pov[] = [
     lensId: import.meta.env.VITE_LENS_ID_1,
     povText: "You are the main character",
     extraAccessories: [
-      { id: "spotlight", label: "spotlight" },
-      { id: "sjerp", label: "sjerp" },
+      { id: "spotlight", label: "Spotlight" },
+      { id: "sjerp", label: "Sjerp" },
     ],
     backgrounds: [
       { id: "bg1", label: "bg1 name" },
