@@ -1,60 +1,43 @@
+import { type Pov } from "../data/povs";
+
 import { io, Socket } from "socket.io-client";
 import qrcode from "qrcode-generator";
 
 import {
-  bootstrapCameraKit,
-  createExtension,
-  Injectable,
-  remoteApiServicesFactory,
-  type CameraKit,
-  type CameraKitSession,
-  type RemoteApiRequest,
-  type RemoteApiResponse,
-  type RemoteApiService,
-} from "@snap/camera-kit";
+  lensState,
+  toggleExtraAccessory,
+  selectBackground,
+} from "../state/lensState";
 
-type PovLens = {
-  name: string;
-  lensId: string;
-  povText: string;
-};
 
-const POV_LENSES: PovLens[] = [
-  {
-    name: 'Main Character',
-    lensId: import.meta.env.VITE_LENS_ID_1,
-    povText: 'you are the main character',
-  },
-  {
-    name: 'Raver-test',
-    lensId: import.meta.env.VITE_LENS_ID_2,
-    povText: 'you packed for sightseeing. Antwerp packed for 4:00',
-  },
-];
+type RemoteToDesktopMessage =
+  | {
+    type: "toggleExtraAccessory";
+    accessoryId: string;
+  }
+  | {
+    type: "selectBackground";
+    backgroundId: string;
+  }
+  | {
+    type: "captureMoment";
+  }
+  | {
+    type: "getRoute";
+  };
 
-let cameraKit: CameraKit;
-let session: CameraKitSession;
+type DesktopToRemoteMessage =
+  | {
+    type: "povChanged";
+    pov: Pov;
+    lensState: typeof lensState;
+  }
+  | {
+    type: "lensStateChanged";
+    lensState: typeof lensState;
+  };
 
-let currentIndex = 0;
-let isSwitching = false;
-
-const API_TOKEN = import.meta.env.VITE_API_KEY;
-const groupID = import.meta.env.VITE_GROUP_ID;
-const OBJECT_API_SPEC_ID = import.meta.env.VITE_OBJECT_API_SPEC_ID;
-
-const lensState = {
-  showLight: false,
-};
-
-type OnMessage = {
-  type: "lightsYes";
-};
-
-type OffMessage = {
-  type: "lightsNo";
-};
-
-type PeerMessage = OnMessage | OffMessage;
+type PeerMessage = RemoteToDesktopMessage | DesktopToRemoteMessage;
 
 type SignalData = {
   type?: string;
@@ -170,12 +153,22 @@ const answerPeerOffer = (offer: SignalData, peerId: string): void => {
 
     console.log("DESKTOP received:", message);
 
-    if (message.type === "lightsYes") {
-      lightsON();
+    if (message.type === "toggleExtraAccessory") {
+      toggleExtraAccessory(message.accessoryId);
+      sendLensStateToRemote();
     }
 
-    if (message.type === "lightsNo") {
-      lightsOff();
+    if (message.type === "selectBackground") {
+      selectBackground(message.backgroundId);
+      sendLensStateToRemote();
+    }
+
+    if (message.type === "captureMoment") {
+      console.log("Capture moment");
+    }
+
+    if (message.type === "getRoute") {
+      console.log("Get route");
     }
   });
 
@@ -203,172 +196,27 @@ const parsePeerMessage = (data: Uint8Array): PeerMessage | null => {
   }
 };
 
-const lightsON = (): void => {
-  if (!$lights) return;
-  console.log("showLight changed to:", lensState.showLight);
+export function sendLensStateToRemote() {
+  if (!peer || !peer.connected) return;
 
-  lensState.showLight = true;
-  $lights?.classList.remove("hidden");
-};
-
-const lightsOff = (): void => {
-  if (!$lights) return;
-
-  lensState.showLight = false;
-  $lights?.classList.add("hidden");
-};
-
-//--------- from here all the lens logic -----------------------
-
-const encoder = new TextEncoder();
-
-const remoteApiService: RemoteApiService = {
-  apiSpecId: OBJECT_API_SPEC_ID,
-
-  getRequestHandler(request: RemoteApiRequest) {
-    // console.log("Remote API request from lens:", {
-    //   apiSpecId: request.apiSpecId,
-    //   endpointId: request.endpointId,
-    //   parameters: request.parameters,
-    // });
-
-    if (request.endpointId !== "getState") {
-      console.warn("Unknown endpoint:", request.endpointId);
-      return undefined;
-    }
-
-    return (reply: (response: RemoteApiResponse) => void) => {
-      const body = JSON.stringify(lensState);
-
-
-      reply({
-        status: "success",
-        metadata: {},
-        body: encoder.encode(body).buffer,
-      });
-    };
-  },
-};
-
-
-async function initCameraKit() {
-  if (!OBJECT_API_SPEC_ID) {
-    throw new Error("Missing VITE_OBJECT_API_SPEC_ID in .env");
-  }
-
-  console.log("Using Remote API Spec ID:", OBJECT_API_SPEC_ID);
-
-  const remoteApiExtension = createExtension().provides(
-    Injectable(
-      remoteApiServicesFactory.token,
-      [] as const,
-      () => [remoteApiService]
-    )
-  );
-
-  cameraKit = await bootstrapCameraKit(
-    {
-      apiToken: API_TOKEN,
-      // logger: "console", //turn on if everything needs to be logged
-    },
-    (container) => container.provides(remoteApiExtension)
+  peer.send(
+    JSON.stringify({
+      type: "lensStateChanged",
+      lensState,
+    })
   );
 }
 
-function getCanvas(): HTMLCanvasElement {
-  const canvas = document.getElementById('canvas');
+export function sendCurrentPovToRemote(pov: Pov) {
+  if (!peer || !peer.connected) return;
 
-  if (!(canvas instanceof HTMLCanvasElement)) {
-    throw new Error('Canvas element not found');
-  }
-
-  return canvas;
+  peer.send(
+    JSON.stringify({
+      type: "povChanged",
+      pov,
+      lensState,
+    })
+  );
 }
-
-async function createCameraSession() {
-  const canvas = getCanvas();
-
-  session = await cameraKit.createSession({
-    liveRenderTarget: canvas,
-  });
-}
-
-async function setupCameraSource() {
-  const mediaStream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      width: { ideal: 1000 },
-      height: { ideal: 1300 },
-      frameRate: { ideal: 30, max: 30 },
-    },
-    audio: false,
-  });
-
-  await session.setSource(mediaStream);
-  await session.setFPSLimit(30);
-}
-
-function updatePovText() {
-  const povTextElement = document.getElementById('povText');
-  const currentPov = POV_LENSES[currentIndex];
-
-  if (povTextElement) {
-    povTextElement.textContent = currentPov.povText;
-  }
-}
-
-async function applyCurrentLens() {
-  if (isSwitching) return;
-
-  isSwitching = true;
-
-  const currentPov = POV_LENSES[currentIndex];
-
-  console.log(`Applying POV: ${currentPov.name}`);
-
-  updatePovText();
-
-  try {
-    const lens = await cameraKit.lensRepository.loadLens(
-      currentPov.lensId,
-      groupID
-    );
-
-    await session.applyLens(lens);
-  } catch (error) {
-    console.error(`Could not apply lens: ${currentPov.name}`, error);
-  } finally {
-    isSwitching = false;
-  }
-}
-
-async function nextPov() {
-  currentIndex = (currentIndex + 1) % POV_LENSES.length;
-  await applyCurrentLens();
-}
-
-function setupKeyboardControls() {
-  window.addEventListener('keydown', async (event) => {
-    if (event.key.toLowerCase() === 'n') {
-      await nextPov();
-    }
-  });
-}
-
-async function startApp() {
-  await initCameraKit();
-  await createCameraSession();
-  await setupCameraSource();
-
-  await applyCurrentLens();
-
-  await session.play();
-  console.log('Session services:', (session as any).remoteApiServices);
-
-  setupKeyboardControls();
-}
-
-startApp().catch((error) => {
-  console.error('Something went wrong while starting the app:', error);
-});
 
 init();

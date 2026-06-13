@@ -109,6 +109,7 @@ const callPeer = (): void => {
     console.log("REMOTE data channel connected!");
 
     $explanation?.classList.add("hidden");
+
   });
 
   peer.on("data", (data: Uint8Array) => {

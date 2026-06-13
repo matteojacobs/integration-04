@@ -1,31 +1,43 @@
+import { POVS } from "../data/povs";
+
 export type LensState = {
-  activePovId: string;
-  activeAccessoryIds: string[];
+  currentPovId: string;
+  extraAccessories: Record<string, boolean>;
   activeBackgroundId: string | null;
 };
 
 export const lensState: LensState = {
-  activePovId: "main-character",
-  activeAccessoryIds: [],
+  currentPovId: POVS[0].id,
+  extraAccessories: {},
   activeBackgroundId: null,
 };
 
-export function resetLensStateForPov(povId: string) {
-  lensState.activePovId = povId;
-  lensState.activeAccessoryIds = [];
+export function resetLensStateForPov(povIndex: number): void {
+  const pov = POVS[povIndex];
+
+  lensState.currentPovId = pov.id;
+  lensState.extraAccessories = {};
   lensState.activeBackgroundId = null;
+
+  pov.extraAccessories.forEach((accessory) => {
+    lensState.extraAccessories[accessory.id] = false;
+  });
 }
 
-export function toggleAccessory(accessoryId: string) {
-  const index = lensState.activeAccessoryIds.indexOf(accessoryId);
-
-  if (index === -1) {
-    lensState.activeAccessoryIds.push(accessoryId);
-  } else {
-    lensState.activeAccessoryIds.splice(index, 1);
+export function toggleExtraAccessory(accessoryId: string): void {
+  if (!(accessoryId in lensState.extraAccessories)) {
+    console.warn(`Accessory "${accessoryId}" is not available for current POV.`);
+    return;
   }
+
+  lensState.extraAccessories[accessoryId] =
+    !lensState.extraAccessories[accessoryId];
 }
 
-export function setBackground(backgroundId: string | null) {
+export function selectBackground(backgroundId: string): void {
   lensState.activeBackgroundId = backgroundId;
+}
+
+export function clearBackground(): void {
+  lensState.activeBackgroundId = null;
 }
