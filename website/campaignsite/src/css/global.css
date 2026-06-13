@@ -166,24 +166,27 @@ Image {
 .intro__title {
     font-size: 3.5rem;
     color: var(--color-light-text);
+    text-align: center;
 }
 
 .intro__title--highlight {
     color: var(--color-accent-pink);
 }
 
-.intro__subtitle {
-    font-size: 1.75rem;
-}
-
 .intro__text {
     color: var(--color-light-text);
-    max-width: 55ch;
+    max-width: 55rem;
     font-size: 1.25rem;
+    align-self: center;
 }
 
 .intro__button {
     text-align: center;
+    border-color: #B7EA63;
+    border-width: 0.125rem;
+    border-style: solid;
+    background: transparent;
+    align-self: center;
 }
 
 /* Meet POVS */
