@@ -32,11 +32,16 @@
     </div>
   </section>
 
-  <section class="screen hidden" id="screenHome">
-    <h2>Customize your POV</h2>
-
-    <button id="goAccessoriesButton">Add extra accessories</button>
-    <button id="goBackgroundsButton">Pick a background</button>
+  <section class="home screen hidden" id="screenHome">
+    <h2 class="home__title">Customize your POV</h2>
+    <div id="goAccessoriesButton" class="home__button"></div>
+      <p class="button__text">Add extra <span class="button__text--green">accessories</span></button>
+      <img class="button__img" src="./src/assets/remote/acc-icon.png" alt="edit icon" width="104">
+    </div>
+    <div id="goBackgroundsButton" class="home__button"></div>
+     <p class="button__text">Pick a <span class="button__text--green">background</span></button>
+     <img class="button__img" src="./src/assets/remote/bg-icon.png" alt="edit icon" width="86">
+    </div>
     <button id="goRouteButton">Get a route</button>
     <button id="goPictureButton">Capture this POV</button>
   </section>
