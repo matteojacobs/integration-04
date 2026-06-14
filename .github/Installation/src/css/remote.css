@@ -226,19 +226,22 @@ body {
 }
 
 .accessories__header,
-.background__header {
+.background__header,
+.route__header {
   text-align: center;
 }
 
 .accessories__title,
-.background__title {
+.background__title,
+.route__title {
   margin: 0;
   font-size: var(--text-l);
   line-height: 1;
 }
 
 .accessories__subtitle,
-.background__subtitle, .route__subtitle {
+.background__subtitle,
+.route__subtitle {
   font-family: "sun antwerpen";
   margin: 1.2rem 0 0;
   font-size: var(--text-s);
@@ -335,7 +338,8 @@ body {
 /* backgrounds */
 
 .backgrounds,
-.picture, .route {
+.picture,
+.route {
   position: relative;
 
   display: flex;
@@ -398,8 +402,40 @@ body {
 
 /* route */
 
-.route__subtitle{
+.route__subtitle {
   max-width: 35rem;
   text-align: center;
   align-self: center;
+  line-height: 130%;
+}
+
+.route__header {
+  display: flex;
+  flex-flow: column;
+}
+
+.route__qr {
+  width: fit-content;
+  margin: 1rem auto 0;
+  padding: 1rem;
+  border-radius: 1.25rem;
+}
+
+.route__qr svg {
+  color: var(--purple-text);
+  display: block;
+  height: auto;
+  width: 19rem;
+}
+
+.route__scan {
+  margin-top: var(--sp-m);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.route__text {
+  font-size: 1.75rem;
+  margin-top: var(--sp-s);
 }

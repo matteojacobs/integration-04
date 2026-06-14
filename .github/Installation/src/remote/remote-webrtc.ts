@@ -3,6 +3,8 @@ import { io, Socket } from "socket.io-client";
 import type { Pov } from "../data/povs";
 import type { LensState } from "../state/lensState";
 
+import qrcode from "qrcode-generator";
+
 type RemoteToDesktopMessage =
   | {
     type: "toggleExtraAccessory";
@@ -51,6 +53,7 @@ type RemoteScreen =
 let currentScreen: RemoteScreen = "connect";
 let currentPov: Pov | null = null;
 let currentLensState: LensState | null = null;
+const $qr = document.getElementById("qr") as HTMLElement;
 
 const $connectButton = document.getElementById("connectButton") as HTMLButtonElement | null;
 const $explanation = document.getElementById("explanation") as HTMLElement | null;
@@ -208,8 +211,6 @@ function getUrlParameter(name: string): string | false {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-
-
 // -------------- screen info -=----------
 
 const screens: Record<RemoteScreen, HTMLElement | null> = {
@@ -326,11 +327,27 @@ function renderBackgrounds() {
 
 
 function renderRoute() {
-  const routeLabel = document.getElementById("routeLabel");
+  const routeQr = document.getElementById("routeQr");
 
-  if (!routeLabel || !currentPov) return;
+  if ( !routeQr || !currentPov) return;
 
-  routeLabel.textContent = `${currentPov.routeLabel} route`;
+  const url = new URL("https://antwerpov.com/routes");
+  url.searchParams.set("pov", currentPov.id);
+
+  const qr = qrcode(4, "L");
+  qr.addData(url.toString());
+  qr.make();
+
+  // routeQr.innerHTML = qr.createImgTag(4);
+  let svg = qr.createSvgTag(5, 2);
+
+  svg = svg
+    .replaceAll('fill="#000000"', 'fill="#4B6DD2"')
+    .replaceAll('fill="black"', 'fill="#4B6DD2"')
+    .replaceAll('fill="#ffffff"', 'fill="#1E1E1E"')
+    .replaceAll('fill="white"', 'fill="#1E1E1E"');
+
+  routeQr.innerHTML = svg;
 }
 
 const checkButtons = () => {
