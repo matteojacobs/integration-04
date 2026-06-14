@@ -225,17 +225,20 @@ body {
   color: var(--white);
 }
 
-.accessories__header, .background__header {
+.accessories__header,
+.background__header {
   text-align: center;
 }
 
-.accessories__title, .background__title {
+.accessories__title,
+.background__title {
   margin: 0;
   font-size: var(--text-l);
   line-height: 1;
 }
 
-.accessories__subtitle, .background__subtitle {
+.accessories__subtitle,
+.background__subtitle, .route__subtitle {
   font-family: "sun antwerpen";
   margin: 1.2rem 0 0;
   font-size: var(--text-s);
@@ -269,7 +272,8 @@ body {
   height: auto;
 }
 
-.accessories__list, .background__list {
+.accessories__list,
+.background__list {
   align-self: center;
 
   display: flex;
@@ -278,7 +282,8 @@ body {
   margin-top: var(--sp-xxl);
 }
 
-.accessory-card, .background-card{
+.accessory-card,
+.background-card {
   padding: 1.5rem;
 
   display: flex;
@@ -299,21 +304,25 @@ body {
   padding: var(--sp-xl) var(--sp-xxxl);
 }
 
-.accessory-card:active, .background-card:active {
+.accessory-card:active,
+.background-card:active {
   transform: translateY(0.25rem) scale(0.98);
 }
 
-.accessory-card.is-active, .background-card.is-active {
+.accessory-card.is-active,
+.background-card.is-active {
   border: 0.45rem solid var(--green-soft);
 }
 
-.accessory-card__img, .background-card__img {
+.accessory-card__img,
+.background-card__img {
   margin-bottom: var(--sp-m);
   width: 10rem;
   height: auto;
 }
 
-.accessory-card__label, .background-card__label {
+.accessory-card__label,
+.background-card__label {
   font-family: "sun antwerpen";
   margin-top: 1rem;
   font-size: var(--text-s);
@@ -325,7 +334,8 @@ body {
 
 /* backgrounds */
 
-.backgrounds {
+.backgrounds,
+.picture, .route {
   position: relative;
 
   display: flex;
@@ -336,19 +346,60 @@ body {
   color: var(--white);
 }
 
-.background-card{
+.background-card {
   padding: var(--sp-m) var(--sp-xl);
 }
 
-.background__list{
+.background__list {
   gap: var(--sp-xl2);
 }
 
- .background-card__label {
-   font-family: "sun antwerpen";
-   margin-top: 0rem;
-   font-size: var(--text-s);
-   color: var(--purple-text);
-   text-align: center;
-   margin-bottom: -0.5rem;
- }
+.background-card__label {
+  font-family: "sun antwerpen";
+  margin-top: 0rem;
+  font-size: var(--text-s);
+  color: var(--purple-text);
+  text-align: center;
+  margin-bottom: -0.5rem;
+}
+
+/*picture */
+
+.picture__button {
+  padding: 1.5rem;
+
+  display: flex;
+  flex-flow: column;
+  place-items: center;
+
+  border: 0;
+  border-left: 0.45rem solid #5574df;
+  border-bottom: 0.45rem solid #5574df;
+  background: var(--black);
+  color: var(--white);
+
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+  padding: var(--sp-xl) var(--sp-xxl);
+  align-self: center;
+  margin-top: var(--sp-xxl);
+}
+
+.picture__button:active {
+  transform: translateY(0.25rem) scale(0.98);
+}
+
+.picture__button.is-active {
+  border: 0.45rem solid var(--green-soft);
+}
+
+/* route */
+
+.route__subtitle{
+  max-width: 35rem;
+  text-align: center;
+  align-self: center;
+}
