@@ -225,17 +225,17 @@ body {
   color: var(--white);
 }
 
-.accessories__header {
+.accessories__header, .background__header {
   text-align: center;
 }
 
-.accessories__title {
+.accessories__title, .background__title {
   margin: 0;
   font-size: var(--text-l);
   line-height: 1;
 }
 
-.accessories__subtitle {
+.accessories__subtitle, .background__subtitle {
   font-family: "sun antwerpen";
   margin: 1.2rem 0 0;
   font-size: var(--text-s);
@@ -269,7 +269,7 @@ body {
   height: auto;
 }
 
-.accessories__list {
+.accessories__list, .background__list {
   align-self: center;
 
   display: flex;
@@ -278,7 +278,7 @@ body {
   margin-top: var(--sp-xxl);
 }
 
-.accessory-card {
+.accessory-card, .background-card{
   padding: 1.5rem;
 
   display: flex;
@@ -299,22 +299,21 @@ body {
   padding: var(--sp-xl) var(--sp-xxxl);
 }
 
-.accessory-card:active {
+.accessory-card:active, .background-card:active {
   transform: translateY(0.25rem) scale(0.98);
-  background-color: #202020;
 }
 
-.accessory-card.is-active {
-  border: 0.35rem solid var(--green-soft);
+.accessory-card.is-active, .background-card.is-active {
+  border: 0.45rem solid var(--green-soft);
 }
 
-.accessory-card__img {
+.accessory-card__img, .background-card__img {
   margin-bottom: var(--sp-m);
   width: 10rem;
   height: auto;
 }
 
-.accessory-card__label {
+.accessory-card__label, .background-card__label {
   font-family: "sun antwerpen";
   margin-top: 1rem;
   font-size: var(--text-s);
@@ -323,9 +322,33 @@ body {
   margin-bottom: -1.2rem;
 }
 
-.accessories__bgimg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(25%, -15%);
+
+/* backgrounds */
+
+.backgrounds {
+  position: relative;
+
+  display: flex;
+  flex-flow: column;
+
+  padding: 4rem 6rem;
+  background: var(--soft-black);
+  color: var(--white);
 }
+
+.background-card{
+  padding: var(--sp-m) var(--sp-xl);
+}
+
+.background__list{
+  gap: var(--sp-xl2);
+}
+
+ .background-card__label {
+   font-family: "sun antwerpen";
+   margin-top: 0rem;
+   font-size: var(--text-s);
+   color: var(--purple-text);
+   text-align: center;
+   margin-bottom: -0.5rem;
+ }

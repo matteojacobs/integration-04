@@ -35,6 +35,11 @@ export function toggleExtraAccessory(accessoryId: string): void {
 }
 
 export function selectBackground(backgroundId: string): void {
+  if (lensState.activeBackgroundId === backgroundId) {
+    lensState.activeBackgroundId = null;
+    return;
+  }
+
   lensState.activeBackgroundId = backgroundId;
 }
 

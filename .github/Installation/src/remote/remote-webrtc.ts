@@ -281,32 +281,49 @@ function renderAccessories() {
   });
 }
 
+
 function renderBackgrounds() {
-  const list = document.getElementById("backgroundList");
 
-  if (!list || !currentPov) return;
+  if (!currentPov) return;
 
-  list.innerHTML = "";
+  const cards = document.querySelectorAll<HTMLButtonElement>(".background-card");
 
-  currentPov.backgrounds.forEach((background) => {
-    const button = document.createElement("button");
-    button.textContent = background.label;
+  cards.forEach((card, index) => {
+    const background = currentPov?.backgrounds[index];
+
+    if (!background) {
+      card.classList.add("hidden");
+      return;
+    }
+
+    card.classList.remove("hidden");
+
+    const label = card.querySelector<HTMLElement>(".background-card__label");
+    const img = card.querySelector<HTMLImageElement>(".background-card__img");
+
+    if (label) {
+      label.textContent = background.label;
+    }
+
+    if (img) {
+      img.src = background.preview ?? "./src/assets/remote/placeholder.webp";
+      img.alt = background.label;
+    }
 
     const isActive =
-      currentLensState?.activeBackgroundId === background.id;
+    currentLensState?.activeBackgroundId === background.id;;
 
-    button.classList.toggle("is-active", isActive);
+    card.classList.toggle("is-active", isActive);
 
-    button.addEventListener("click", () => {
+    card.onclick = () => {
       sendToPeer({
         type: "selectBackground",
         backgroundId: background.id,
       });
-    });
-
-    list.appendChild(button);
+    };
   });
 }
+
 
 function renderRoute() {
   const routeLabel = document.getElementById("routeLabel");
