@@ -12,9 +12,11 @@
   --blue-l: #4DB8FF;
   --blue-d: #0099FF;
   --purple: #4B6DD2;
+  --purple-text: #829FF4;
 
   /* text */
   --font-bacalar: "bacalar-regular";
+
   --text-s: 1.5rem;
   /*24*/
   --text-m: 2rem;
@@ -30,6 +32,9 @@
   --sp-m: 2rem;
   --sp-xl: 3.75rem;
   --sp-xl2: 4.3rem;
+  --sp-xl3: 5rem;
+  --sp-xxl: 6rem;
+  --sp-xxxl: 8rem;
 }
 
 @font-face {

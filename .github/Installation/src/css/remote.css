@@ -30,7 +30,7 @@ body {
 
 .connect__button {
   font-family: "sun antwerpen";
-  width: min(22rem, 80vw);
+  width: 22rem;
   margin: 1rem auto;
   padding: 1rem 1.4rem;
   color: var(--black);
@@ -219,11 +219,10 @@ body {
 
   display: flex;
   flex-flow: column;
-  row-gap: var(--sp-xl);
 
   padding: 4rem 6rem;
-  background: var(--background, #1b1b1b);
-  color: var(--white, #ffffff);
+  background: var(--soft-black);
+  color: var(--white);
 }
 
 .accessories__header {
@@ -239,7 +238,7 @@ body {
 .accessories__subtitle {
   font-family: "sun antwerpen";
   margin: 1.2rem 0 0;
-  font-size: 1.5rem;
+  font-size: var(--text-s);
   line-height: 1.2;
 }
 
@@ -250,7 +249,7 @@ body {
   display: grid;
   place-items: center;
 
-  border: 0.12rem solid #b7f35c;
+  border: 0.12rem solid var(--green-soft);
   background: transparent;
   cursor: pointer;
   touch-action: manipulation;
@@ -273,35 +272,31 @@ body {
 .accessories__list {
   align-self: center;
 
-  display: grid;
-  grid-template-columns: repeat(2, minmax(18rem, 24rem));
-  gap: clamp(3rem, 6vw, 5rem);
-
-  width: min(100%, 54rem);
+  display: flex;
+  flex-flow: row;
+  gap: var(--sp-xl2);
+  margin-top: var(--sp-xxl);
 }
 
 .accessory-card {
-  aspect-ratio: 1 / 0.85;
   padding: 1.5rem;
 
-  display: grid;
-  grid-template-rows: 1fr auto;
+  display: flex;
+  flex-flow: column;
   place-items: center;
 
   border: 0;
   border-left: 0.45rem solid #5574df;
   border-bottom: 0.45rem solid #5574df;
-  background: var(--black, #111111);
-  color: var(--white, #ffffff);
-
-  cursor: pointer;
-  touch-action: manipulation;
+  background: var(--black);
+  color: var(--white);
 
   transition:
     transform 120ms ease,
     background-color 120ms ease,
     border-color 120ms ease,
     box-shadow 120ms ease;
+  padding: var(--sp-xl) var(--sp-xxxl);
 }
 
 .accessory-card:active {
@@ -310,31 +305,27 @@ body {
 }
 
 .accessory-card.is-active {
-  border: 0.35rem solid #b7f35c;
-  box-shadow: 0 0 0 0.35rem rgba(183, 243, 92, 0.18);
+  border: 0.35rem solid var(--green-soft);
 }
 
 .accessory-card__img {
-  width: min(70%, 10rem);
+  margin-bottom: var(--sp-m);
+  width: 10rem;
   height: auto;
 }
 
 .accessory-card__label {
+  font-family: "sun antwerpen";
   margin-top: 1rem;
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  color: #b7f35c;
+  font-size: var(--text-s);
+  color: var(--purple-text);
   text-align: center;
+  margin-bottom: -1.2rem;
 }
 
 .accessories__bgimg {
   position: absolute;
   top: 0;
   right: 0;
-
-  width: clamp(5rem, 8vw, 7rem);
-  height: auto;
-
   transform: translate(25%, -15%);
-  pointer-events: none;
 }
-
