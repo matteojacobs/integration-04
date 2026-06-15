@@ -590,6 +590,10 @@ const checkButtons = () => {
   $sendImgButton?.addEventListener("click", () => {
     if (!$contactInput || $sendImgButton.disabled) return;
 
+    document.getElementById("after__send")?.classList.remove("hidden");
+    $sendImgButton.classList.add("hidden");
+    $sendImgButton.classList.add("hidden");
+
     const value = $contactInput.value.trim();
 
     sendToPeer({

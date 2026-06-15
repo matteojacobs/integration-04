@@ -106,29 +106,33 @@ body {
 
 .image__countdown {
   position: absolute;
+  align-self: center;
   z-index: 10;
-  color: var(--white);
+  color: var(--black);
   font-family: "sun Antwerpen";
   font-weight: 700;
-  font-size: var(--text-xl);
-  top: 18rem;
+  font-size: var(--text-xxl);
+  top: 30%;
+  right: 50%;
 }
 
-.webcam{
+.webcam {
+  position: relative;
   display: grid;
   height: 100%;
 }
 
-.webcam__pixels, .canvas{
+.webcam__pixels,
+.canvas {
   grid-column: 1;
   grid-row: 1;
 }
 
-.webcam__pixels{
+.webcam__pixels {
   z-index: 10;
   margin-top: -1rem;
 }
 
-.POV__text--green{
+.POV__text--green {
   color: var(--green-soft);
 }
