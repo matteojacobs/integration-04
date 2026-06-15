@@ -19,6 +19,9 @@ type RemoteToDesktopMessage =
   }
   | {
     type: "getRoute";
+  }
+  | {
+    type: "cancelImage";
   };
 
 type DesktopToRemoteMessage =
@@ -30,6 +33,16 @@ type DesktopToRemoteMessage =
   | {
     type: "lensStateChanged";
     lensState: LensState;
+  }
+  | {
+    type: "captureStarted";
+  }
+  | {
+    type: "captureCancelled";
+  }
+  | {
+    type: "imageCaptured";
+    imageDataUrl: string;
   };
 
 type PeerMessage = RemoteToDesktopMessage | DesktopToRemoteMessage;
@@ -53,12 +66,14 @@ type RemoteScreen =
 let currentScreen: RemoteScreen = "connect";
 let currentPov: Pov | null = null;
 let currentLensState: LensState | null = null;
-const $qr = document.getElementById("qr") as HTMLElement;
 
 const $connectButton = document.getElementById("connectButton") as HTMLButtonElement | null;
 const $explanation = document.getElementById("explanation") as HTMLElement | null;
 const $startButton = document.getElementById("connectButton") as HTMLButtonElement | null;
-
+const $captureButton = document.getElementById("captureButton") as HTMLButtonElement | null;
+const $cancelButton = document.getElementById("cancelImage") as HTMLButtonElement | null;
+const $cancelSection = document.getElementById("cancelDiv") as HTMLButtonElement | null;
+const $takenImage = document.getElementById("takenImage") as HTMLImageElement | null;
 
 let socket: Socket;
 let peer: any = null;
@@ -164,6 +179,23 @@ const callPeer = (): void => {
     if (message.type === "lensStateChanged") {
       currentLensState = message.lensState;
       renderCurrentPovControls();
+    }
+
+    if (message.type === "captureStarted") {
+      switchCameraScreen();
+    }
+
+    if (message.type === "captureCancelled") {
+      switchCameraBack();
+    }
+
+    if (message.type === "imageCaptured") {
+      if ($takenImage) {
+        $takenImage.src = message.imageDataUrl;
+      }
+
+      switchCameraBack();
+      showScreen("pictureTaken");
     }
 
     console.log("REMOTE received:", message);
@@ -312,7 +344,7 @@ function renderBackgrounds() {
     }
 
     const isActive =
-    currentLensState?.activeBackgroundId === background.id;;
+      currentLensState?.activeBackgroundId === background.id;;
 
     card.classList.toggle("is-active", isActive);
 
@@ -329,7 +361,7 @@ function renderBackgrounds() {
 function renderRoute() {
   const routeQr = document.getElementById("routeQr");
 
-  if ( !routeQr || !currentPov) return;
+  if (!routeQr || !currentPov) return;
 
   const url = new URL("https://antwerpov.com/routes");
   url.searchParams.set("pov", currentPov.id);
@@ -338,7 +370,6 @@ function renderRoute() {
   qr.addData(url.toString());
   qr.make();
 
-  // routeQr.innerHTML = qr.createImgTag(4);
   let svg = qr.createSvgTag(5, 2);
 
   svg = svg
@@ -348,6 +379,16 @@ function renderRoute() {
     .replaceAll('fill="white"', 'fill="#1E1E1E"');
 
   routeQr.innerHTML = svg;
+}
+
+const switchCameraScreen = () => {
+  $captureButton?.classList.add("hidden");
+  $cancelSection?.classList.remove("hidden");
+}
+
+const switchCameraBack = () => {
+  $captureButton?.classList.remove("hidden");
+  $cancelSection?.classList.add("hidden");
 }
 
 const checkButtons = () => {
@@ -375,9 +416,15 @@ const checkButtons = () => {
     showScreen("picture");
   });
 
-  document.getElementById("captureButton")?.addEventListener("click", () => {
+  $captureButton?.addEventListener("click", () => {
     sendToPeer({ type: "captureMoment" });
-    showScreen("pictureTaken");
+    // showScreen("pictureTaken");
+    switchCameraScreen();
+  });
+
+  $cancelButton?.addEventListener("click", () => {
+    sendToPeer({ type: "cancelImage" });
+    switchCameraBack();
   });
 
   document.querySelectorAll(".backButton").forEach((button) => {
@@ -385,6 +432,8 @@ const checkButtons = () => {
       showScreen("home");
     });
   });
+
+
 }
 
 

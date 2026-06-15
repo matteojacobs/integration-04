@@ -24,7 +24,11 @@ type RemoteToDesktopMessage =
   }
   | {
     type: "getRoute";
+  } |
+  {
+    type: "cancelImage";
   };
+
 
 type DesktopToRemoteMessage =
   | {
@@ -35,6 +39,16 @@ type DesktopToRemoteMessage =
   | {
     type: "lensStateChanged";
     lensState: typeof lensState;
+  }
+  | {
+    type: "captureStarted";
+  }
+  | {
+    type: "captureCancelled";
+  }
+  | {
+    type: "imageCaptured";
+    imageDataUrl: string;
   };
 
 type PeerMessage = RemoteToDesktopMessage | DesktopToRemoteMessage;
@@ -48,7 +62,12 @@ type SignalData = {
 const $url = document.getElementById("url") as HTMLAnchorElement;
 const $qr = document.getElementById("qr") as HTMLElement;
 const $welcome = document.getElementById("welcome") as HTMLElement;
+const $imageCountdown = document.getElementById("imageCountdown") as HTMLElement | null;
+const $cameraCanvas = document.getElementById("canvas") as HTMLCanvasElement | null;
 
+let isCapturingImage = false;
+let captureWasCancelled = false;
+let captureTimeouts: number[] = [];
 
 let socket: Socket;
 let peer: any = null;
@@ -164,7 +183,11 @@ const answerPeerOffer = (offer: SignalData, peerId: string): void => {
     }
 
     if (message.type === "captureMoment") {
-      console.log("Capture moment");
+      startCaptureFlow();
+    }
+
+    if (message.type === "cancelImage") {
+      cancelCaptureFlow();
     }
 
     if (message.type === "getRoute") {
@@ -196,6 +219,12 @@ const parsePeerMessage = (data: Uint8Array): PeerMessage | null => {
   }
 };
 
+export function sendToRemote(message: DesktopToRemoteMessage) {
+  if (!peer || !peer.connected) return;
+
+  peer.send(JSON.stringify(message));
+}
+
 export function sendLensStateToRemote() {
   if (!peer || !peer.connected) return;
 
@@ -224,5 +253,140 @@ let onRemoteConnected: (() => void) | null = null;
 export function setOnRemoteConnected(callback: () => void) {
   onRemoteConnected = callback;
 }
+
+// ---- img flow ------------------
+
+function startCaptureFlow() {
+  if (isCapturingImage) return;
+
+  isCapturingImage = true;
+  captureWasCancelled = false;
+  clearCaptureTimeouts();
+
+  sendToRemote({ type: "captureStarted" });
+
+  const countdownValues = ["3", "2", "1"];
+  let index = 0;
+
+  const tick = () => {
+    if (captureWasCancelled) return;
+
+    if (!$imageCountdown) {
+      console.error("Missing #imageCountdown");
+      finishCapture();
+      return;
+    }
+
+    if (index < countdownValues.length) {
+      $imageCountdown.textContent = countdownValues[index];
+      $imageCountdown.classList.remove("hidden");
+
+      index++;
+
+      const timeoutId = window.setTimeout(tick, 1000);
+      captureTimeouts.push(timeoutId);
+
+      return;
+    }
+
+    finishCapture();
+  };
+
+  tick();
+}
+
+function cancelCaptureFlow() {
+  if (!isCapturingImage) return;
+
+  captureWasCancelled = true;
+  isCapturingImage = false;
+
+  clearCaptureTimeouts();
+  hideCountdown();
+
+  sendToRemote({ type: "captureCancelled" });
+}
+
+function clearCaptureTimeouts() {
+  captureTimeouts.forEach((timeoutId) => {
+    window.clearTimeout(timeoutId);
+  });
+
+  captureTimeouts = [];
+}
+
+function hideCountdown() {
+  $imageCountdown?.classList.add("hidden");
+}
+
+function finishCapture() {
+  if (captureWasCancelled) return;
+
+  hideCountdown();
+
+  const imageDataUrl = captureCanvasWithLogo();
+
+  isCapturingImage = false;
+
+  if (!imageDataUrl) {
+    console.error("Could not capture image");
+    sendToRemote({ type: "captureCancelled" });
+    return;
+  }
+
+  sendToRemote({
+    type: "imageCaptured",
+    imageDataUrl,
+  });
+}
+
+function captureCanvasWithLogo(): string | null {
+  if (!$cameraCanvas) {
+    console.error("Missing #canvas");
+    return null;
+  }
+
+  const outputCanvas = document.createElement("canvas");
+  outputCanvas.width = $cameraCanvas.width;
+  outputCanvas.height = $cameraCanvas.height;
+
+  const ctx = outputCanvas.getContext("2d");
+
+  if (!ctx) {
+    console.error("Could not create canvas context");
+    return null;
+  }
+
+  ctx.drawImage($cameraCanvas, 0, 0, outputCanvas.width, outputCanvas.height);
+
+  drawLogoOnImage(ctx, outputCanvas.width, outputCanvas.height);
+
+  return outputCanvas.toDataURL("image/jpeg", 0.9);
+}
+
+function drawLogoOnImage(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number
+) {
+  ctx.save();
+
+  ctx.font = `bold ${Math.round(width * 0.075)}px bacalar`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+
+  ctx.lineWidth = Math.round(width * 0.008);
+  ctx.fillStyle = "#B7F35C";
+
+  const text = "AntwerPOV";
+  const x = width / 2;
+  const y = height * 0.04;
+
+  ctx.fillText(text, x, y);
+
+  ctx.restore();
+}
+
+
 
 init();

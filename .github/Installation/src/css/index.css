@@ -95,3 +95,13 @@ body {
 .hidden {
   visibility: hidden;
 }
+
+.image__countdown{
+  position: absolute;
+  z-index: 10;
+  color: var(--white);
+  font-family: "sun Antwerpen";
+  font-weight: 700;
+  font-size: var(--text-xl);
+  top: 18rem;
+}

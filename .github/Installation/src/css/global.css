@@ -17,9 +17,11 @@
   /* text */
   --font-bacalar: "bacalar-regular";
 
+  --text-xs: 1.4rem;
   --text-s: 1.5rem;
   /*24*/
   --text-m: 2rem;
+  --text-ml: 2.5rem;
   /*32*/
   --text-l: 3rem;
   /*48*/
@@ -29,6 +31,7 @@
   /*128*/
 
   /* spacing */
+  --sp-s: 1rem;
   --sp-m: 2rem;
   --sp-l: 3rem;
   --sp-xl: 3.75rem;
