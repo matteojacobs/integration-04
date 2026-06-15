@@ -22,6 +22,11 @@ type RemoteToDesktopMessage =
   }
   | {
     type: "cancelImage";
+  } | {
+    type: "saveCapturedImage";
+    contactMode: "instagram" | "email";
+    contactValue: string;
+    featureMe: boolean;
   };
 
 type DesktopToRemoteMessage =
@@ -553,11 +558,6 @@ const checkButtons = () => {
     showScreen("picture");
   });
 
-  // $captureButton?.addEventListener("click", () => {
-  //   sendToPeer({ type: "captureMoment" });
-  //   // showScreen("pictureTaken");
-  //   switchCameraScreen();
-  // });
   $captureButton?.addEventListener("click", () => {
     sendToPeer({ type: "captureMoment" });
     switchCameraScreen();
@@ -585,6 +585,19 @@ const checkButtons = () => {
 
   $contactInput?.addEventListener("input", () => {
     validateContactInput();
+  });
+
+  $sendImgButton?.addEventListener("click", () => {
+    if (!$contactInput || $sendImgButton.disabled) return;
+
+    const value = $contactInput.value.trim();
+
+    sendToPeer({
+      type: "saveCapturedImage",
+      contactMode,
+      contactValue: contactMode === "instagram" ? `@${value}` : value,
+      featureMe: $featureInput?.checked === true,
+    });
   });
 
 }

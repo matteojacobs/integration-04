@@ -27,6 +27,11 @@ type RemoteToDesktopMessage =
   } |
   {
     type: "cancelImage";
+  } | {
+    type: "saveCapturedImage";
+    contactMode: "instagram" | "email";
+    contactValue: string;
+    featureMe: boolean;
   };
 
 
@@ -71,6 +76,10 @@ const $povTextAfter = document.getElementById("povTextAfter") as HTMLElement | n
 let isCapturingImage = false;
 let captureWasCancelled = false;
 let captureTimeouts: number[] = [];
+let lastCaptureImages: {
+  decoratedImageDataUrl: string;
+  cleanImageDataUrl: string | null;
+} | null = null;
 
 let socket: Socket;
 let peer: any = null;
@@ -195,6 +204,10 @@ const answerPeerOffer = (offer: SignalData, peerId: string): void => {
 
     if (message.type === "getRoute") {
       console.log("Get route");
+    }
+
+    if (message.type === "saveCapturedImage") {
+      saveCapturedImageToDatabase(message);
     }
   });
 
@@ -328,6 +341,7 @@ async function finishCapture() {
   hideCountdown();
 
   const imageDataUrl = await captureInstallationImage();
+  // const cleanImageDataUrl = await captureCleanLensImage();
 
   isCapturingImage = false;
 
@@ -336,6 +350,11 @@ async function finishCapture() {
     sendToRemote({ type: "captureCancelled" });
     return;
   }
+
+  lastCaptureImages = {
+    decoratedImageDataUrl: imageDataUrl,
+    cleanImageDataUrl: null,
+  };
 
   sendToRemote({
     type: "imageCaptured",
@@ -517,6 +536,46 @@ function drawPixelStrip(
   const stripHeight = width * stripRatio;
 
   ctx.drawImage(pixelStrip, 0, y, width, stripHeight);
+}
+
+async function saveCapturedImageToDatabase(message: {
+  type: "saveCapturedImage";
+  contactMode: "instagram" | "email";
+  contactValue: string;
+  featureMe: boolean;
+}) {
+  if (!lastCaptureImages) {
+    console.error("No captured image to save.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:443/api/submissions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        povId: lensState.currentPovId,
+        decoratedImageDataUrl: lastCaptureImages.decoratedImageDataUrl,
+        cleanImageDataUrl: lastCaptureImages.cleanImageDataUrl,
+        contactMode: message.contactMode,
+        contactValue: message.contactValue,
+        featureMe: message.featureMe,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => null);
+      console.error("Server error response:", errorBody);
+      throw new Error(errorBody?.message ?? "Could not save image.");
+    }
+
+    const result = await response.json();
+    console.log("Saved submission:", result);
+  } catch (error) {
+    console.error("Save failed:", error);
+  }
 }
 
 init();
