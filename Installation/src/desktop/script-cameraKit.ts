@@ -80,7 +80,7 @@ async function initCameraKit() {
       apiToken: API_TOKEN,
       // logger: "console", //turn on if everything needs to be logged
     },
-    (container) => container.provides(remoteApiExtension)
+    (container: any) => container.provides(remoteApiExtension)
   );
 }
 
@@ -105,8 +105,8 @@ async function createCameraSession() {
 async function setupCameraSource() {
   const mediaStream = await navigator.mediaDevices.getUserMedia({
     video: {
-      width: { ideal: 1000 },
-      height: { ideal: 1300 },
+      width: { ideal: 1080 },
+      height: { ideal: 1490 },
       frameRate: { ideal: 30, max: 30 },
     },
     audio: false,
@@ -117,12 +117,17 @@ async function setupCameraSource() {
 }
 
 function updatePovText() {
-  const povTextElement = document.getElementById('povText');
+  const beforeElement = document.getElementById("povTextBefore");
+  const greenElement = document.getElementById("povTextGreen");
+  const afterElement = document.getElementById("povTextAfter");  
+
   const currentPov = POVS[currentIndex];
 
-  if (povTextElement) {
-    povTextElement.textContent = currentPov.povText;
-  }
+  if (!beforeElement || !greenElement || !afterElement) return;
+
+  beforeElement.textContent = currentPov.povText.before;
+  greenElement.textContent = currentPov.povText.green;
+  afterElement.textContent = currentPov.povText.after ?? "";
 }
 
 async function applyCurrentLens() {
