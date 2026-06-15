@@ -67,6 +67,20 @@ let currentScreen: RemoteScreen = "connect";
 let currentPov: Pov | null = null;
 let currentLensState: LensState | null = null;
 
+type ContactMode = "instagram" | "email";
+
+let contactMode: ContactMode = "instagram";
+
+const $contactLabel = document.getElementById("contactLabel") as HTMLLabelElement | null;
+const $contactField = document.getElementById("contactField") as HTMLElement | null;
+const $contactPrefix = document.getElementById("contactPrefix") as HTMLElement | null;
+const $contactInput = document.getElementById("contactInput") as HTMLInputElement | null;
+const $contactError = document.getElementById("contactError") as HTMLElement | null;
+const $switchContactMode = document.getElementById("switchContactMode") as HTMLButtonElement | null;
+const $sendImgButton = document.getElementById("sendImg") as HTMLButtonElement | null;
+const $redoButton = document.getElementById("redoImage") as HTMLButtonElement | null;
+const $featureInput = document.getElementById("feature") as HTMLInputElement | null;
+
 const $connectButton = document.getElementById("connectButton") as HTMLButtonElement | null;
 const $explanation = document.getElementById("explanation") as HTMLElement | null;
 const $startButton = document.getElementById("connectButton") as HTMLButtonElement | null;
@@ -391,6 +405,129 @@ const switchCameraBack = () => {
   $cancelSection?.classList.add("hidden");
 }
 
+function updateContactMode() {
+  if (
+    !$contactLabel ||
+    !$contactInput ||
+    !$contactPrefix ||
+    !$switchContactMode
+  ) {
+    return;
+  }
+
+  $contactInput.value = "";
+
+  if (contactMode === "instagram") {
+    $contactLabel.classList.add("imgInfo__label--instagram");
+    $contactLabel.classList.remove("imgInfo__label--email");
+    $contactLabel.textContent = "Instagram Username";
+    $contactInput.type = "text";
+    $contactInput.name = "instagram";
+    $contactInput.placeholder = "";
+    $contactInput.minLength = 1;
+    $contactInput.maxLength = 30;
+
+    $contactPrefix.classList.remove("hidden");
+    $switchContactMode.textContent = "send it to me via e-mail instead!";
+  }
+
+  if (contactMode === "email") {
+    $contactLabel.classList.remove("imgInfo__label--instagram");
+    $contactLabel.classList.add("imgInfo__label--email");
+    $contactLabel.textContent = "E-mail address";
+    $contactInput.type = "email";
+    $contactInput.name = "email";
+    $contactInput.placeholder = "you@example.com";
+    $contactInput.removeAttribute("minlength");
+    $contactInput.maxLength = 80;
+
+    $contactPrefix.classList.add("hidden");
+    $switchContactMode.textContent = "send it via Instagram instead!";
+  }
+
+  validateContactInput();
+}
+
+function isValidInstagramUsername(value: string) {
+  // simple Instagram-style validation:
+  // letters, numbers, underscores and dots, max 30 characters
+  return /^[a-zA-Z0-9._]{1,30}$/.test(value);
+}
+
+function validateContactInput() {
+  if (!$contactInput || !$sendImgButton || !$contactField || !$contactError) {
+    return;
+  }
+
+  const value = $contactInput.value.trim();
+  let isValid = false;
+  let errorText = "";
+
+  if (contactMode === "instagram") {
+    isValid = isValidInstagramUsername(value);
+
+    if (!value) {
+      errorText = "Please fill in your Instagram username.";
+    } else {
+      errorText = "Use only letters, numbers, dots or underscores.";
+    }
+  }
+
+  if (contactMode === "email") {
+    isValid = value.length > 0 && $contactInput.checkValidity();
+
+    if (!value) {
+      errorText = "Please fill in your e-mail address.";
+    } else {
+      errorText = "Please fill in a valid e-mail address.";
+    }
+  }
+
+  $sendImgButton.disabled = !isValid;
+
+  const shouldShowError = value.length > 0 && !isValid;
+
+  $contactField.classList.toggle("is-invalid", shouldShowError);
+  $contactError.classList.toggle("hidden", !shouldShowError);
+  $contactError.textContent = errorText;
+}
+
+function startNewCapture() {
+  if (!peer || !peer.connected) {
+    console.warn("Cannot start capture, peer is not connected.");
+    return;
+  }
+
+  // Clear old preview image
+  if ($takenImage) {
+    $takenImage.removeAttribute("src");
+  }
+
+  // Reset form
+  resetContactForm();
+
+  // Go back to the picture screen
+  showScreen("picture");
+
+  // Show cancel state on the iPad
+  switchCameraScreen();
+
+  // Tell desktop to start countdown and capture
+  sendToPeer({
+    type: "captureMoment",
+  });
+}
+
+function resetContactForm() {
+  contactMode = "instagram";
+
+  if ($featureInput) {
+    $featureInput.checked = false;
+  }
+
+  updateContactMode();
+}
+
 const checkButtons = () => {
   document.getElementById("screenStart")?.addEventListener("click", () => {
     showScreen("home");
@@ -416,10 +553,18 @@ const checkButtons = () => {
     showScreen("picture");
   });
 
+  // $captureButton?.addEventListener("click", () => {
+  //   sendToPeer({ type: "captureMoment" });
+  //   // showScreen("pictureTaken");
+  //   switchCameraScreen();
+  // });
   $captureButton?.addEventListener("click", () => {
     sendToPeer({ type: "captureMoment" });
-    // showScreen("pictureTaken");
     switchCameraScreen();
+  });
+
+  $redoButton?.addEventListener("click", () => {
+    startNewCapture();
   });
 
   $cancelButton?.addEventListener("click", () => {
@@ -433,6 +578,14 @@ const checkButtons = () => {
     });
   });
 
+  $switchContactMode?.addEventListener("click", () => {
+    contactMode = contactMode === "instagram" ? "email" : "instagram";
+    updateContactMode();
+  });
+
+  $contactInput?.addEventListener("input", () => {
+    validateContactInput();
+  });
 
 }
 

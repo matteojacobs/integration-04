@@ -465,6 +465,10 @@ body {
 
 /* picture taken screen */
 
+.picture__taken {
+  background-color: var(--black);
+}
+
 
 .picture__title {
   margin: 0;
@@ -564,25 +568,14 @@ body {
   font-weight: 700;
 }
 
-.imgInfo__label::after {
-  content: "";
-  width: 1.7rem;
-  height: 1.7rem;
-
-  background-image: url("../assets/remote/insta.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.instagramField {
+.contactField {
   width: 100%;
   height: 4rem;
 
   background: var(--white);
 }
 
-.instagramField__prefix {
+.contactField__prefix {
   padding-left: 1rem;
 
   color: var(--black);
@@ -609,7 +602,7 @@ body {
   outline: none;
 }
 
-.instagramField:focus-within {
+.contactField:focus-within {
   outline: 0.25rem solid var(--green-soft);
   outline-offset: 0.2rem;
 }
@@ -693,4 +686,55 @@ body {
 .send__image {
   font-size: 3.5rem;
   line-height: 0.8;
+}
+
+.contactField:focus-within {
+  outline: 0.25rem solid var(--green-soft);
+  outline-offset: 0.2rem;
+}
+
+/* .contactField.is-invalid {
+  outline: 0.25rem solid #ff4f6d;
+  outline-offset: 0.2rem;
+} */
+
+.contactError {
+  margin-top: 0.6rem;
+
+  color: #ff4f6d;
+  font-family: "sun antwerpen";
+  font-size: var(--text-xs);
+}
+
+.send__button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.send__button:disabled:active {
+  transform: none;
+  background: var(--green-soft);
+}
+
+.contactField__prefix.hidden {
+  display: none;
+}
+
+.imgInfo__label::after {
+  content: "";
+  width: 1.7rem;
+  height: 1.7rem;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.imgInfo__label--instagram::after {
+  background-image: url("../assets/remote/insta.svg");
+}
+
+.imgInfo__label--email::after {
+  background-image: url("../assets/remote/email.svg");
 }

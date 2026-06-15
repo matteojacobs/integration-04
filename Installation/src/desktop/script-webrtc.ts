@@ -64,6 +64,9 @@ const $qr = document.getElementById("qr") as HTMLElement;
 const $welcome = document.getElementById("welcome") as HTMLElement;
 const $imageCountdown = document.getElementById("imageCountdown") as HTMLElement | null;
 const $cameraCanvas = document.getElementById("canvas") as HTMLCanvasElement | null;
+const $povTextBefore = document.getElementById("povTextBefore") as HTMLElement | null;
+const $povTextGreen = document.getElementById("povTextGreen") as HTMLElement | null;
+const $povTextAfter = document.getElementById("povTextAfter") as HTMLElement | null;
 
 let isCapturingImage = false;
 let captureWasCancelled = false;
@@ -319,12 +322,12 @@ function hideCountdown() {
   $imageCountdown?.classList.add("hidden");
 }
 
-function finishCapture() {
+async function finishCapture() {
   if (captureWasCancelled) return;
 
   hideCountdown();
 
-  const imageDataUrl = captureCanvasWithLogo();
+  const imageDataUrl = await captureInstallationImage();
 
   isCapturingImage = false;
 
@@ -340,53 +343,180 @@ function finishCapture() {
   });
 }
 
-function captureCanvasWithLogo(): string | null {
+async function captureInstallationImage(): Promise<string | null> {
   if (!$cameraCanvas) {
     console.error("Missing #canvas");
     return null;
   }
 
+  await document.fonts.ready;
+
+  // Same ratio as 295 x 450 (= what is shown), but higher quality
+  const exportWidth = 590;
+  const exportHeight = 900;
+
+  const headerHeight = exportHeight * 0.18;
+  const cameraY = headerHeight;
+  const cameraHeight = exportHeight - headerHeight;
+
   const outputCanvas = document.createElement("canvas");
-  outputCanvas.width = $cameraCanvas.width;
-  outputCanvas.height = $cameraCanvas.height;
+  outputCanvas.width = exportWidth;
+  outputCanvas.height = exportHeight;
 
   const ctx = outputCanvas.getContext("2d");
 
   if (!ctx) {
-    console.error("Could not create canvas context");
+    console.error("Could not create export canvas context");
     return null;
   }
 
-  ctx.drawImage($cameraCanvas, 0, 0, outputCanvas.width, outputCanvas.height);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
 
-  drawLogoOnImage(ctx, outputCanvas.width, outputCanvas.height);
+  ctx.fillStyle = "#1E1E1E";
+  ctx.fillRect(0, 0, exportWidth, exportHeight);
 
-  return outputCanvas.toDataURL("image/jpeg", 0.9);
+  ctx.fillStyle = "#1E1E1E";
+  ctx.fillRect(0, 0, exportWidth, headerHeight);
+
+  drawHeaderText(ctx, exportWidth, headerHeight);
+  drawMirroredCanvasCover(
+    ctx,
+    $cameraCanvas,
+    0,
+    cameraY,
+    exportWidth,
+    cameraHeight
+  );
+
+  drawPixelStrip(ctx, exportWidth, cameraY);
+
+  drawWatermark(ctx, exportWidth, exportHeight);
+
+  return outputCanvas.toDataURL("image/jpeg", 0.85);
 }
 
-function drawLogoOnImage(
+function drawHeaderText(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  headerHeight: number
+) {
+  const titleText = "POV:";
+  const beforeText = $povTextBefore?.textContent ?? "";
+  const greenText = $povTextGreen?.textContent ?? "";
+  const afterText = $povTextAfter?.textContent ?? "";
+
+  const centerX = width / 2;
+
+  // title
+  ctx.save();
+  ctx.fillStyle = "#FCFCFC";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  ctx.font = `400 ${width * 0.09}px bacalar, sans-serif`;
+
+  const titleY = headerHeight * 0.18;
+  ctx.fillText(titleText, centerX, titleY);
+  ctx.restore();
+
+  // pov text
+  ctx.save();
+  ctx.textBaseline = "top";
+  ctx.font = `400 ${width * 0.07}px "sun antwerpen", sans-serif`;
+
+  const sentenceY = headerHeight * 0.58;
+
+  const beforeWidth = ctx.measureText(beforeText).width;
+  const greenWidth = ctx.measureText(greenText).width;
+  const afterWidth = ctx.measureText(afterText).width;
+
+  const totalWidth = beforeWidth + greenWidth + afterWidth;
+  let x = centerX - totalWidth / 2;
+
+  ctx.fillStyle = "#FCFCFC";
+  ctx.fillText(beforeText, x, sentenceY);
+  x += beforeWidth;
+
+  ctx.fillStyle = "#B7EA63";
+  ctx.fillText(greenText, x, sentenceY);
+  x += greenWidth;
+
+  ctx.fillStyle = "#FCFCFC";
+  ctx.fillText(afterText, x, sentenceY);
+
+  ctx.restore();
+}
+
+function drawWatermark(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number
 ) {
   ctx.save();
 
-  ctx.font = `bold ${Math.round(width * 0.075)}px bacalar`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "top";
+  ctx.fillStyle = "#161616";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "bottom";
+  ctx.font = `400 ${width * 0.07}px bacalar, sans-serif`;
 
-  ctx.lineWidth = Math.round(width * 0.008);
-  ctx.fillStyle = "#B7F35C";
-
-  const text = "AntwerPOV";
-  const x = width / 2;
-  const y = height * 0.04;
-
-  ctx.fillText(text, x, y);
+  ctx.fillText("AntwerPOV", width - 24, height - 20);
 
   ctx.restore();
 }
 
+function drawMirroredCanvasCover(
+  ctx: CanvasRenderingContext2D,
+  sourceCanvas: HTMLCanvasElement,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
+  const sourceWidth = sourceCanvas.width;
+  const sourceHeight = sourceCanvas.height;
 
+  const scale = Math.max(width / sourceWidth, height / sourceHeight);
+
+  const croppedWidth = width / scale;
+  const croppedHeight = height / scale;
+
+  const sourceX = (sourceWidth - croppedWidth) / 2;
+  const sourceY = (sourceHeight - croppedHeight) / 2;
+
+  ctx.save();
+
+  // Mirror camera
+  ctx.translate(x + width, y);
+  ctx.scale(-1, 1);
+
+  ctx.drawImage(
+    sourceCanvas,
+    sourceX,
+    sourceY,
+    croppedWidth,
+    croppedHeight,
+    0,
+    0,
+    width,
+    height
+  );
+
+  ctx.restore();
+}
+
+function drawPixelStrip(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  y: number
+) {
+  const pixelStrip = document.querySelector(".webcam__pixels") as HTMLImageElement | null;
+
+  if (!pixelStrip || !pixelStrip.complete) return;
+
+  const stripRatio = pixelStrip.naturalHeight / pixelStrip.naturalWidth;
+  const stripHeight = width * stripRatio;
+
+  ctx.drawImage(pixelStrip, 0, y, width, stripHeight);
+}
 
 init();
