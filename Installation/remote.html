@@ -124,15 +124,15 @@
     <button class="backButton">
       <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
     </button>
-    <div class="taken">
-      <div class="taken__image">
+    <div class="taken" id="taken">
+      <div class="taken__image" id="takenImageSection">
         <img class="taken__photo" id="takenImage" alt="img that was taken" width="295" height="390">
         <button  class="redo__button" id="redoImage">
           <p class="redo__text">Redo</p>
           <img class="redo__image" src="./src/assets/remote/redo.svg" alt="arrows circle" width="27" height="27">
         </button>
       </div>
-      <div class="taken__information">
+      <div class="taken__information" id="takenInformation">
         <h3 class="imgInfo__title">Keep this POV?</h3>
         <p class="imgInfo__subtitle">Want to get this photo in your own gallery? <br> Let us send it to you!</p>
         <label class="imgInfo__label imgInfo__label--instagram" for="contactInput" id="contactLabel">
@@ -158,7 +158,7 @@
       <p class="send__text">Send</p>
       <img class="send__image" src="./src/assets/remote/send.svg" alt="arrow" width="44" height="36">
     </button>
-    <div class="after__send hidden"> 
+    <div class="after__send hidden" id="afterSend"> 
       <p class="after__text">You will receive your image soon!</p>
       <img class="after__img" src="./src/assets/remote/camera-purple.svg" width="112" height="103" alt="camera">
     </div>

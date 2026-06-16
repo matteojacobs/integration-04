@@ -738,3 +738,17 @@ body {
 .imgInfo__label--email::after {
   background-image: url("../assets/remote/email.svg");
 }
+
+/* after send */
+
+.after__send {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: var(--sp-xxxl);
+}
+
+.after__text {
+  font-size: var(--text-m);
+  margin-bottom: var(--sp-xl);
+}

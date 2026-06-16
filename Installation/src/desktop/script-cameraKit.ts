@@ -107,6 +107,7 @@ async function setupCameraSource() {
     video: {
       width: { ideal: 1080 },
       height: { ideal: 1490 },
+      aspectRatio: { ideal: 9 / 16 },
       frameRate: { ideal: 30, max: 30 },
     },
     audio: false,
@@ -119,7 +120,7 @@ async function setupCameraSource() {
 function updatePovText() {
   const beforeElement = document.getElementById("povTextBefore");
   const greenElement = document.getElementById("povTextGreen");
-  const afterElement = document.getElementById("povTextAfter");  
+  const afterElement = document.getElementById("povTextAfter");
 
   const currentPov = POVS[currentIndex];
 
