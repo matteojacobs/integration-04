@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC Remote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Eater&family=Jolly+Lodger&family=Nosifer&display=swap"
+      rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/remote.css">
+  <link rel="stylesheet" href="/src/css/global.css">
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="explanation" id="explanation">
+    <h1 class="explanation__title nosifer">Spirit Sync</h1>
+    <p class="explanation__text">When you click start, you will see a haunted room on your computer. 
+    You can control a ghost</p>
+    <button id="connectButton" class="start-button">Start</button>
+  </div>
+
+  <div class="game hidden" id="game">
+    <div class="ghost">
+      <h2 class="control__title">Ghost Movement</h2>
+      <div class="ghost__swipe">
+        <img class="swipe__ghost" id="ghost-swipe" src="/src/assets/ghost-control.svg" width="50">
+        <div class="swipe__area" >
+          <p>Swipe to move the ghost</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+  <script type="module" src="/src/js/remote.js"></script>
+</body>
+
+</html>
