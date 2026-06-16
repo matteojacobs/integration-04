@@ -1,3 +1,37 @@
+@font-face {
+    font-family: "AntwerpRegular";
+    src: url(../assets/fonts/Antwerpen-Regular.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "AntwerpSmallCapsRegular";
+    src: url(../assets/fonts/AntwerpenSmallCaps-Regular.woff2);
+}
+
+@font-face {
+    font-family: "AntwerpTall";
+    src: url(../assets/fonts/AntwerpenTall-Tall.woff2);
+}
+
+@font-face {
+    font-family: "BacalarRegular";
+    src: url(../assets/fonts/bacalartest-regular.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "SunAntwerpen";
+    src: url(../assets/fonts/SunAntwerpen_500.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "SunAntwerpen";
+    src: url(../assets/fonts/SunAntwerpen_700.woff2);
+    font-weight: 700;
+}
+
 :root {
     /* Colors */
     --color-primary: #545CAB;
@@ -16,7 +50,13 @@
     --space-l: 5rem;
     --space-xl: 5rem;
 
+
     /* Font Variables */
+    --font-size-s: 1.25rem;
+    --font-size-m: 2.25rem;
+    --font-size-l: 3.125rem;
+    --font-size-xl: 8rem;
+
     --font-family-serif: var(--font-family-serif);
 }
 
@@ -31,13 +71,13 @@ html {
 }
 
 body {
-    font-family: var(--font-family-serif);
+    font-family: "SunAntwerpen";
+    font-weight: 500;
     line-height: 1.5;
     /* padding: var(--space-l) var(--space-s) var(--space-s); */
     color: var(--color-grey);
     background: var(--color-background);
 }
-
 
 img,
 Image {
@@ -47,6 +87,11 @@ Image {
 
 .visually-hidden {
     display: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 77.5rem;
 }
 
 /* Navigation */
@@ -63,6 +108,7 @@ Image {
 .nav__item--active {}
 
 .nav__link {
+    font-family: "AntwerpRegular";
     background: var(--color-primary);
     padding: var(--space-xs) var(--space-xl);
     text-decoration: none;
@@ -89,6 +135,7 @@ Image {
 }
 
 .hero__title {
+    font-family: "BacalarRegular";
     font-size: 6.7rem;
     color: var(--color-light-text-alt);
     grid-area: 1/1/1/1;
@@ -164,7 +211,8 @@ Image {
 }
 
 .intro__title {
-    font-size: 3.5rem;
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-l);
     color: var(--color-light-text);
     text-align: center;
 }
@@ -176,8 +224,10 @@ Image {
 .intro__text {
     color: var(--color-light-text);
     max-width: 55rem;
-    font-size: 1.25rem;
+    font-size: var(--font-size-s);
     align-self: center;
+    font-family: "SunAntwerpen";
+    font-weight: 500;
 }
 
 .intro__button {
@@ -189,16 +239,84 @@ Image {
     align-self: center;
 }
 
-/* Meet POVS */
-.meet {}
-
-.meet__title {
-    font-size: 3.5rem;
-    color: var(--color-dark);
+/* From screen to citytrip ah */
+.citytrip {
+    place-items: center;
 }
 
-.meet__title--highlight {
+.citytrip__content {
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    padding: 5rem 0;
+}
+
+.citytrip__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-l);
+}
+
+.citytrip__subtitle {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-m);
+}
+
+.citytrip__title--highlight {
     color: var(--color-blue);
+}
+
+.citytrip__text {
+    font-family: "SunAntwerpen";
+    font-weight: 500;
+    font-size: var(--font-size-s);
+    max-width: 34rem;
+}
+
+.citytrip__steps {
+    display: flex;
+    gap: var(--space-l);
+    align-items: end;
+    padding: 1rem 0;
+}
+
+.citytrip__step {
+    align-items: end;
+}
+
+/* Locations */
+.locations {
+    place-items: center;
+    background: var(--color-blue);
+    padding: 2rem 0;
+    display: grid;
+    gap: 2rem;
+}
+
+.locations__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-l);
+    color: var(--color-white);
+}
+
+.locations__list {
+    display: flex;
+    color: var(--color-white);
+    gap: var(--space-l);
+}
+
+.location {
+    place-items: center;
+}
+
+/* featured */
+.featured__pt1 {
+    background: var(--color-dark);
+    color: var(--color-white);
+    place-items: center;
+}
+
+.featured_pt2 {
+    place-items: center;
 }
 
 /* Footer */
@@ -213,6 +331,7 @@ Image {
 
 .footer__title {
     font-size: 6.7rem;
+    font-family: "BacalarRegular";
 }
 
 .footer__subtitle {}
@@ -246,4 +365,5 @@ Image {
     max-width: 20rem;
     font-size: 1.5rem;
     color: var(--color-dark);
+    font-family: "AntwerpRegular";
 }
