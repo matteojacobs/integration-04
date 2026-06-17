@@ -1,7 +1,6 @@
 export type ExtraAccessory = {
   id: string;
   label: string;
-  icon?: string;
 };
 
 export type BackgroundOption = {
@@ -37,8 +36,8 @@ export const POVS: Pov[] = [
       green: "main character",
     },
     extraAccessories: [
-      { id: "spotlight", label: "Spotlight" },
-      { id: "sjerp", label: "Sjerp" },
+      { id: "spotlight", label: "Medaillon" },
+      { id: "sjerp", label: "Confidence meter" },
     ],
     backgrounds: [
       { id: "bg1", label: "bg1 name" },
@@ -56,8 +55,8 @@ export const POVS: Pov[] = [
       green: "raves",
     },
     extraAccessories: [
-      { id: "fanny", label: "Fanny pack" },
-      { id: "glitter", label: "Face flitter" },
+      { id: "bracelets", label: "Bracelets" },
+      { id: "energy", label: "Energy drink" },
     ],
     backgrounds: [
       { id: "bg1", label: "bg1 name" },
@@ -76,7 +75,7 @@ export const POVS: Pov[] = [
     },
     extraAccessories: [
       { id: "earrings", label: "Earrings" },
-      { id: "broche", label: "Broche" },
+      { id: "bracelet", label: "Bracelet" },
     ],
     backgrounds: [
       { id: "bg1", label: "bg1 name" },

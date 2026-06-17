@@ -304,7 +304,7 @@ body {
     background-color 120ms ease,
     border-color 120ms ease,
     box-shadow 120ms ease;
-  padding: var(--sp-xl) var(--sp-xxxl);
+  padding: var(--sp-m) var(--sp-xxl);
 }
 
 .accessory-card:active,
@@ -320,7 +320,7 @@ body {
 .accessory-card__img,
 .background-card__img {
   margin-bottom: var(--sp-m);
-  width: 10rem;
+  width: 12rem;
   height: auto;
 }
 

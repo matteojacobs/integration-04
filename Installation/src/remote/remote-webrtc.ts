@@ -314,7 +314,7 @@ function renderAccessories() {
     }
 
     if (img) {
-      img.src = accessory.icon ?? "./src/assets/remote/placeholder.webp";
+      img.src = `./src/assets/remote/${accessory.id}.png`;
       img.alt = accessory.label;
     }
 
