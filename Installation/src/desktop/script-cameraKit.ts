@@ -24,7 +24,7 @@ let serialPort: any = null;
 let serialReader: ReadableStreamDefaultReader<string> | null = null;
 
 let lastPedalTriggerTime = 0;
-const PEDAL_COOLDOWN = 600; // prevents double switching
+const PEDAL_COOLDOWN = 600; // prevents 2x switching
 
 let currentIndex = 0;
 let isSwitching = false;
