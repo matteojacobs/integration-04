@@ -1,5 +1,14 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+// astro.config.mjs
+import { defineConfig } from "astro/config";
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  image: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lragbxqhqdxmejklvypd.supabase.co",
+        pathname: "/storage/v1/object/public/submissions/**",
+      },
+    ],
+  },
+});
