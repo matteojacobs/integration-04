@@ -78,7 +78,6 @@ let contactMode: ContactMode = "email";
 
 const $contactLabel = document.getElementById("contactLabel") as HTMLLabelElement | null;
 const $contactField = document.getElementById("contactField") as HTMLElement | null;
-const $contactPrefix = document.getElementById("contactPrefix") as HTMLElement | null;
 const $contactInput = document.getElementById("contactInput") as HTMLInputElement | null;
 const $contactError = document.getElementById("contactError") as HTMLElement | null;
 const $switchContactMode = document.getElementById("switchContactMode") as HTMLButtonElement | null;
@@ -414,7 +413,6 @@ function updateContactMode() {
   if (
     !$contactLabel ||
     !$contactInput ||
-    !$contactPrefix ||
     !$switchContactMode
   ) {
     return;
@@ -435,9 +433,6 @@ function updateContactMode() {
     $contactInput.removeAttribute("minlength");
     $contactInput.maxLength = 80;
 
-    $contactPrefix.classList.add("hidden");
-    $contactPrefix.textContent = "";
-
     $switchContactMode.textContent = "send it to my number instead!";
   }
 
@@ -453,9 +448,6 @@ function updateContactMode() {
     $contactInput.inputMode = "tel";
     $contactInput.minLength = 8;
     $contactInput.maxLength = 20;
-
-    $contactPrefix.classList.add("hidden");
-    $contactPrefix.textContent = "";
 
     $switchContactMode.textContent = "send it by e-mail instead!";
   }
@@ -614,6 +606,17 @@ const checkButtons = () => {
       contactValue: value,
       featureMe: $featureInput?.checked === true,
     });
+
+    window.setTimeout(() => {
+      showScreen("home");
+
+      // reset the send screen for next time
+      document.getElementById("afterSend")?.classList.add("hidden");
+      document.getElementById("taken")?.classList.remove("hidden");
+      $sendImgButton.classList.remove("hidden");
+
+      resetContactForm();
+    }, 4000);
   });
 
 }
