@@ -366,7 +366,7 @@ function renderBackgrounds() {
     }
 
     if (img) {
-      img.src = background.preview ?? "./src/assets/remote/meir.png";
+      img.src = `./src/assets/remote/${background.preview}.png`;
       img.alt = background.label;
     }
 
