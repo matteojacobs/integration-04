@@ -1,6 +1,7 @@
 body {
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
+  overflow: hidden;
   font-family: "Antwerpen";
   color: var(--white);
   background: var(--more-black);
@@ -11,13 +12,13 @@ body {
 }
 
 .explanation {
-  position: fixed;
+  height: 100%;
   inset: 0;
   z-index: 10;
   display: grid;
   place-content: center;
+  justify-content: center;
   gap: 1.2rem;
-  padding: 2rem;
   text-align: center;
   background: var(--more-black);
 }
@@ -51,29 +52,8 @@ body {
   padding: 2rem;
 }
 
-.button {
-  width: min(24rem, 84vw);
-  min-height: 12rem;
-  display: grid;
-  place-items: center;
-  margin: 0;
-  padding: 2rem;
-  color: rgb(0, 0, 0);
-  background: rgba(255, 209, 102, 0.9);
-  border-radius: 2rem;
-  font-size: clamp(1.6rem, 8vw, 3rem);
-  font-weight: 900;
-  text-align: center;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  user-select: none;
-  touch-action: manipulation;
-}
 
-.button:active {
-  transform: scale(0.96);
-  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.3);
-}
+/* screens */
 
 .hidden {
   display: none !important;
@@ -84,7 +64,8 @@ body {
 }
 
 .screen {
-  height: 100vh;
+  overflow: hidden;
+  height: 100vh; 
 }
 
 .start__info {
@@ -174,17 +155,18 @@ body {
 }
 
 .home__grid {
-  margin-top: var(--sp-xl);
+  margin-top: var(--sp-l);
   justify-content: center;
   display: flex;
   flex-flow: row wrap;
   row-gap: var(--sp-xl);
   column-gap: var(--sp-xl2);
-
+  width: 90%;
 }
 
 .home__button {
-  width: 30rem;
+  width: clamp(26rem, 28vw, 30rem);
+  min-height: clamp(15rem, 27vh, 20rem);
   display: flex;
   flex-flow: column;
   justify-items: center;
@@ -204,12 +186,12 @@ body {
 }
 
 .button__text--green {
-  color: #b7f35c;
+  color: var(--green-soft);
 }
 
 .button__img {
-  margin: 2.3rem 0 2.3rem 0;
   align-self: center;
+  margin: clamp(1.2rem, 3vh, 2.3rem) 0;
 }
 
 /* accessories page */
@@ -287,8 +269,6 @@ body {
 
 .accessory-card,
 .background-card {
-  padding: 1.5rem;
-
   display: flex;
   flex-flow: column;
   place-items: center;
@@ -304,7 +284,12 @@ body {
     background-color 120ms ease,
     border-color 120ms ease,
     box-shadow 120ms ease;
-  padding: var(--sp-xl) var(--sp-xxxl);
+  padding: var(--sp-m) var(--sp-xxl);
+  padding: clamp(1rem, 2vw, var(--sp-m)) clamp(3.5rem, 3vw, var(--sp-xxl));
+}
+
+.background__list{
+  gap: var(--sp-l);
 }
 
 .accessory-card:active,
@@ -317,21 +302,24 @@ body {
   border: 0.45rem solid var(--green-soft);
 }
 
-.accessory-card__img,
-.background-card__img {
+.accessory-card__img {
   margin-bottom: var(--sp-m);
-  width: 10rem;
+  width:clamp(14rem, 12vw, 16rem);
   height: auto;
+}
+
+.background-card__img{
+  width: clamp(10rem, 12vw, 13rem);
+  margin-bottom: var(--sp-s);
 }
 
 .accessory-card__label,
 .background-card__label {
   font-family: "sun antwerpen";
-  margin-top: 1rem;
+  margin-top: -2rem;
   font-size: var(--text-s);
   color: var(--purple-text);
   text-align: center;
-  margin-bottom: -1.2rem;
 }
 
 
@@ -465,6 +453,10 @@ body {
 
 /* picture taken screen */
 
+.picture__taken {
+  background-color: var(--black);
+}
+
 
 .picture__title {
   margin: 0;
@@ -479,7 +471,7 @@ body {
   align-items: center;
   flex: 1;
   gap: var(--sp-xxl);
-  margin-top: var(--sp-xl);
+  margin-top: var(--sp-l);
 }
 
 .imgInfo__title {
@@ -564,25 +556,14 @@ body {
   font-weight: 700;
 }
 
-.imgInfo__label::after {
-  content: "";
-  width: 1.7rem;
-  height: 1.7rem;
-
-  background-image: url("../assets/remote/insta.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.instagramField {
+.contactField {
   width: 100%;
   height: 4rem;
 
   background: var(--white);
 }
 
-.instagramField__prefix {
+.contactField__prefix {
   padding-left: 1rem;
 
   color: var(--black);
@@ -609,7 +590,7 @@ body {
   outline: none;
 }
 
-.instagramField:focus-within {
+.contactField:focus-within {
   outline: 0.25rem solid var(--green-soft);
   outline-offset: 0.2rem;
 }
@@ -648,8 +629,8 @@ body {
 }
 
 .featureCheck__input {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
 
   accent-color: var(--green-soft);
 }
@@ -693,4 +674,64 @@ body {
 .send__image {
   font-size: 3.5rem;
   line-height: 0.8;
+}
+
+.contactField:focus-within {
+  outline: 0.25rem solid var(--green-soft);
+  outline-offset: 0.2rem;
+}
+
+.contactError {
+  margin-top: 0.6rem;
+
+  color: #ff4f6d;
+  font-family: "sun antwerpen";
+  font-size: var(--text-xs);
+}
+
+.send__button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.send__button:disabled:active {
+  transform: none;
+  background: var(--green-soft);
+}
+
+.contactField__prefix.hidden {
+  display: none;
+}
+
+.imgInfo__label::after {
+  content: "";
+  width: 1.7rem;
+  height: 1.7rem;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.imgInfo__label--phone::after {
+  background-image: url("../assets/remote/phone-icon.svg");
+}
+
+.imgInfo__label--email::after {
+  background-image: url("../assets/remote/email-icon.svg");
+}
+
+/* after send */
+
+.after__send {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: var(--sp-xxxl);
+}
+
+.after__text {
+  font-size: var(--text-m);
+  margin-bottom: var(--sp-xl);
 }

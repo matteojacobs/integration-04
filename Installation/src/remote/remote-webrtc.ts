@@ -22,6 +22,11 @@ type RemoteToDesktopMessage =
   }
   | {
     type: "cancelImage";
+  } | {
+    type: "saveCapturedImage";
+    contactMode:"email" | "phone";
+    contactValue: string;
+    featureMe: boolean;
   };
 
 type DesktopToRemoteMessage =
@@ -66,6 +71,22 @@ type RemoteScreen =
 let currentScreen: RemoteScreen = "connect";
 let currentPov: Pov | null = null;
 let currentLensState: LensState | null = null;
+
+type ContactMode = "email" | "phone";
+let contactMode: ContactMode = "email";
+
+const INACTIVITY_TIME = 30000; // 30 seconds
+let inactivityTimeoutId: number | null = null;
+
+
+const $contactLabel = document.getElementById("contactLabel") as HTMLLabelElement | null;
+const $contactField = document.getElementById("contactField") as HTMLElement | null;
+const $contactInput = document.getElementById("contactInput") as HTMLInputElement | null;
+const $contactError = document.getElementById("contactError") as HTMLElement | null;
+const $switchContactMode = document.getElementById("switchContactMode") as HTMLButtonElement | null;
+const $sendImgButton = document.getElementById("sendImg") as HTMLButtonElement | null;
+const $redoButton = document.getElementById("redoImage") as HTMLButtonElement | null;
+const $featureInput = document.getElementById("feature") as HTMLInputElement | null;
 
 const $connectButton = document.getElementById("connectButton") as HTMLButtonElement | null;
 const $explanation = document.getElementById("explanation") as HTMLElement | null;
@@ -264,6 +285,12 @@ function showScreen(screen: RemoteScreen) {
   });
 
   screens[screen]?.classList.remove("hidden");
+
+  if (screen === "connect" || screen === "start") {
+    clearInactivityTimer();
+  } else {
+    startInactivityTimer();
+  }
 }
 
 function renderCurrentPovControls() {
@@ -296,7 +323,7 @@ function renderAccessories() {
     }
 
     if (img) {
-      img.src = accessory.icon ?? "./src/assets/remote/placeholder.webp";
+      img.src = `./src/assets/remote/${accessory.id}.png`;
       img.alt = accessory.label;
     }
 
@@ -339,7 +366,7 @@ function renderBackgrounds() {
     }
 
     if (img) {
-      img.src = background.preview ?? "./src/assets/remote/placeholder.webp";
+      img.src = `./src/assets/remote/${background.preview}.png`;
       img.alt = background.label;
     }
 
@@ -373,8 +400,8 @@ function renderRoute() {
   let svg = qr.createSvgTag(5, 2);
 
   svg = svg
-    .replaceAll('fill="#000000"', 'fill="#4B6DD2"')
-    .replaceAll('fill="black"', 'fill="#4B6DD2"')
+    .replaceAll('fill="#000000"', 'fill="#829FF4"')
+    .replaceAll('fill="black"', 'fill="#829FF4"')
     .replaceAll('fill="#ffffff"', 'fill="#1E1E1E"')
     .replaceAll('fill="white"', 'fill="#1E1E1E"');
 
@@ -391,7 +418,147 @@ const switchCameraBack = () => {
   $cancelSection?.classList.add("hidden");
 }
 
+function updateContactMode() {
+  if (
+    !$contactLabel ||
+    !$contactInput ||
+    !$switchContactMode
+  ) {
+    return;
+  }
+
+  $contactInput.value = "";
+
+  if (contactMode === "email") {
+    $contactLabel.classList.add("imgInfo__label--email");
+    $contactLabel.classList.remove("imgInfo__label--phone");
+
+    $contactLabel.textContent = "E-mail address";
+
+    $contactInput.type = "email";
+    $contactInput.name = "email";
+    $contactInput.placeholder = "you@example.com";
+    $contactInput.inputMode = "email";
+    $contactInput.removeAttribute("minlength");
+    $contactInput.maxLength = 80;
+
+    $switchContactMode.textContent = "send it to my number instead!";
+  }
+
+  if (contactMode === "phone") {
+    $contactLabel.classList.remove("imgInfo__label--email");
+    $contactLabel.classList.add("imgInfo__label--phone");
+
+    $contactLabel.textContent = "Phone number";
+
+    $contactInput.type = "tel";
+    $contactInput.name = "phone";
+    $contactInput.placeholder = "+32 4 12 34 56 78";
+    $contactInput.inputMode = "tel";
+    $contactInput.minLength = 8;
+    $contactInput.maxLength = 20;
+
+    $switchContactMode.textContent = "send it by e-mail instead!";
+  }
+
+  validateContactInput();
+}
+
+function isValidPhoneNumber(value: string) {
+  // Allows +, spaces, brackets and dashes.
+  // Then checks if there are enough digits.
+  const cleanedValue = value.replace(/[^\d]/g, "");
+
+  return cleanedValue.length >= 8 && cleanedValue.length <= 15;
+}
+
+function validateContactInput() {
+  if (!$contactInput || !$sendImgButton || !$contactField || !$contactError) {
+    return;
+  }
+
+  const value = $contactInput.value.trim();
+  let isValid = false;
+  let errorText = "";
+
+  if (contactMode === "email") {
+    isValid = value.length > 0 && $contactInput.checkValidity();
+
+    if (!value) {
+      errorText = "Please fill in your e-mail address.";
+    } else {
+      errorText = "Please fill in a valid e-mail address.";
+    }
+  }
+
+  if (contactMode === "phone") {
+    isValid = isValidPhoneNumber(value);
+
+    if (!value) {
+      errorText = "Please fill in your phone number.";
+    } else {
+      errorText = "Please fill in a valid phone number.";
+    }
+  }
+
+  $sendImgButton.disabled = !isValid;
+
+  const shouldShowError = value.length > 0 && !isValid;
+
+  $contactField.classList.toggle("is-invalid", shouldShowError);
+  $contactError.classList.toggle("hidden", !shouldShowError);
+  $contactError.textContent = errorText;
+}
+
+function startNewCapture() {
+  if (!peer || !peer.connected) {
+    console.warn("Cannot start capture, peer is not connected.");
+    return;
+  }
+
+  // Clear old preview image
+  if ($takenImage) {
+    $takenImage.removeAttribute("src");
+  }
+
+  // Reset form
+  resetContactForm();
+
+  // Go back to the picture screen
+  showScreen("picture");
+
+  // Show cancel state on the iPad
+  switchCameraScreen();
+
+  // Tell desktop to start countdown and capture
+  sendToPeer({
+    type: "captureMoment",
+  });
+}
+
+function resetContactForm() {
+  contactMode = "email";
+
+  if ($featureInput) {
+    $featureInput.checked = false;
+  }
+
+  updateContactMode();
+}
+
 const checkButtons = () => {
+  document.addEventListener("pointerdown", () => {
+    resetInactivityTimer();
+  });
+
+  document.addEventListener("keydown", () => {
+    resetInactivityTimer();
+  });
+
+  document.addEventListener("input", () => {
+    resetInactivityTimer();
+  });
+
   document.getElementById("screenStart")?.addEventListener("click", () => {
     showScreen("home");
   });
@@ -418,8 +585,11 @@ const checkButtons = () => {
 
   $captureButton?.addEventListener("click", () => {
     sendToPeer({ type: "captureMoment" });
-    // showScreen("pictureTaken");
     switchCameraScreen();
+  });
+
+  $redoButton?.addEventListener("click", () => {
+    startNewCapture();
   });
 
   $cancelButton?.addEventListener("click", () => {
@@ -433,7 +603,129 @@ const checkButtons = () => {
     });
   });
 
+  $switchContactMode?.addEventListener("click", () => {
+    contactMode = contactMode === "email" ? "phone" : "email";
+    updateContactMode();
+  });
 
+  $contactInput?.addEventListener("input", () => {
+    validateContactInput();
+  });
+
+  $sendImgButton?.addEventListener("click", () => {
+    if (!$contactInput || $sendImgButton.disabled) return;
+
+    document.getElementById("afterSend")?.classList.remove("hidden");
+    $sendImgButton.classList.add("hidden");
+    document.getElementById("taken")?.classList.add("hidden");
+
+    const value = $contactInput.value.trim();
+
+    sendToPeer({
+      type: "saveCapturedImage",
+      contactMode,
+      contactValue: value,
+      featureMe: $featureInput?.checked === true,
+    });
+
+    window.setTimeout(() => {
+      showScreen("home");
+
+      // reset the send screen for next time
+      document.getElementById("afterSend")?.classList.add("hidden");
+      document.getElementById("taken")?.classList.remove("hidden");
+      $sendImgButton.classList.remove("hidden");
+
+      resetContactForm();
+    }, 4000);
+  });
+
+  $contactInput?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      closeKeyboard();
+    }
+  });
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      const target = event.target as HTMLElement;
+
+      const tappedInput = target.closest("#contactInput");
+      const tappedContactField = target.closest("#contactField");
+      const tappedSwitchButton = target.closest("#switchContactMode");
+
+      if (!tappedInput && !tappedContactField && !tappedSwitchButton) {
+        closeKeyboard();
+      }
+    },
+    true
+  );
+}
+
+
+/* check activity */ 
+
+function clearInactivityTimer() {
+  if (inactivityTimeoutId !== null) {
+    window.clearTimeout(inactivityTimeoutId);
+    inactivityTimeoutId = null;
+  }
+}
+
+function startInactivityTimer() {
+  clearInactivityTimer();
+
+  // Do not count inactivity on connect/start screen
+  if (currentScreen === "connect" || currentScreen === "start") {
+    return;
+  }
+
+  inactivityTimeoutId = window.setTimeout(() => {
+    goBackToStartBecauseInactive();
+  }, INACTIVITY_TIME);
+}
+
+function resetInactivityTimer() {
+  startInactivityTimer();
+}
+
+function goBackToStartBecauseInactive() {
+  console.log("No interaction, going back to start screen");
+
+  // If a capture was waiting/cancelling, cancel it on the desktop too
+  if (currentScreen === "picture") {
+    sendToPeer({
+      type: "cancelImage",
+    });
+
+    switchCameraBack();
+  }
+
+  // Reset picture taken/send UI
+  document.getElementById("afterSend")?.classList.add("hidden");
+  document.getElementById("taken")?.classList.remove("hidden");
+  $sendImgButton?.classList.remove("hidden");
+
+  if ($takenImage) {
+    $takenImage.removeAttribute("src");
+  }
+
+  resetContactForm();
+
+  // Go back to "tap to start"
+  showScreen("start");
+}
+
+function closeKeyboard() {
+  if ($contactInput) {
+    $contactInput.blur();
+  }
+
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur();
+  }
 }
 
 

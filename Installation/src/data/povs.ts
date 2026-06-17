@@ -1,7 +1,6 @@
 export type ExtraAccessory = {
   id: string;
   label: string;
-  icon?: string;
 };
 
 export type BackgroundOption = {
@@ -10,30 +9,40 @@ export type BackgroundOption = {
   preview?: string;
 };
 
+export type PovText = {
+  before: string;
+  green: string;
+  after?: string;
+};
+
 export type Pov = {
   id: string;
   name: string;
   lensId: string;
-  povText: string;
+  povText: PovText;
   extraAccessories: ExtraAccessory[];
   backgrounds: BackgroundOption[];
   routeLabel: string;
 };
+
 
 export const POVS: Pov[] = [
   {
     id: "main-character",
     name: "Main character",
     lensId: import.meta.env.VITE_LENS_ID_1,
-    povText: "You are the main character",
+    povText: {
+      before: "You are the ",
+      green: "main character",
+    },
     extraAccessories: [
-      { id: "spotlight", label: "Spotlight" },
-      { id: "sjerp", label: "Sjerp" },
+      { id: "spotlight", label: "Medaillon" },
+      { id: "sjerp", label: "Confidence meter" },
     ],
     backgrounds: [
-      { id: "bg1", label: "bg1 name" },
-      { id: "bg2", label: "bg2 name" },
-      { id: "bg3", label: "bg3 name" },
+      { id: "bg1", label: "Zurenborg", preview:"main-character-zurenborg" },
+      { id: "bg2", label: "View on MAS", preview:"main-character-mas" },
+      { id: "bg3", label: "Cozy street", preview: "main-character-cozystreet" },
     ],
     routeLabel: "Main-character",
   },
@@ -41,15 +50,18 @@ export const POVS: Pov[] = [
     id: "raver",
     name: "Raver",
     lensId: import.meta.env.VITE_LENS_ID_2,
-    povText: "You like Antwerp techno raves",
+    povText: {
+      before: "You like Antwerp ",
+      green: "raves",
+    },
     extraAccessories: [
-      { id: "fanny", label: "Fanny pack" },
-      { id: "glitter", label: "Face flitter" },
+      { id: "bracelets", label: "Bracelets" },
+      { id: "energy", label: "Energy drink" },
     ],
     backgrounds: [
-      { id: "bg1", label: "bg1 name" },
-      { id: "bg2", label: "bg2 name" },
-      { id: "bg3", label: "bg3 name" },
+      { id: "bg1", label: "Rave", preview: "raver-rave" },
+      { id: "bg2", label: "Cafe", preview: "raver-cafe" },
+      { id: "bg3", label: "Festival", preview: "raver-festival" },
     ],
     routeLabel: "Nightlife",
   },
@@ -57,15 +69,18 @@ export const POVS: Pov[] = [
     id: "fashionista",
     name: "Fashionista",
     lensId: import.meta.env.VITE_LENS_ID_3,
-    povText: "You are Antwerps biggest fashionista.",
+    povText: {
+      before: "You are an Antwerp ",
+      green: "fashionista",
+    },
     extraAccessories: [
       { id: "earrings", label: "Earrings" },
-      { id: "broche", label: "Broche" },
+      { id: "bracelet", label: "Bracelet" },
     ],
     backgrounds: [
-      { id: "bg1", label: "bg1 name" },
-      { id: "bg2", label: "bg2 name" },
-      { id: "bg3", label: "bg3 name" },
+      { id: "bg1", label: "Catwalk", preview: "fashionista-catwalk" },
+      { id: "bg2", label: "Meir", preview: "fashionista-meir" },
+      { id: "bg3", label: "Fitting room", preview: "fashionista-fittingroom" },
     ],
     routeLabel: "Fashion",
   },
