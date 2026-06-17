@@ -693,11 +693,6 @@ body {
   outline-offset: 0.2rem;
 }
 
-/* .contactField.is-invalid {
-  outline: 0.25rem solid #ff4f6d;
-  outline-offset: 0.2rem;
-} */
-
 .contactError {
   margin-top: 0.6rem;
 
@@ -731,12 +726,12 @@ body {
   background-position: center;
 }
 
-.imgInfo__label--instagram::after {
-  background-image: url("../assets/remote/insta.svg");
+.imgInfo__label--phone::after {
+  background-image: url("../assets/remote/phone-icon.svg");
 }
 
 .imgInfo__label--email::after {
-  background-image: url("../assets/remote/email.svg");
+  background-image: url("../assets/remote/email-icon.svg");
 }
 
 /* after send */

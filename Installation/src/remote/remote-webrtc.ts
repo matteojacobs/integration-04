@@ -24,7 +24,7 @@ type RemoteToDesktopMessage =
     type: "cancelImage";
   } | {
     type: "saveCapturedImage";
-    contactMode: "instagram" | "email";
+    contactMode:"email" | "phone";
     contactValue: string;
     featureMe: boolean;
   };
@@ -72,9 +72,9 @@ let currentScreen: RemoteScreen = "connect";
 let currentPov: Pov | null = null;
 let currentLensState: LensState | null = null;
 
-type ContactMode = "instagram" | "email";
+type ContactMode = "email" | "phone";
+let contactMode: ContactMode = "email";
 
-let contactMode: ContactMode = "instagram";
 
 const $contactLabel = document.getElementById("contactLabel") as HTMLLabelElement | null;
 const $contactField = document.getElementById("contactField") as HTMLElement | null;
@@ -422,41 +422,53 @@ function updateContactMode() {
 
   $contactInput.value = "";
 
-  if (contactMode === "instagram") {
-    $contactLabel.classList.add("imgInfo__label--instagram");
-    $contactLabel.classList.remove("imgInfo__label--email");
-    $contactLabel.textContent = "Instagram Username";
-    $contactInput.type = "text";
-    $contactInput.name = "instagram";
-    $contactInput.placeholder = "";
-    $contactInput.minLength = 1;
-    $contactInput.maxLength = 30;
-
-    $contactPrefix.classList.remove("hidden");
-    $switchContactMode.textContent = "send it to me via e-mail instead!";
-  }
-
   if (contactMode === "email") {
-    $contactLabel.classList.remove("imgInfo__label--instagram");
     $contactLabel.classList.add("imgInfo__label--email");
+    $contactLabel.classList.remove("imgInfo__label--phone");
+
     $contactLabel.textContent = "E-mail address";
+
     $contactInput.type = "email";
     $contactInput.name = "email";
     $contactInput.placeholder = "you@example.com";
+    $contactInput.inputMode = "email";
     $contactInput.removeAttribute("minlength");
     $contactInput.maxLength = 80;
 
     $contactPrefix.classList.add("hidden");
-    $switchContactMode.textContent = "send it via Instagram instead!";
+    $contactPrefix.textContent = "";
+
+    $switchContactMode.textContent = "send it to my number instead!";
+  }
+
+  if (contactMode === "phone") {
+    $contactLabel.classList.remove("imgInfo__label--email");
+    $contactLabel.classList.add("imgInfo__label--phone");
+
+    $contactLabel.textContent = "Phone number";
+
+    $contactInput.type = "tel";
+    $contactInput.name = "phone";
+    $contactInput.placeholder = "+32 4 12 34 56 78";
+    $contactInput.inputMode = "tel";
+    $contactInput.minLength = 8;
+    $contactInput.maxLength = 20;
+
+    $contactPrefix.classList.add("hidden");
+    $contactPrefix.textContent = "";
+
+    $switchContactMode.textContent = "send it by e-mail instead!";
   }
 
   validateContactInput();
 }
 
-function isValidInstagramUsername(value: string) {
-  // simple Instagram-style validation:
-  // letters, numbers, underscores and dots, max 30 characters
-  return /^[a-zA-Z0-9._]{1,30}$/.test(value);
+function isValidPhoneNumber(value: string) {
+  // Allows +, spaces, brackets and dashes.
+  // Then checks if there are enough digits.
+  const cleanedValue = value.replace(/[^\d]/g, "");
+
+  return cleanedValue.length >= 8 && cleanedValue.length <= 15;
 }
 
 function validateContactInput() {
@@ -468,16 +480,6 @@ function validateContactInput() {
   let isValid = false;
   let errorText = "";
 
-  if (contactMode === "instagram") {
-    isValid = isValidInstagramUsername(value);
-
-    if (!value) {
-      errorText = "Please fill in your Instagram username.";
-    } else {
-      errorText = "Use only letters, numbers, dots or underscores.";
-    }
-  }
-
   if (contactMode === "email") {
     isValid = value.length > 0 && $contactInput.checkValidity();
 
@@ -485,6 +487,16 @@ function validateContactInput() {
       errorText = "Please fill in your e-mail address.";
     } else {
       errorText = "Please fill in a valid e-mail address.";
+    }
+  }
+
+  if (contactMode === "phone") {
+    isValid = isValidPhoneNumber(value);
+
+    if (!value) {
+      errorText = "Please fill in your phone number.";
+    } else {
+      errorText = "Please fill in a valid phone number.";
     }
   }
 
@@ -524,7 +536,7 @@ function startNewCapture() {
 }
 
 function resetContactForm() {
-  contactMode = "instagram";
+  contactMode = "email";
 
   if ($featureInput) {
     $featureInput.checked = false;
@@ -579,7 +591,7 @@ const checkButtons = () => {
   });
 
   $switchContactMode?.addEventListener("click", () => {
-    contactMode = contactMode === "instagram" ? "email" : "instagram";
+    contactMode = contactMode === "email" ? "phone" : "email";
     updateContactMode();
   });
 
@@ -599,7 +611,7 @@ const checkButtons = () => {
     sendToPeer({
       type: "saveCapturedImage",
       contactMode,
-      contactValue: contactMode === "instagram" ? `@${value}` : value,
+      contactValue: value,
       featureMe: $featureInput?.checked === true,
     });
   });

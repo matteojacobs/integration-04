@@ -29,7 +29,7 @@ type RemoteToDesktopMessage =
     type: "cancelImage";
   } | {
     type: "saveCapturedImage";
-    contactMode: "instagram" | "email";
+    contactMode: "email" | "phone";
     contactValue: string;
     featureMe: boolean;
   };
@@ -540,7 +540,7 @@ function drawPixelStrip(
 
 async function saveCapturedImageToDatabase(message: {
   type: "saveCapturedImage";
-  contactMode: "instagram" | "email";
+  contactMode: "email" | "phone";
   contactValue: string;
   featureMe: boolean;
 }) {
