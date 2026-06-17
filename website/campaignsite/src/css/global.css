@@ -1,13 +1,49 @@
+@font-face {
+    font-family: "AntwerpRegular";
+    src: url(../assets/fonts/Antwerpen-Regular.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "AntwerpSmallCapsRegular";
+    src: url(../assets/fonts/AntwerpenSmallCaps-Regular.woff2);
+}
+
+@font-face {
+    font-family: "AntwerpTall";
+    src: url(../assets/fonts/AntwerpenTall-Tall.woff2);
+}
+
+@font-face {
+    font-family: "BacalarRegular";
+    src: url(../assets/fonts/bacalartest-regular.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "SunAntwerpen";
+    src: url(../assets/fonts/SunAntwerpen_500.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "SunAntwerpen";
+    src: url(../assets/fonts/SunAntwerpen_700.woff2);
+    font-weight: 700;
+}
+
 :root {
     /* Colors */
     --color-primary: #545CAB;
     --color-dark: #1E1E1E;
+    --color-black: #161616;
     --color-accent-green: #B7EA63;
     --color-accent-pink: #FF70E8;
     --color-blue: #545CAB;
     --color-light-text: whitesmoke;
     --color-light-text-alt: antiquewhite;
     --color-white: white;
+    --bg-black: #1e1e1e;
 
     /* Spacing */
     --space-xs: 0.5rem;
@@ -16,7 +52,13 @@
     --space-l: 5rem;
     --space-xl: 5rem;
 
+
     /* Font Variables */
+    --font-size-s: 1.25rem;
+    --font-size-m: 2.25rem;
+    --font-size-l: 3.125rem;
+    --font-size-xl: 8rem;
+
     --font-family-serif: var(--font-family-serif);
 }
 
@@ -31,13 +73,13 @@ html {
 }
 
 body {
-    font-family: var(--font-family-serif);
+    font-family: "SunAntwerpen";
+    font-weight: 500;
     line-height: 1.5;
     /* padding: var(--space-l) var(--space-s) var(--space-s); */
     color: var(--color-grey);
     background: var(--color-background);
 }
-
 
 img,
 Image {
@@ -49,10 +91,18 @@ Image {
     display: none;
 }
 
+.container {
+    width: 100%;
+    max-width: 77.5rem;
+}
+
 /* Navigation */
+.nav {
+    background: var(--color-dark);
+}
+
 .nav__list {
-    margin-top: var(--space-xl);
-    position: absolute;
+    padding: 3rem 2rem;
     display: flex;
     flex-flow: row nowrap;
     justify-self: center;
@@ -63,6 +113,7 @@ Image {
 .nav__item--active {}
 
 .nav__link {
+    font-family: "AntwerpRegular";
     background: var(--color-primary);
     padding: var(--space-xs) var(--space-xl);
     text-decoration: none;
@@ -71,7 +122,7 @@ Image {
 }
 
 .nav__link--active {
-    background: var(--color-dark);
+    background: var(--color-black);
     color: var(--color-accent-green);
 }
 
@@ -89,9 +140,11 @@ Image {
 }
 
 .hero__title {
+    font-family: "BacalarRegular";
     font-size: 6.7rem;
     color: var(--color-light-text-alt);
     grid-area: 1/1/1/1;
+    text-align: center;
 }
 
 .hero__bottom {
@@ -105,6 +158,10 @@ Image {
     background: var(--color-dark);
 }
 
+.carousel__content {
+    display: grid;
+}
+
 .hero__carousel {
     grid-area: 1/1/1/1;
     width: 100%;
@@ -115,15 +172,78 @@ Image {
 
 .hero__image {
     grid-area: 1/1/1/1;
-    width: 100%;
     height: auto;
     overflow: hidden;
     display: none;
     transition: all 250ms;
+    height: 100%;
+}
+
+.hero__image--side {
+    grid-area: 1/1/1/1;
+    justify-self: end;
+    height: 100%;
+    width: auto;
+    height: 100%;
+    padding: 0;
+    translate: 0.1rem;
 }
 
 .hero__image--active {
     display: block;
+}
+
+.hero__side {
+    background: var(--color-white);
+    display: grid;
+    place-items: center;
+    padding: 2rem 4rem;
+}
+
+.side__title {
+    font-size: var(--space-l);
+    font-family: "Bacalar";
+}
+
+.side__text {
+    font-size: var(--space-m);
+    text-align: center;
+    font-family: "AntwerpRegular";
+}
+
+.side__text--highlight {
+    color: var(--color-blue);
+}
+
+.side__top {
+    display: flex;
+    flex-flow: column nowrap;
+    place-items: center;
+}
+
+.side__bottom {
+    display: flex;
+    flex-flow: column nowrap;
+    place-items: center;
+}
+
+.hero__content {
+    display: flex;
+}
+
+.hero__button {
+    background: var(--color-accent-pink);
+    padding: var(--space-xs) var(--space-m);
+    text-decoration: none;
+    max-width: 20rem;
+    font-size: 1.5rem;
+    color: var(--color-dark);
+    font-family: "AntwerpRegular";
+}
+
+.button__subtext {
+    font-family: "SunAntwerpen";
+    font-weight: 500;
 }
 
 .carousel__nav {
@@ -133,7 +253,7 @@ Image {
     grid-area: 1/1/1/1;
     justify-self: center;
     align-items: end;
-    margin-bottom: 10.5rem;
+    margin-bottom: 4rem;
 }
 
 .carousel__dot {
@@ -164,38 +284,150 @@ Image {
 }
 
 .intro__title {
-    font-size: 3.5rem;
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-l);
     color: var(--color-light-text);
+    text-align: center;
 }
 
 .intro__title--highlight {
     color: var(--color-accent-pink);
 }
 
-.intro__subtitle {
-    font-size: 1.75rem;
-}
-
 .intro__text {
     color: var(--color-light-text);
-    max-width: 55ch;
-    font-size: 1.25rem;
+    max-width: 55rem;
+    font-size: var(--font-size-s);
+    align-self: center;
+    font-family: "SunAntwerpen";
+    font-weight: 500;
 }
 
 .intro__button {
     text-align: center;
+    border-color: #B7EA63;
+    border-width: 0.125rem;
+    border-style: solid;
+    background: transparent;
+    align-self: center;
 }
 
-/* Meet POVS */
-.meet {}
-
-.meet__title {
-    font-size: 3.5rem;
-    color: var(--color-dark);
+/* From screen to citytrip ah */
+.citytrip {
+    place-items: center;
 }
 
-.meet__title--highlight {
+.citytrip__content {
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    padding: 5rem 0;
+}
+
+.citytrip__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-l);
+}
+
+.citytrip__subtitle {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-m);
+}
+
+.citytrip__title--highlight {
     color: var(--color-blue);
+}
+
+.citytrip__text {
+    font-family: "SunAntwerpen";
+    font-weight: 500;
+    font-size: var(--font-size-s);
+    max-width: 34rem;
+}
+
+.citytrip__steps {
+    display: flex;
+    gap: var(--space-l);
+    align-items: end;
+    padding: 1rem 0;
+}
+
+.citytrip__step {
+    align-items: end;
+}
+
+.step__content {
+    display: grid;
+    place-items: center;
+    gap: 2rem;
+    color: var(--color-blue);
+    font-weight: 700;
+}
+
+/* Locations */
+.locations {
+    place-items: center;
+    background: var(--color-blue);
+    padding: 2rem 0;
+    display: grid;
+    gap: 2rem;
+}
+
+.locations__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-l);
+    color: var(--color-white);
+}
+
+.locations__list {
+    display: flex;
+    color: var(--color-white);
+    gap: var(--space-l);
+}
+
+.location {
+    place-items: center;
+}
+
+/* featured */
+.featured__pt1 {
+    display: grid;
+    padding: 2rem 0;
+    background: var(--color-dark);
+    color: var(--color-white);
+    gap: 2rem;
+    place-items: center;
+}
+
+.featured__pt2 {
+    display: grid;
+    padding: 0 0 0 0;
+    gap: 2rem;
+    place-items: center;
+}
+
+.featured_pt2 {
+    place-items: center;
+}
+
+.featured__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-l);
+    font-weight: 500;
+}
+
+.featured__subtitle {
+    font-family: "SunAntwerpen";
+    font-size: var(--font-size-s);
+    max-width: 55ch;
+    text-align: center;
+}
+
+.featured__more {
+    text-decoration: none;
+    color: var(--color-accent-green);
+    font-family: "AntwerpRegular";
+    font-weight: 500;
 }
 
 /* Footer */
@@ -210,6 +442,7 @@ Image {
 
 .footer__title {
     font-size: 6.7rem;
+    font-family: "BacalarRegular";
 }
 
 .footer__subtitle {}
@@ -243,4 +476,121 @@ Image {
     max-width: 20rem;
     font-size: 1.5rem;
     color: var(--color-dark);
+    font-family: "AntwerpRegular";
+}
+
+/* Things for the routes page */
+
+/* Routes Hero */
+.hero__routes {
+    display: grid;
+}
+
+.hero__title {
+    font-family: "BacalarRegular";
+    font-size: 8rem;
+    color: var(--color-white);
+    text-align: center;
+}
+
+.routes__content {
+    place-items: center;
+    color: var(--color-white);
+    background: var(--color-dark);
+    padding: 5rem 0;
+    gap: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.routes__subtitle {
+    font-family: "SunAntwerpen";
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: var(--font-size-s);
+    max-width: 55ch;
+    text-align: center;
+}
+
+/* Routes */
+.routes {
+    display: grid;
+    place-items: center;
+    padding: 2rem 0 0 0;
+}
+
+.routes__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-l);
+}
+
+.POV__list {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+    background: var(--color-dark);
+    padding: 2rem 0;
+    width: 100%;
+    justify-content: center;
+}
+
+.POV {
+    background: var(--color-blue);
+    color: var(--color-white);
+    padding: 0.5rem 5rem;
+}
+
+/* Routes maps povs */
+.POV__route {
+    background: var(--color-blue);
+    padding: 2rem 0;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--color-white);
+    gap: 5rem;
+}
+
+.POV__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-m);
+}
+
+.route__stats {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+}
+
+.route__buttons {
+    display: flex;
+    gap: 3rem;
+}
+
+.route__download {
+    background: var(--color-accent-green);
+    color: var(--color-dark);
+    padding: 0.1rem 3rem;
+}
+
+.route__save {
+    border: var(--color-white) 0.2rem solid;
+    color: var(--color-white);
+    padding: 0.1rem 3rem;
+}
+
+.route__button {
+    text-decoration: none;
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-s);
+}
+
+/* More information section, bottom */
+.information__button {
+    background: var(--color-blue);
+    color: var(--color-white);
+    text-decoration: none;
+    padding: 0.5rem 4rem;
+    font-size: var(--font-size-s);
+    font-family: "AntwerpRegular";
 }
