@@ -20,6 +20,11 @@ import { sendCurrentPovToRemote, setOnRemoteConnected } from "./script-webrtc";
 
 let cameraKit: CameraKit;
 let session: CameraKitSession;
+let serialPort: any = null;
+let serialReader: ReadableStreamDefaultReader<string> | null = null;
+
+let lastPedalTriggerTime = 0;
+const PEDAL_COOLDOWN = 600; // prevents double switching
 
 let currentIndex = 0;
 let isSwitching = false;
@@ -174,6 +179,92 @@ function setupKeyboardControls() {
   });
 }
 
+function setupPedalControls() {
+  const button = document.getElementById("connectPedalButton");
+
+  if (!button) {
+    console.warn("Connect pedal button not found");
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    connectPedal();
+  });
+}
+
+async function connectPedal() {
+  if (!("serial" in navigator)) {
+    alert("Web Serial is not supported in this browser. Use Chrome or Edge.");
+    return;
+  }
+
+  try {
+    serialPort = await (navigator as any).serial.requestPort();
+
+    await serialPort.open({
+      baudRate: 9600,
+    });
+
+    console.log("Pedal connected");
+
+    const textDecoder = new TextDecoderStream();
+
+    serialPort.readable.pipeTo(textDecoder.writable).catch((error: unknown) => {
+      console.error("Serial pipe error:", error);
+    });
+
+    serialReader = textDecoder.readable.getReader();
+
+    readPedalMessages();
+  } catch (error) {
+    console.error("Could not connect to pedal:", error);
+  }
+}
+
+async function readPedalMessages() {
+  if (!serialReader) return;
+
+  let buffer = "";
+
+  try {
+    while (true) {
+      const { value, done } = await serialReader.read();
+
+      if (done) break;
+      if (!value) continue;
+
+      buffer += value;
+
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+
+      for (const line of lines) {
+        const message = line.trim();
+
+        console.log("Pedal message:", message);
+
+        if (message === "1") {
+          await triggerPedalNextPov();
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error while reading pedal messages:", error);
+  }
+}
+
+async function triggerPedalNextPov() {
+  const now = Date.now();
+
+  if (now - lastPedalTriggerTime < PEDAL_COOLDOWN) {
+    return;
+  }
+
+  lastPedalTriggerTime = now;
+
+  await nextPov();
+}
+
 async function startApp() {
   await initCameraKit();
   await createCameraSession();
@@ -188,7 +279,8 @@ async function startApp() {
   await session.play();
   console.log('Session services:', (session as any).remoteApiServices);
 
-  setupKeyboardControls();
+  setupKeyboardControls(); //i'm keeping this to debug
+  setupPedalControls();
 }
 
 startApp().catch((error) => {

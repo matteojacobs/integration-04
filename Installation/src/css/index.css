@@ -136,3 +136,12 @@ body {
 .POV__text--green {
   color: var(--green-soft);
 }
+
+.connect-arduino{
+  border: none;
+  background-color: var(--green-soft);
+  padding: var(--sp-s);
+  font-family: 'sun antwerpen';
+  font-size: var(--text-s);
+  margin-bottom: var(--sp-xl);
+}
