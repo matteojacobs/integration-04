@@ -75,6 +75,9 @@ let currentLensState: LensState | null = null;
 type ContactMode = "email" | "phone";
 let contactMode: ContactMode = "email";
 
+const INACTIVITY_TIME = 30000; // 30 seconds
+let inactivityTimeoutId: number | null = null;
+
 
 const $contactLabel = document.getElementById("contactLabel") as HTMLLabelElement | null;
 const $contactField = document.getElementById("contactField") as HTMLElement | null;
@@ -282,6 +285,12 @@ function showScreen(screen: RemoteScreen) {
   });
 
   screens[screen]?.classList.remove("hidden");
+
+  if (screen === "connect" || screen === "start") {
+    clearInactivityTimer();
+  } else {
+    startInactivityTimer();
+  }
 }
 
 function renderCurrentPovControls() {
@@ -357,7 +366,7 @@ function renderBackgrounds() {
     }
 
     if (img) {
-      img.src = background.preview ?? "./src/assets/remote/placeholder.webp";
+      img.src = background.preview ?? "./src/assets/remote/meir.png";
       img.alt = background.label;
     }
 
@@ -391,8 +400,8 @@ function renderRoute() {
   let svg = qr.createSvgTag(5, 2);
 
   svg = svg
-    .replaceAll('fill="#000000"', 'fill="#4B6DD2"')
-    .replaceAll('fill="black"', 'fill="#4B6DD2"')
+    .replaceAll('fill="#000000"', 'fill="#829FF4"')
+    .replaceAll('fill="black"', 'fill="#829FF4"')
     .replaceAll('fill="#ffffff"', 'fill="#1E1E1E"')
     .replaceAll('fill="white"', 'fill="#1E1E1E"');
 
@@ -538,6 +547,18 @@ function resetContactForm() {
 }
 
 const checkButtons = () => {
+  document.addEventListener("pointerdown", () => {
+    resetInactivityTimer();
+  });
+
+  document.addEventListener("keydown", () => {
+    resetInactivityTimer();
+  });
+
+  document.addEventListener("input", () => {
+    resetInactivityTimer();
+  });
+  
   document.getElementById("screenStart")?.addEventListener("click", () => {
     showScreen("home");
   });
@@ -619,6 +640,60 @@ const checkButtons = () => {
     }, 4000);
   });
 
+}
+
+
+/* check activity */ 
+
+function clearInactivityTimer() {
+  if (inactivityTimeoutId !== null) {
+    window.clearTimeout(inactivityTimeoutId);
+    inactivityTimeoutId = null;
+  }
+}
+
+function startInactivityTimer() {
+  clearInactivityTimer();
+
+  // Do not count inactivity on connect/start screen
+  if (currentScreen === "connect" || currentScreen === "start") {
+    return;
+  }
+
+  inactivityTimeoutId = window.setTimeout(() => {
+    goBackToStartBecauseInactive();
+  }, INACTIVITY_TIME);
+}
+
+function resetInactivityTimer() {
+  startInactivityTimer();
+}
+
+function goBackToStartBecauseInactive() {
+  console.log("No interaction, going back to start screen");
+
+  // If a capture was waiting/cancelling, cancel it on the desktop too
+  if (currentScreen === "picture") {
+    sendToPeer({
+      type: "cancelImage",
+    });
+
+    switchCameraBack();
+  }
+
+  // Reset picture taken/send UI
+  document.getElementById("afterSend")?.classList.add("hidden");
+  document.getElementById("taken")?.classList.remove("hidden");
+  $sendImgButton?.classList.remove("hidden");
+
+  if ($takenImage) {
+    $takenImage.removeAttribute("src");
+  }
+
+  resetContactForm();
+
+  // Go back to "tap to start"
+  showScreen("start");
 }
 
 
