@@ -558,7 +558,7 @@ const checkButtons = () => {
   document.addEventListener("input", () => {
     resetInactivityTimer();
   });
-  
+
   document.getElementById("screenStart")?.addEventListener("click", () => {
     showScreen("home");
   });
@@ -640,6 +640,28 @@ const checkButtons = () => {
     }, 4000);
   });
 
+  $contactInput?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      closeKeyboard();
+    }
+  });
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      const target = event.target as HTMLElement;
+
+      const tappedInput = target.closest("#contactInput");
+      const tappedContactField = target.closest("#contactField");
+      const tappedSwitchButton = target.closest("#switchContactMode");
+
+      if (!tappedInput && !tappedContactField && !tappedSwitchButton) {
+        closeKeyboard();
+      }
+    },
+    true
+  );
 }
 
 
@@ -694,6 +716,16 @@ function goBackToStartBecauseInactive() {
 
   // Go back to "tap to start"
   showScreen("start");
+}
+
+function closeKeyboard() {
+  if ($contactInput) {
+    $contactInput.blur();
+  }
+
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur();
+  }
 }
 
 
