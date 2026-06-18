@@ -11,7 +11,7 @@ export default defineConfig({
       },
     ],
   },
-  site: 'https://matteojacobs.github.io/integration-04/',
-  base: '/',
+  site: 'https://matteojacobs.github.io',
+  base: '/integration-04',
 });
 import { defineConfig } from 'astro/config';
