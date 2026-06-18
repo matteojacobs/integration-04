@@ -60,6 +60,10 @@
     --font-size-xl: 8rem;
 
     --font-family-serif: var(--font-family-serif);
+
+    /* Utopia Steps */
+    --step-0-h1: clamp(3.8125rem, 2.2407rem + 6.3992vw, 8rem);
+    --step-0-h2: clamp(2.625rem, 2.32rem + 1.2416vw, 3.4375rem);
 }
 
 html {
@@ -93,7 +97,7 @@ Image {
 
 .container {
     width: 100%;
-    max-width: 77.5rem;
+    max-width: 15rem;
 }
 
 /* Navigation */
@@ -139,7 +143,7 @@ Image {
 
 .hero__title {
     font-family: "BacalarRegular";
-    font-size: 6.7rem;
+    font-size: var(--step-0-h1);
     color: var(--color-light-text-alt);
     grid-area: 1/1/1/1;
     text-align: center;
@@ -285,7 +289,7 @@ Image {
 
 .intro__title {
     font-family: "AntwerpRegular";
-    font-size: var(--font-size-l);
+    font-size: var(--step-0-h2);
     color: var(--color-light-text);
     text-align: center;
 }
@@ -357,7 +361,7 @@ Image {
 
 .citytrip__title {
     font-family: "AntwerpRegular";
-    font-size: var(--space-l);
+    font-size: var(--step-0-h2);
 }
 
 .citytrip__subtitle {
@@ -401,15 +405,17 @@ Image {
     place-items: center;
     background: var(--color-blue);
     padding: 2rem 0;
-    display: grid;
+    display: flex;
+    flex-flow: column nowrap;
     gap: 2rem;
     overflow: hidden;
 }
 
 .locations__title {
     font-family: "AntwerpRegular";
-    font-size: var(--font-size-l);
+    font-size: var(--step-0-h2);
     color: var(--color-white);
+    text-align: center;
 }
 
 .locations__list {
@@ -445,8 +451,15 @@ Image {
 
 .featured__title {
     font-family: "AntwerpRegular";
-    font-size: var(--font-size-l);
+    font-size: var(--step-0-h2);
     font-weight: 500;
+    text-align: center;
+}
+
+.featured__content {
+    display: grid;
+    place-items: center;
+    gap: 2rem;
 }
 
 .featured__title--highlight {
@@ -518,15 +531,16 @@ Image {
 /* Footer */
 .footer {
     display: flex;
+    place-items: center;
     flex-flow: column nowrap;
     gap: var(--space-m);
-    padding: var(--space-s) var(--space-l);
     background: var(--color-dark);
     color: var(--color-light-text);
+    padding: 2rem 0;
 }
 
 .footer__title {
-    font-size: 6.7rem;
+    font-size: var(--step-0-h1);
     font-family: "BacalarRegular";
 }
 
@@ -573,7 +587,7 @@ Image {
 
 .hero__title {
     font-family: "BacalarRegular";
-    font-size: 8rem;
+    font-size: var(--step-0-h1);
     color: var(--color-white);
     text-align: center;
 }
@@ -606,7 +620,7 @@ Image {
 
 .routes__title {
     font-family: "AntwerpRegular";
-    font-size: var(--font-size-l);
+    font-size: var(--step-0-h2);
 }
 
 .POV__list {
@@ -681,12 +695,7 @@ Image {
 }
 
 /* Media queries, responsive design */
-@media screen and (max-width: 24rem) {
-
-    /* Hero stuff */
-    .hero__title {
-        font-size: 3rem;
-    }
+@media screen and (min-width: 24rem) {
 
     /* featured */
     .featured__submissions {
@@ -697,12 +706,33 @@ Image {
         overflow: hidden;
     }
 
-    /* Footer stuff */
-    .footer__title {
-        font-size: 3rem;
-    }
-
     .container {
         max-width: 20rem;
+    }
+}
+
+@media screen and (min-width: 36rem) {
+
+    .container {
+        max-width: 32rem;
+    }
+}
+
+@media screen and (min-width: 50rem) {
+
+    .container {
+        max-width: 42rem;
+    }
+}
+
+@media screen and (min-width: 75rem) {
+    .container {
+        max-width: 70rem;
+    }
+}
+
+@media screen and (min-width: 90rem) {
+    .container {
+        max-width: 85rem;
     }
 }
