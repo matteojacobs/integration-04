@@ -1,3 +1,8 @@
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const handleToggleHero = () => {
     let $heroImg = document.querySelectorAll('.hero__image');
     let $carouselDot = document.querySelectorAll('.carousel__dot');

@@ -1,0 +1,39 @@
+---
+import { supabase } from "../../db/supabase";
+
+import { Image } from "astro:assets";
+
+const { data, error } = await supabase
+    .from("photo_submissions")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+console.log("photo_submissions query", { data, error });
+
+const photoSubmissions = data ?? [];
+---
+
+{
+    photoSubmissions.map((submission) => (
+        <li class="submission__card">
+            <article class="submission">
+                <h3 class="visually-hidden">{submission.pov_id}</h3>
+                <Image
+                    class="submission__image"
+                    src={`${import.meta.env.STORAGE_URL}${submission.decorated_image_path}`}
+                    alt="hey"
+                    decoding="async"
+                    loading="lazy"
+                    inferSize="true"
+                    format="avif"
+                />
+                <div class="submission__details">
+                    <p class="submission__date">{submission.created_at}</p>
+                    <p class="submission__location">
+                        {submission.capture_location}
+                    </p>
+                </div>
+            </article>
+        </li>
+    ))
+}

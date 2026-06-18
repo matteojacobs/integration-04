@@ -7,66 +7,9 @@ import Locations from "../components/Locations.astro";
 import FeaturedPovs from "../components/FeaturedPovs.astro";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-import { supabase } from "../db/supabase";
-
-import { Image } from "astro:assets";
-
-const { data, error } = await supabase
-	.from("photo_submissions")
-	.select("*")
-	.order("created_at", { ascending: false });
-
-console.log("photo_submissions query", { data, error });
-
-const photoSubmissions = data ?? [];
 ---
 
 <BaseLayout>
-	<script is:inline define:vars={{ photoSubmissions, error }}>
-		console.log("photo_submissions", { photoSubmissions, error });
-	</script>
-
-	<section>
-		<h2>Photo submissions</h2>
-		{
-			error ? (
-				<p>Failed to load photo submissions.</p>
-			) : photoSubmissions.length ? (
-				<ul>
-					{photoSubmissions.map((submission) => (
-						<li>
-							<p>
-								<strong>{submission.pov_id}</strong>
-							</p>
-							<Image
-								src={`${import.meta.env.STORAGE_URL}${submission.decorated_image_path}`}
-								alt="hey"
-								decoding="async"
-								loading="lazy"
-								inferSize
-								format="avif"
-							/>
-							<p>
-								Decorated image: {import.meta.env.STORAGE_URL}
-								{submission.decorated_image_path}
-							</p>
-							<p>Clean image: {submission.clean_image_path}</p>
-							<p>Contact mode: {submission.contact_mode}</p>
-							<p>Contact value: {submission.contact_value}</p>
-							<p>
-								Feature me:{" "}
-								{submission.feature_me ? "Yes" : "No"}
-							</p>
-						</li>
-					))}
-				</ul>
-			) : (
-				<p>No photo submissions found.</p>
-			)
-		}
-	</section>
-
 	<Hero />
 	<Intro />
 	<Citytrip />
