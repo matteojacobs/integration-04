@@ -331,6 +331,7 @@ Image {
 
 .pov__card {
     background: var(--color-white);
+    max-width: 20rem;
 }
 
 .pov__content {
@@ -631,6 +632,7 @@ Image {
     padding: 2rem 0;
     width: 100%;
     justify-content: center;
+    overflow: hidden;
 }
 
 .POV {
@@ -655,33 +657,57 @@ Image {
     font-size: var(--space-m);
 }
 
+.povroute__content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3rem;
+    align-items: center;
+}
+
 .route__stats {
     display: flex;
     flex-flow: row nowrap;
     gap: 5rem;
 }
 
+.stat__list{
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+}
+
+.stat__info{
+    color: var(--color-accent-green);
+    font-family: "AntwerpRegular";
+}
+
 .route__buttons {
     display: flex;
-    gap: 3rem;
+    flex-flow: column nowrap;
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
 }
 
 .route__download {
+    border: var(--color-accent-green) 0.2rem solid;
     background: var(--color-accent-green);
     color: var(--color-dark);
-    padding: 0.1rem 3rem;
 }
 
 .route__save {
     border: var(--color-white) 0.2rem solid;
     color: var(--color-white);
-    padding: 0.1rem 3rem;
 }
 
 .route__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
     font-family: "AntwerpRegular";
     font-size: var(--font-size-s);
+    padding: 0.75rem 0;
 }
 
 /* More information section, bottom */
@@ -712,9 +738,16 @@ Image {
 }
 
 @media screen and (min-width: 36rem) {
-
     .container {
         max-width: 32rem;
+    }
+
+    /* POVS */
+    .route__buttons {
+        flex-flow: row nowrap;
+    }
+    .route__button{
+        padding: 0.75rem 2rem;
     }
 }
 
