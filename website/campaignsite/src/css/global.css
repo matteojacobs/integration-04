@@ -99,6 +99,7 @@ Image {
 /* Navigation */
 .nav {
     background: var(--color-dark);
+    overflow: hidden;
 }
 
 .nav__list {
@@ -133,9 +134,6 @@ Image {
 .hero {
     height: 100vh;
     background: var(--color-dark);
-    display: grid;
-    grid-template-columns: 1/1/1/1;
-    grid-template-rows: 1/1/1/1;
     overflow: hidden;
 }
 
@@ -273,7 +271,9 @@ Image {
 
 /* Intro thingies */
 .intro {
-    padding: var(--space-l) var(--space-l);
+    display: grid;
+    place-items: center;
+    padding: 2rem 0;
     background: var(--color-dark);
 }
 
@@ -310,6 +310,37 @@ Image {
     border-style: solid;
     background: transparent;
     align-self: center;
+    font-family: "AntwerpRegular";
+    font-weight: 500;
+    color: var(--color-accent-green);
+    text-decoration: none;
+    padding: 0.5rem 2rem;
+    box-shadow: 0.2rem 0.3rem var(--color-accent-green);
+    transition: all 250ms ease-in;
+}
+
+.intro__button:hover {
+    background: var(--color-accent-green);
+    color: var(--color-black);
+    box-shadow: 0rem 0rem var(--color-accent-green);
+}
+
+.pov__card {
+    background: var(--color-white);
+}
+
+.pov__content {
+    display: grid;
+    place-items: center;
+}
+
+.pov__bottom {
+    background: var(--color-accent-green);
+    padding: 1rem;
+}
+
+.pov__text {
+    text-align: center;
 }
 
 /* From screen to citytrip ah */
@@ -350,6 +381,7 @@ Image {
     gap: var(--space-l);
     align-items: end;
     padding: 1rem 0;
+    overflow: hidden;
 }
 
 .citytrip__step {
@@ -371,6 +403,7 @@ Image {
     padding: 2rem 0;
     display: grid;
     gap: 2rem;
+    overflow: hidden;
 }
 
 .locations__title {
@@ -390,13 +423,17 @@ Image {
 }
 
 /* featured */
+.featured {}
+
 .featured__pt1 {
-    display: grid;
+    display: flex;
+    flex-flow: column;
     padding: 2rem 0;
     background: var(--color-dark);
     color: var(--color-white);
     gap: 2rem;
     place-items: center;
+    overflow: hidden;
 }
 
 .featured__pt2 {
@@ -406,14 +443,14 @@ Image {
     place-items: center;
 }
 
-.featured_pt2 {
-    place-items: center;
-}
-
 .featured__title {
     font-family: "AntwerpRegular";
     font-size: var(--font-size-l);
     font-weight: 500;
+}
+
+.featured__title--highlight {
+    color: var(--color-accent-pink);
 }
 
 .featured__subtitle {
@@ -428,6 +465,54 @@ Image {
     color: var(--color-accent-green);
     font-family: "AntwerpRegular";
     font-weight: 500;
+}
+
+.featured__scroll {
+    overflow-x: scroll;
+    width: 100%;
+}
+
+.featured__submissions {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: max-content;
+    overflow: hidden;
+}
+
+.submission__card {
+    flex-shrink: 0;
+    width: 320px;
+}
+
+.featured__submissions {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.submission {
+    display: grid;
+    gap: 2rem;
+}
+
+.submission__image {
+    box-shadow: 0.5rem 0.75rem #B7EA63;
+}
+
+.submission__details {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.submission__details {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0 2rem;
 }
 
 /* Footer */
@@ -593,4 +678,31 @@ Image {
     padding: 0.5rem 4rem;
     font-size: var(--font-size-s);
     font-family: "AntwerpRegular";
+}
+
+/* Media queries, responsive design */
+@media screen and (max-width: 24rem) {
+
+    /* Hero stuff */
+    .hero__title {
+        font-size: 3rem;
+    }
+
+    /* featured */
+    .featured__submissions {
+        overflow: hidden;
+    }
+
+    .featured__submissions {
+        overflow: hidden;
+    }
+
+    /* Footer stuff */
+    .footer__title {
+        font-size: 3rem;
+    }
+
+    .container {
+        max-width: 20rem;
+    }
 }

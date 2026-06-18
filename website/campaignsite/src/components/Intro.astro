@@ -1,22 +1,24 @@
 ---
-import POVCard from "./POVCard.astro";
+import POVCard from "./cards/POVCard.astro";
 ---
 
 <section class="intro">
-    <div class="intro__content">
-        <h2 class="intro__title">
-            One <span class="intro__title--highlight">city</span>, different <span
-                class="intro__title--highlight">perspectives</span
-            >
-        </h2>
-        <p class="intro__text">
-            Antwerp is full of clichés: arrogant locals, fashion people, ravers,
-            rich kids, shoppers and culture types. We use these stereotypes as
-            starting points, then twist them into routes that reveal hidden
-            sides of the city.
-        </p>
-        <POVCard />
-        <a class="intro__button button" href="">View matching routes</a>
+    <div class="container">
+        <div class="intro__content">
+            <h2 class="intro__title">
+                One <span class="intro__title--highlight">city</span>, different <span
+                    class="intro__title--highlight">perspectives</span
+                >
+            </h2>
+            <p class="intro__text">
+                Antwerp is full of clichés: arrogant locals, fashion people, ravers,
+                rich kids, shoppers and culture types. We use these stereotypes as
+                starting points, then twist them into routes that reveal hidden
+                sides of the city.
+            </p>
+            <POVCard />
+            <a class="intro__button" href="">View matching routes</a>
+        </div>
     </div>
 </section>
 <svg
