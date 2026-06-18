@@ -1,13 +1,18 @@
+---
+import FeatureCard from "./cards/FeatureCard.astro";
+---
+
 <section class="featured">
     <div class="featured__pt1">
-        <h2 class="featured__title">Featured POVs</h2>
+        <h2 class="featured__title">
+            <span class="featured__title--highlight">Featured</span> POVs
+        </h2>
         <p class="featured__subtitle">
             Want to be featured on the website? Capture your POV at the
             installation and choose “feature me” after scanning your QR
         </p>
-        <ul>
-            <li>Item</li>
-            <li>Item</li>
+        <ul class="featured__submissions">
+            <FeatureCard client:load/>
         </ul>
         <a class="information__button" href="">Visit Antwerp →</a>
     </div>
