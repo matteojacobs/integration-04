@@ -3,6 +3,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const routes = document.querySelectorAll(".pov__name");
+console.log(routes);
+
 const handleToggleHero = () => {
     let $heroImg = document.querySelectorAll('.hero__image');
     let $carouselDot = document.querySelectorAll('.carousel__dot');
@@ -30,9 +33,16 @@ const handleToggleHero = () => {
     }, 2500);
 }
 
+const handleToggleRoute = (e) => {
+    console.log(e);
+}
+
 const init = () => {
     console.log("hey");
-    handleToggleHero();
+    // handleToggleHero();
+    routes.forEach(route => {
+        route.addEventListener("click", handleToggleRoute);
+    })
 }
 
 init()

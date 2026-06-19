@@ -1,15 +1,21 @@
+---
+import { Image } from "astro:assets";
+import Route1 from "../../assets/routes/route_1.png";
+---
+
 <section class="routes">
-    <h2 class="routes__title">Choose your POV</h2>
-    <ul class="POV__list">
-        <li class="POV">Main Character</li>
-        <li class="POV">Main Character</li>
-        <li class="POV">Main Character</li>
-        <li class="POV">Main Character</li>
+    <h2 class="routes__title">→Choose your POV→</h2>
+    <ul class="pov__list">
+        <li class="pov__name">Fahsionista</li>
+        <li class="pov__name">Main Character</li>
+        <li class="pov__name">Raver</li>
     </ul>
     <article class="POV__route">
         <div class="container povroute__content">
             <h3 class="POV__title">The Main Character</h3>
             <!-- Image thingie -->
+            <Image src={Route1} alt="meow" />
+
             <ul class="route__stats">
                 <li class="route__stat">
                     <ul class="stat__list">
