@@ -108,28 +108,32 @@ Image {
 /* Navigation */
 .nav {
     background: var(--color-dark);
-    overflow: hidden;
+    padding: 2rem 0;
 }
 
 .nav__list {
-    padding: 3rem 2rem;
     display: flex;
     flex-flow: row nowrap;
     justify-self: center;
+    max-width: 22rem;
+    width: 100%;
 }
 
-.nav__item {}
-
-.nav__item--active {}
+.nav__item {
+    display: flex;
+    width: 100%;
+}
 
 .nav__link {
     font-family: "AntwerpRegular";
     background: var(--color-primary);
-    padding: var(--space-xs) var(--space-xl);
     text-decoration: none;
     color: var(--color-white);
     text-transform: uppercase;
     transition: all 250ms ease;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
 }
 
 .nav__link:hover {
@@ -284,7 +288,7 @@ Image {
 
 .pov__cards {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: space-around;
 }
 
@@ -321,59 +325,6 @@ Image {
 .pov__text {
     text-align: center;
     font-family: "SunAntwerpen";
-    font-weight: 700;
-}
-
-/* From screen to citytrip ah */
-.citytrip {
-    place-items: center;
-}
-
-.citytrip__content {
-    display: flex;
-    flex-flow: column;
-    gap: 2rem;
-    padding: 5rem 0;
-}
-
-.citytrip__title {
-    font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
-}
-
-.citytrip__subtitle {
-    font-family: "AntwerpRegular";
-    font-size: var(--space-m);
-}
-
-.citytrip__title--highlight {
-    color: var(--color-blue);
-}
-
-.citytrip__text {
-    font-family: "SunAntwerpen";
-    font-weight: 500;
-    font-size: var(--font-size-s);
-    max-width: 34rem;
-}
-
-.citytrip__steps {
-    display: flex;
-    gap: var(--space-l);
-    align-items: end;
-    padding: 1rem 0;
-    overflow: hidden;
-}
-
-.citytrip__step {
-    align-items: end;
-}
-
-.step__content {
-    display: grid;
-    place-items: center;
-    gap: 2rem;
-    color: var(--color-blue);
     font-weight: 700;
 }
 
@@ -442,17 +393,39 @@ Image {
     padding: 2rem 0;
 }
 
-.featured__pt2 {
-    display: grid;
-    padding: 0 0 0 0;
-    gap: 2rem;
-    place-items: center;
-}
-
 .featured__title {
     font-family: "AntwerpRegular";
     font-size: var(--step-0-h2);
     font-weight: 500;
+}
+
+.featured__title--highlight {
+    color: var(--color-accent-pink);
+}
+
+.featured__subtitle {
+    font-family: "SunAntwerpen";
+    font-size: var(--font-size-s);
+    max-width: 55ch;
+}
+
+.information {
+    display: grid;
+    padding: 0 0 0 0;
+    place-items: center;
+}
+
+.information__container {
+    display: grid;
+    place-items: center;
+    gap: 2rem;
+}
+
+.information__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--step-0-h2);
+    font-weight: 500;
+    text-align: center;
 }
 
 .featured__content {
@@ -461,11 +434,11 @@ Image {
     gap: 2rem;
 }
 
-.featured__title--highlight {
-    color: var(--color-accent-pink);
+.information__title--highlight {
+    color: var(--color-blue);
 }
 
-.featured__subtitle {
+.information__subtitle {
     font-family: "SunAntwerpen";
     font-size: var(--font-size-s);
     max-width: 55ch;
@@ -536,7 +509,7 @@ Image {
     gap: var(--space-m);
     background: var(--color-dark);
     color: var(--color-light-text);
-    padding: 2rem 0;
+    padding: 2rem 0 0 0;
 }
 
 .footer__title {
@@ -544,38 +517,66 @@ Image {
     font-family: "BacalarRegular";
 }
 
-.footer__subtitle {}
+.footer__subtitle {
+    font-family: "AntwerpRegular";
+    text-align: center;
+    font-size: 1rem;
+    translate: 0rem -1rem;
+}
+
+.footer__top {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 0 0 1rem 0;
+}
 
 .footer__bottom {
     display: flex;
+    flex-flow: column nowrap;
     justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
 }
 
 .footer__links {
     display: flex;
     flex-flow: column nowrap;
+    gap: 1rem;
+    align-items: center;
 }
 
 .footer__link {
     text-decoration: none;
     color: var(--color-light-text);
+    font-family: "AntwerpRegular";
 }
 
 .footer__socials {
     display: flex;
     flex-flow: row nowrap;
-    gap: var(--space-s);
+    gap: 2rem;
+}
+
+.footer__credits {
+    display: grid;
+    place-items: center;
+    background: var(--color-black);
+    width: 100%;
+    padding: .5rem 0;
+    font-size: .8rem
 }
 
 /* Utitlity classes */
 .button {
     background: var(--color-accent-green);
-    padding: var(--space-xs) var(--space-m);
+    padding: 0.1rem var(--space-m);
     text-decoration: none;
     max-width: 20rem;
     font-size: 1.5rem;
     color: var(--color-dark);
     font-family: "AntwerpRegular";
+    text-align: center;
 }
 
 /* Things for the routes page */
@@ -864,9 +865,22 @@ Image {
 }
 
 @media screen and (min-width: 50rem) {
+    .nav__list {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-self: center;
+        max-width: 35rem;
+        width: 100%;
+    }
 
     .container {
         max-width: 42rem;
+    }
+}
+
+@media screen and (min-width: 60rem) {
+    .container {
+        max-width: 55rem;
     }
 }
 

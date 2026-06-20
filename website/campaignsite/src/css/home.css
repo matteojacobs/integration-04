@@ -16,8 +16,8 @@
     justify-content: center;
     rotate: 4deg;
     gap: 2rem;
-    width: 120%;
-    translate: -5rem -8rem;
+    width: 160%;
+    translate: -8rem -8rem;
 }
 
 .hero__content {
@@ -45,9 +45,84 @@
     text-align: center;
 }
 
+.pov__cards {}
+
 /* Citytrip stuff */
 .citytrip__container {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: space-between;
+    align-items: center;
 }
+
+/* From screen to citytrip ah */
+.citytrip {
+    place-items: center;
+}
+
+.citytrip__content {
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    padding: 5rem 0;
+    width: 100%;
+}
+
+.citytrip__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--step-0-h2);
+}
+
+.citytrip__subtitle {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-m);
+}
+
+.citytrip__title--highlight {
+    color: var(--color-blue);
+}
+
+.citytrip__text {
+    font-family: "SunAntwerpen";
+    font-weight: 500;
+    font-size: var(--font-size-s);
+    max-width: 34rem;
+}
+
+.citytrip__steps {
+    display: flex;
+    gap: var(--space-l);
+    align-items: end;
+    padding: 1rem 0;
+    overflow: hidden;
+}
+
+.citytrip__step {
+    align-items: end;
+}
+
+.step__content {
+    display: grid;
+    place-items: center;
+    gap: 2rem;
+    color: var(--color-blue);
+    font-weight: 700;
+}
+
+/* Media queries, responsive design */
+@media screen and (min-width: 24rem) {}
+
+@media screen and (min-width: 36rem) {}
+
+@media screen and (min-width: 50rem) {
+    .citytrip__container {
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (min-width: 60rem) {}
+
+@media screen and (min-width: 75rem) {}
+
+@media screen and (min-width: 90rem) {}

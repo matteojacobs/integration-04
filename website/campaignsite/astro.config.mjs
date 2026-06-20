@@ -1,5 +1,7 @@
 // astro.config.mjs
 import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+
 
 export default defineConfig({
   image: {
@@ -13,5 +15,6 @@ export default defineConfig({
   },
   site: 'https://matteojacobs.github.io',
   base: '/integration-04',
+  integrations: [react()],
 });
 import { defineConfig } from 'astro/config';

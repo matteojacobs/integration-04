@@ -1,6 +1,16 @@
 ---
 import FeatureCard from "./cards/FeatureCard.astro";
 import Information from "./Information.astro";
+import RecentSubmissions from "../components/FeatureCardRecents";
+
+import { supabase } from "../db/supabase";
+
+const { data } = await supabase
+    .from("photo_submissions")
+    .select("*")
+    .eq("feature_me", true)
+    .order("created_at", { ascending: false })
+    .limit(4);
 ---
 
 <section class="featured">
@@ -14,7 +24,7 @@ import Information from "./Information.astro";
                 installation and choose “feature me” after scanning your QR
             </p>
             <ul class="featured__submissions">
-                <FeatureCard client:load />
+                <RecentSubmissions client:load initialData={data ?? []} />
             </ul>
         </div>
     </div>
