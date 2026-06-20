@@ -1,0 +1,53 @@
+/* Hero stuff */
+.hero__subtitle {
+    color: var(--color-black);
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-s);
+    background: var(--color-accent-green);
+    padding: 0.2rem 2rem;
+    justify-self: end;
+    rotate: -3deg;
+    translate: -1rem -2.5rem;
+}
+
+.hero__images {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    rotate: 4deg;
+    gap: 2rem;
+    width: 120%;
+    translate: -5rem -8rem;
+}
+
+.hero__content {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    translate: 0rem -1rem;
+}
+
+/* Intro stuff */
+.intro__meet {
+    display: grid;
+    place-items: center;
+    rotate: -6deg;
+}
+
+.intro__meet svg,
+.intro__meet p {
+    grid-area: 1/1/1/1;
+}
+
+.meet__text {
+    font-family: "AntwerpRegular";
+    max-width: 8ch;
+    text-align: center;
+}
+
+/* Citytrip stuff */
+.citytrip__container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}

@@ -1,73 +1,35 @@
 ---
 import { Image } from "astro:assets";
-import HeroImg1 from "../assets/Hero-img-1.png";
-import HeroImg2 from "../assets/Hero-img-2.png";
-import HeroImg3 from "../assets/Hero-img-3.png";
+import HeroImg1 from "../assets/hero-home/hero-img-1.png";
+import HeroImg2 from "../assets/hero-home/hero-img2.png";
+import HeroImg3 from "../assets/hero-home/hero-img-3.png";
+
+// const heroImages = [HeroImg1, HeroImg2, HeroImg3];
+
+const imageModules = import.meta.glob(
+    "../assets/hero-home/*.{png,jpg,jpeg,webp}",
+    { eager: true },
+);
+
+const heroImages = Object.entries(imageModules)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([, mod]) => mod.default);
 ---
 
 <section class="hero">
     <h1 class="hero__title">AntwerPOV</h1>
+    <p class="hero__subtitle">View Antwerp through others</p>
     <div class="hero__content">
-        <div class="carousel__content">
-            <div class="hero__carousel">
-                <Image
-                    src={HeroImg1}
-                    alt="Hero"
-                    class="hero__image hero__image--active"
-                    decoding="async"
-                    loading="lazy"
-                    inferSize
-                    format="avif"
-                />
-                <Image
-                    src={HeroImg2}
-                    alt="Hero"
-                    class="hero__image"
-                    decoding="async"
-                    loading="lazy"
-                    inferSize
-                    format="avif"
-                />
-                <Image
-                    src={HeroImg3}
-                    alt="Hero"
-                    class="hero__image"
-                    decoding="async"
-                    loading="lazy"
-                    inferSize
-                    format="avif"
-                />
-            </div>
-            <svg
-                class="hero__image--side"
-                xmlns="http://www.w3.org/2000/svg"
-                width="174"
-                height="614"
-                viewBox="0 0 174 614"
-                fill="none"
-            >
-                <path
-                    d="M56.6938 0H173.241V613.446H0V560.482H114.906V505.074H165.5V445.185H0V390.421H114.906V332.818H165.5V275.824H114.906V218.221H56.6938V161.228H165.5V105.758H114.906V47.5454H56.6938V0Z"
-                    fill="white"></path>
-            </svg>
-            <div class="carousel__nav">
-                <div class="carousel__dot carousel__dot--active"></div>
-                <div class="carousel__dot"></div>
-                <div class="carousel__dot"></div>
-            </div>
-        </div>
-        <div class="hero__side">
-            <div class="side__top">
-                <p class="side__title">POV</p>
-                <p class="side__text">
-                    "I <span class="side__text--highlight">only</span> went to Antwerp
-                    to rave"
-                </p>
-            </div>
-            <div class="side__bottom">
-                <p class="button__subtext">↓But not you!↓</p>
-                <a class="hero__button" href="">Experience POVs</a>
-            </div>
-        </div>
+        <ul class="hero__images">
+            {
+                heroImages.map((heroImage) => {
+                    return (
+                        <li>
+                            <Image src={heroImage} alt="" />
+                        </li>
+                    );
+                })
+            }
+        </ul>
     </div>
 </section>

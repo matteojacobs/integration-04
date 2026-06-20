@@ -31,7 +31,7 @@ const handleToggleHero = () => {
 }
 
 const init = () => {
-    handleToggleHero();
+    // handleToggleHero();
 }
 
 init()
