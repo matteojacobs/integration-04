@@ -129,6 +129,11 @@ Image {
     text-decoration: none;
     color: var(--color-white);
     text-transform: uppercase;
+    transition: all 250ms ease;
+}
+
+.nav__link:hover {
+    box-shadow: 0.2rem 0.2rem var(--color-accent-green);
 }
 
 .nav__link--active {
@@ -175,63 +180,6 @@ Image {
     height: auto;
     overflow: hidden;
     display: grid;
-}
-
-.hero__image {
-    grid-area: 1/1/1/1;
-    height: auto;
-    overflow: hidden;
-    display: none;
-    transition: all 250ms;
-    height: 100%;
-}
-
-.hero__image--side {
-    grid-area: 1/1/1/1;
-    justify-self: end;
-    height: 100%;
-    width: auto;
-    height: 100%;
-    padding: 0;
-    translate: 0.1rem;
-}
-
-.hero__image--active {
-    display: block;
-}
-
-.hero__side {
-    background: var(--color-white);
-    display: grid;
-    place-items: center;
-    padding: 2rem 4rem;
-}
-
-.side__title {
-    font-size: var(--space-l);
-    font-family: "Bacalar";
-}
-
-.side__text {
-    font-size: var(--space-m);
-    text-align: center;
-    font-family: "AntwerpRegular";
-}
-
-.side__text--highlight {
-    color: var(--color-blue);
-}
-
-.side__top {
-    display: flex;
-    flex-flow: column nowrap;
-    place-items: center;
-}
-
-.side__bottom {
-    display: flex;
-    flex-flow: column nowrap;
-    place-items: center;
 }
 
 .hero__content {
@@ -667,7 +615,6 @@ Image {
     padding: 0.5rem 2rem;
     justify-self: end;
     rotate: -3deg;
-    translate: 0rem -2rem;
 }
 
 .routes__subtext {
@@ -856,6 +803,33 @@ Image {
     font-family: "AntwerpRegular";
     max-width: fit-content;
 }
+
+.antwerplogo {
+    display: grid;
+    place-items: center;
+}
+
+.antwerplogo__img {
+    grid-area: 1/1/1/1;
+    z-index: 1;
+}
+
+.antwerplogo__bg {
+    grid-area: 1 / 1 / 1 / 1;
+    animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
 
 /* Media queries, responsive design */
 @media screen and (min-width: 24rem) {

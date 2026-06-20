@@ -1,0 +1,15 @@
+/* Hero stuff */
+.hero__subtitle {
+    color: var(--color-black);
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-s);
+    background: var(--color-accent-green);
+    padding: 0.2rem 2rem;
+    justify-self: end;
+    rotate: -4deg;
+    translate: 0rem -4rem;
+}
+
+.hero__image {
+    
+}

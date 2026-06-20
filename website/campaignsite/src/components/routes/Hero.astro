@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets"
+
+import Hero from "../../assets/routes/routes-hero.png"
 
 ---
 
@@ -12,6 +15,7 @@
                 routes that show you Antwerp behind the clichés.
             </p>
         </div>
+        <Image class="hero__image" src={Hero} alt="Hero image" />
     </div>
     <div class="hero__content">
 

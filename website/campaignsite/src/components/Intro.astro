@@ -5,19 +5,35 @@ import PovCard from "./cards/PovCard.astro";
 <section class="intro">
     <div class="container">
         <div class="intro__content">
+            <div class="intro__meet">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="157"
+                    height="139"
+                    viewBox="0 0 157 139"
+                    fill="none"
+                >
+                    <path
+                        d="M152.639 52.125V47.7811H148.278H143.917H139.556H135.194V43.4379H130.833H126.472H122.111V39.0939H126.472V34.75H130.833V30.4061V26.0621V21.7189H126.472V17.375H122.111V13.0311H117.75H113.389H109.028V17.375H104.667V13.0311V8.68786H100.305V4.34393H95.9441V0H91.5835H87.2222H82.8609V4.34393H78.5004V8.68786H74.1391V13.0311H69.7778V17.375H65.4165V13.0311H61.0552V8.68786H56.6946V4.34393H52.3333H47.972V8.68786H43.6115V13.0311H39.2502H34.8889V17.375V21.7189V26.0621V30.4061H39.2502V34.75H34.8889H30.5276H26.1663H21.8057V39.0939H17.4444H13.0832V43.4379V47.7811V52.125H17.4444H21.8057V56.4689H17.4444V60.8121H13.0832H8.72258V65.1561H4.36129H0V69.5V73.8439V78.1879V82.5311H4.36129V86.875H8.72258H13.0832H17.4444V91.2189H21.8057H26.1663V95.5621H21.8057H17.4444V99.9061V104.25V108.594V112.938H21.8057H26.1663V117.281H30.5276H34.8889H39.2502V121.625H34.8889V125.969V130.312H39.2502V134.656H43.6115V139H47.972H52.3333H56.6946H61.0552V134.656H65.4165H69.7778H74.1391V130.312H78.5004V125.969H82.8609V130.312V134.656H87.2222V139H91.5835H95.9441H100.305H104.667H109.028V134.656V130.312V125.969H113.389H117.75V121.625V117.281H122.111H126.472H130.833H135.194V112.938H139.556V108.594V104.25V99.9061V95.5621H135.194V91.2189H130.833H126.472V86.875H130.833V82.5311H135.194H139.556H143.917V78.1879H148.278V73.8439H152.639V69.5H157V65.1561V60.8121V56.4689V52.125H152.639Z"
+                        fill="white"></path>
+                </svg>
+                <p class="meet__text">Meet the POV's</p>
+            </div>
             <h2 class="intro__title">
                 One <span class="intro__title--highlight">city</span>, different <span
                     class="intro__title--highlight">perspectives</span
                 >
             </h2>
             <p class="intro__text">
-                Antwerp is full of clichés: arrogant locals, fashion people, ravers,
-                rich kids, shoppers and culture types. We use these stereotypes as
-                starting points, then twist them into routes that reveal hidden
-                sides of the city.
+                Antwerp is full of clichés: arrogant locals, fashion people,
+                ravers, rich kids, shoppers and culture types. We use these
+                stereotypes as starting points, then twist them into routes that
+                reveal hidden sides of the city.
             </p>
             <PovCard />
-            <a class="intro__button" href="">View matching routes</a>
+            <a class="intro__button" href=`${import.meta.env.BASE_URL}/routes`
+                >View matching routes</a
+            >
         </div>
     </div>
 </section>
