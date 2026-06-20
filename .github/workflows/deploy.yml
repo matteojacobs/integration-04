@@ -25,9 +25,9 @@ jobs:
         with:
           path: website/campaignsite
         env:
-          SUPABASE_URL: 'https://lragbxqhqdxmejklvypd.supabase.co'
-          SUPABASE_KEY: 'sb_publishable_BIAwmCHUVCLJbyuaqkbnyw_LDBgPaqA'
-          STORAGE_URL: 'https://lragbxqhqdxmejklvypd.supabase.co/storage/v1/object/public/submissions/'
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_KEY: ${{ secrets.PUBLIC_SUPABASE_KEY }}
+          PUBLIC_STORAGE_URL: ${{ secrets.PUBLIC_STORAGE_URL }}
 
   deploy:
     needs: build
