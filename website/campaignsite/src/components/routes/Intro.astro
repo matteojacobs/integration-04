@@ -1,29 +1,274 @@
+---
+import { Image } from "astro:assets";
+import Route1 from "../../assets/routes/route_1.png";
+import RouteStops from "./RouteStops.astro";
+---
+
 <section class="routes">
-    <h2 class="routes__title">Choose your POV</h2>
-    <ul class="POV__list">
-        <li class="POV">Main Character</li>
-        <li class="POV">Main Character</li>
-        <li class="POV">Main Character</li>
-        <li class="POV">Main Character</li>
+    <h2 class="routes__title">→Choose your POV→</h2>
+    <ul class="pov__list">
+        <li
+            class="pov__name pov__name--fashion pov__name--active"
+            data-pov="fashionista"
+        >
+            Fashionista
+        </li>
+        <li class="pov__name
+            pov__name--mc" data-pov="mc">
+            Main Character
+        </li>
+        <li class="pov__name pov__name--raver" data-pov="raver">Raver</li>
     </ul>
-    <article class="POV__route">
-        <h3 class="POV__title">The Main Character</h3>
-        <!-- Image thingie -->
-        <ul class="route__stats">
-            <li class="route__stat">2h20</li>
-            <li class="route__stat">4.2KM</li>
-            <li class="route__stat">8 stops</li>
-        </ul>
-        <ul class="route__buttons">
-            <li>
-                <a class="route__download route__button" href="">Download PDF</a
-                >
-            </li>
-            <li>
-                <a class="route__save route__button" href=""
-                    >Save to Google Maps</a
-                >
-            </li>
-        </ul>
-    </article>
+    <div class="povroutes">
+        <article
+            class="pov__route pov__route--active pov__route--fashionista"
+            id="fashionista"
+        >
+            <div class="container povroute__content">
+                <h3 class="POV__title">Fashionista</h3>
+                <!-- Image thingie -->
+                <Image class="route__image" src={Route1} alt="meow" />
+                <ul class="route__stats">
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="37"
+                                    height="37"
+                                    viewBox="0 0 37 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M24.6427 22.9993V24.6421H22.9999V26.2849H21.3571V24.6421H19.7143V22.9993H18.0715V21.3565H16.4287V6.57123H19.7143V19.7137H21.3571V21.3565H22.9999V22.9993H24.6427Z"
+                                        fill="#B7EA63"></path>
+                                    <path
+                                        d="M34.4989 13.1425V9.85684H32.8561V6.57123H31.2133V4.92842H29.5705V3.28561H26.2849V1.64281H22.9993V0H13.1425V1.64281H9.85684V3.28561H6.57123V4.92842H4.92842V6.57123H3.28561V9.85684H1.64281V13.1425H0V22.9993H1.64281V26.2849H3.28561V29.5705H4.92842V31.2133H6.57123V32.8561H9.85684V34.4989H13.1425V36.1417H22.9993V34.4989H26.2849V32.8561H29.5705V31.2133H31.2133V29.5705H32.8561V26.2849H34.4989V22.9993H36.1417V13.1425H34.4989ZM32.8561 22.9993H31.2133V26.2849H29.5705V29.5705H26.2849V31.2133H22.9993V32.8561H13.1425V31.2133H9.85684V29.5705H6.57123V26.2849H4.92842V22.9993H3.28561V13.1425H4.92842V9.85684H6.57123V6.57123H9.85684V4.92842H13.1425V3.28561H22.9993V4.92842H26.2849V6.57123H29.5705V9.85684H31.2133V13.1425H32.8561V22.9993Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">2h20</li>
+                        </ul>
+                    </li>
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="33"
+                                    height="37"
+                                    viewBox="0 0 33 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M31.2133 3.28561V1.64281H29.5705V0H24.6421V1.64281H22.9993V3.28561H21.3565V8.21403H22.9993V9.85684H24.6421V14.7853H8.21403V9.85684H9.85684V8.21403H11.4996V3.28561H9.85684V1.64281H8.21403V0H3.28561V1.64281H1.64281V3.28561H0V8.21403H1.64281V9.85684H3.28561V26.2849H1.64281V27.9277H0V32.8561H1.64281V34.4989H3.28561V36.1417H8.21403V34.4989H9.85684V32.8561H11.4996V27.9277H9.85684V26.2849H8.21403V19.7137H27.9277V18.0709H29.5705V9.85684H31.2133V8.21403H32.8561V3.28561H31.2133ZM29.5705 6.57123H27.9277V8.21403H26.2849V6.57123H24.6421V4.92842H26.2849V3.28561H27.9277V4.92842H29.5705V6.57123ZM3.28561 6.57123V4.92842H4.92842V3.28561H6.57123V4.92842H8.21403V6.57123H6.57123V8.21403H4.92842V6.57123H3.28561ZM8.21403 29.5705V31.2133H6.57123V32.8561H4.92842V31.2133H3.28561V29.5705H4.92842V27.9277H6.57123V29.5705H8.21403Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">4.2KM</li>
+                        </ul>
+                    </li>
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="27"
+                                    height="37"
+                                    viewBox="0 0 27 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M24.6421 8.21403V4.92842H22.9993V3.28561H21.3565V1.64281H18.0709V0H8.21403V1.64281H4.92842V3.28561H3.28561V4.92842H1.64281L1.64281 8.21403H0L0 18.0709H1.64281L1.64281 21.3565H3.28561V22.9993H4.92842L4.92842 26.2849H6.57123V27.9277H8.21403V31.2133H9.85684V32.8561H11.4996V36.1417H14.7853V32.8561H16.4281V31.2133H18.0709V27.9277H19.7137V26.2849H21.3565V22.9993H22.9993V21.3565H24.6421V18.0709H26.2849L26.2849 8.21403H24.6421ZM16.4281 16.4281H14.7853V18.0709H11.4996V16.4281H9.85684V14.7853H8.21403V11.4996H9.85684V9.85684H11.4996V8.21403H14.7853V9.85684H16.4281V11.4996H18.0709L18.0709 14.7853H16.4281V16.4281Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">8 stops</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="route__buttons">
+                    <li>
+                        <a
+                            class="route__download route__button"
+                            href="routes/route-fashionista.pdf"
+                            download="fashionista-route">Download PDF</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="route__save route__button"
+                            href="https://maps.app.goo.gl/yrbUz5Xs1rDVy7Br6"
+                            target="_blank">Save to Google Maps</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <article class="pov__route" id="mc">
+            <div class="container povroute__content">
+                <h3 class="POV__title">The Main Character</h3>
+                <!-- Image thingie -->
+                <Image src={Route1} alt="meow" />
+                <ul class="route__stats">
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="37"
+                                    height="37"
+                                    viewBox="0 0 37 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M24.6427 22.9993V24.6421H22.9999V26.2849H21.3571V24.6421H19.7143V22.9993H18.0715V21.3565H16.4287V6.57123H19.7143V19.7137H21.3571V21.3565H22.9999V22.9993H24.6427Z"
+                                        fill="#B7EA63"></path>
+                                    <path
+                                        d="M34.4989 13.1425V9.85684H32.8561V6.57123H31.2133V4.92842H29.5705V3.28561H26.2849V1.64281H22.9993V0H13.1425V1.64281H9.85684V3.28561H6.57123V4.92842H4.92842V6.57123H3.28561V9.85684H1.64281V13.1425H0V22.9993H1.64281V26.2849H3.28561V29.5705H4.92842V31.2133H6.57123V32.8561H9.85684V34.4989H13.1425V36.1417H22.9993V34.4989H26.2849V32.8561H29.5705V31.2133H31.2133V29.5705H32.8561V26.2849H34.4989V22.9993H36.1417V13.1425H34.4989ZM32.8561 22.9993H31.2133V26.2849H29.5705V29.5705H26.2849V31.2133H22.9993V32.8561H13.1425V31.2133H9.85684V29.5705H6.57123V26.2849H4.92842V22.9993H3.28561V13.1425H4.92842V9.85684H6.57123V6.57123H9.85684V4.92842H13.1425V3.28561H22.9993V4.92842H26.2849V6.57123H29.5705V9.85684H31.2133V13.1425H32.8561V22.9993Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">2h20</li>
+                        </ul>
+                    </li>
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="33"
+                                    height="37"
+                                    viewBox="0 0 33 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M31.2133 3.28561V1.64281H29.5705V0H24.6421V1.64281H22.9993V3.28561H21.3565V8.21403H22.9993V9.85684H24.6421V14.7853H8.21403V9.85684H9.85684V8.21403H11.4996V3.28561H9.85684V1.64281H8.21403V0H3.28561V1.64281H1.64281V3.28561H0V8.21403H1.64281V9.85684H3.28561V26.2849H1.64281V27.9277H0V32.8561H1.64281V34.4989H3.28561V36.1417H8.21403V34.4989H9.85684V32.8561H11.4996V27.9277H9.85684V26.2849H8.21403V19.7137H27.9277V18.0709H29.5705V9.85684H31.2133V8.21403H32.8561V3.28561H31.2133ZM29.5705 6.57123H27.9277V8.21403H26.2849V6.57123H24.6421V4.92842H26.2849V3.28561H27.9277V4.92842H29.5705V6.57123ZM3.28561 6.57123V4.92842H4.92842V3.28561H6.57123V4.92842H8.21403V6.57123H6.57123V8.21403H4.92842V6.57123H3.28561ZM8.21403 29.5705V31.2133H6.57123V32.8561H4.92842V31.2133H3.28561V29.5705H4.92842V27.9277H6.57123V29.5705H8.21403Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">4.2KM</li>
+                        </ul>
+                    </li>
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="27"
+                                    height="37"
+                                    viewBox="0 0 27 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M24.6421 8.21403V4.92842H22.9993V3.28561H21.3565V1.64281H18.0709V0H8.21403V1.64281H4.92842V3.28561H3.28561V4.92842H1.64281L1.64281 8.21403H0L0 18.0709H1.64281L1.64281 21.3565H3.28561V22.9993H4.92842L4.92842 26.2849H6.57123V27.9277H8.21403V31.2133H9.85684V32.8561H11.4996V36.1417H14.7853V32.8561H16.4281V31.2133H18.0709V27.9277H19.7137V26.2849H21.3565V22.9993H22.9993V21.3565H24.6421V18.0709H26.2849L26.2849 8.21403H24.6421ZM16.4281 16.4281H14.7853V18.0709H11.4996V16.4281H9.85684V14.7853H8.21403V11.4996H9.85684V9.85684H11.4996V8.21403H14.7853V9.85684H16.4281V11.4996H18.0709L18.0709 14.7853H16.4281V16.4281Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">8 stops</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="route__buttons">
+                    <li>
+                        <a
+                            class="route__download route__button"
+                            href="routes/route-mc.pdf"
+                            download="mc-route">Download PDF</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="route__save route__button"
+                            href="https://maps.app.goo.gl/yAx4Sqkp51mmpyiCA"
+                            target="_blank">Save to Google Maps</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <article class="pov__route" id="raver">
+            <div class="container povroute__content">
+                <h3 class="POV__title">Raver</h3>
+                <!-- Image thingie -->
+                <Image src={Route1} alt="meow" />
+                <ul class="route__stats">
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="37"
+                                    height="37"
+                                    viewBox="0 0 37 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M24.6427 22.9993V24.6421H22.9999V26.2849H21.3571V24.6421H19.7143V22.9993H18.0715V21.3565H16.4287V6.57123H19.7143V19.7137H21.3571V21.3565H22.9999V22.9993H24.6427Z"
+                                        fill="#B7EA63"></path>
+                                    <path
+                                        d="M34.4989 13.1425V9.85684H32.8561V6.57123H31.2133V4.92842H29.5705V3.28561H26.2849V1.64281H22.9993V0H13.1425V1.64281H9.85684V3.28561H6.57123V4.92842H4.92842V6.57123H3.28561V9.85684H1.64281V13.1425H0V22.9993H1.64281V26.2849H3.28561V29.5705H4.92842V31.2133H6.57123V32.8561H9.85684V34.4989H13.1425V36.1417H22.9993V34.4989H26.2849V32.8561H29.5705V31.2133H31.2133V29.5705H32.8561V26.2849H34.4989V22.9993H36.1417V13.1425H34.4989ZM32.8561 22.9993H31.2133V26.2849H29.5705V29.5705H26.2849V31.2133H22.9993V32.8561H13.1425V31.2133H9.85684V29.5705H6.57123V26.2849H4.92842V22.9993H3.28561V13.1425H4.92842V9.85684H6.57123V6.57123H9.85684V4.92842H13.1425V3.28561H22.9993V4.92842H26.2849V6.57123H29.5705V9.85684H31.2133V13.1425H32.8561V22.9993Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">2h20</li>
+                        </ul>
+                    </li>
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="33"
+                                    height="37"
+                                    viewBox="0 0 33 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M31.2133 3.28561V1.64281H29.5705V0H24.6421V1.64281H22.9993V3.28561H21.3565V8.21403H22.9993V9.85684H24.6421V14.7853H8.21403V9.85684H9.85684V8.21403H11.4996V3.28561H9.85684V1.64281H8.21403V0H3.28561V1.64281H1.64281V3.28561H0V8.21403H1.64281V9.85684H3.28561V26.2849H1.64281V27.9277H0V32.8561H1.64281V34.4989H3.28561V36.1417H8.21403V34.4989H9.85684V32.8561H11.4996V27.9277H9.85684V26.2849H8.21403V19.7137H27.9277V18.0709H29.5705V9.85684H31.2133V8.21403H32.8561V3.28561H31.2133ZM29.5705 6.57123H27.9277V8.21403H26.2849V6.57123H24.6421V4.92842H26.2849V3.28561H27.9277V4.92842H29.5705V6.57123ZM3.28561 6.57123V4.92842H4.92842V3.28561H6.57123V4.92842H8.21403V6.57123H6.57123V8.21403H4.92842V6.57123H3.28561ZM8.21403 29.5705V31.2133H6.57123V32.8561H4.92842V31.2133H3.28561V29.5705H4.92842V27.9277H6.57123V29.5705H8.21403Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">4.2KM</li>
+                        </ul>
+                    </li>
+                    <li class="route__stat">
+                        <ul class="stat__list">
+                            <li class="stat__icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="27"
+                                    height="37"
+                                    viewBox="0 0 27 37"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M24.6421 8.21403V4.92842H22.9993V3.28561H21.3565V1.64281H18.0709V0H8.21403V1.64281H4.92842V3.28561H3.28561V4.92842H1.64281L1.64281 8.21403H0L0 18.0709H1.64281L1.64281 21.3565H3.28561V22.9993H4.92842L4.92842 26.2849H6.57123V27.9277H8.21403V31.2133H9.85684V32.8561H11.4996V36.1417H14.7853V32.8561H16.4281V31.2133H18.0709V27.9277H19.7137V26.2849H21.3565V22.9993H22.9993V21.3565H24.6421V18.0709H26.2849L26.2849 8.21403H24.6421ZM16.4281 16.4281H14.7853V18.0709H11.4996V16.4281H9.85684V14.7853H8.21403V11.4996H9.85684V9.85684H11.4996V8.21403H14.7853V9.85684H16.4281V11.4996H18.0709L18.0709 14.7853H16.4281V16.4281Z"
+                                        fill="#B7EA63"></path>
+                                </svg>
+                            </li>
+                            <li class="stat__info">8 stops</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="route__buttons">
+                    <li>
+                        <a
+                            class="route__download route__button"
+                            href="routes/route-raver.pdf"
+                            download="raver-route">Download PDF</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="route__save route__button"
+                            href="https://maps.app.goo.gl/t9rv27AW3WS3H1Dk7"
+                            target="_blank">Save to Google Maps</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </div>
 </section>
+<RouteStops />

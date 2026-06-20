@@ -1,45 +1,14 @@
-<section class="featured">
-    <div class="featured__pt1">
-        <h2 class="featured__title">The route stops</h2>
-        <ul>
-            <li>Item</li>
-            <li>Item</li>
-        </ul>
-    </div>
-    <div class="featured__pt2">
-        <svg
-            class="featured__top"
-            xmlns="http://www.w3.org/2000/svg"
-            width="100%"
-            height="auto"
-            viewBox="0 0 1440 394"
-            fill="none"
-        >
-            <path
-                d="M70.2252 290.859H-0.319092V0H1440.95V82.4825H1379.09V187.756H1440.95V393.962H1308.55V187.756H1000.32V151.941H826.677V82.4825H655.2V119.383H621.556V82.4825H516.282V187.756H344.805V82.4825H173.328V187.756H70.2252V290.859Z"
-                fill="#1E1E1E"></path>
-        </svg>
-        <h2 class="featured__title">What to get more information?</h2>
-        <p class="featured__subtitle">
-            Check out the Visit Antwerp website and anything you need to know
-            about this beautiful city
-        </p>
-        <a class="information__button" href="">Visit Antwerp →</a>
-        <svg
-            class="featured__bottom"
-            xmlns="http://www.w3.org/2000/svg"
-            width="100%"
-            height="auto"
-            viewBox="0 0 1440 306"
-            fill="none"
-        >
-            <path d="M70.3044 0H-0.358704V103.722H70.3044V0Z" fill="#1E1E1E"
-            ></path>
-            <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M-0.358704 297.376H175.396V203.676H345.604V297.376H517.53V242.359H687.738V274.166H825.279V297.376H894.049V274.166H929.294V207.114H1205.24V102.239H1440.78V305.972H-0.358704V297.376ZM1308.71 207.114V298.907H1410.45V207.114H1308.71Z"
-                fill="#1E1E1E"></path>
-        </svg>
-    </div>
-</section>
+---
+import { Image } from "astro:assets";
+import Image1Fashion from "../../assets/routes/fashionista/picture-1.png";
+---
+
+<article class="route__stops">
+    <h3 class="stops__title">The route stops</h3>
+    <ul class="stops__list">
+        <li class="route__stop">
+            <Image src={Image1Fashion} alt="hey" />
+            <li class="route__stop">Item</li>
+        </li>
+    </ul>
+</article>

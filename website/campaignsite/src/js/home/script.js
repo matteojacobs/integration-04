@@ -31,7 +31,6 @@ const handleToggleHero = () => {
 }
 
 const init = () => {
-    console.log("hey");
     handleToggleHero();
 }
 
