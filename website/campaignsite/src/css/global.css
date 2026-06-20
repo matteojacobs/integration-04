@@ -61,6 +61,11 @@
 
     --font-family-serif: var(--font-family-serif);
 
+    /* Routes variables, meant to be changed */
+    --route-shadow-color: var(--color-accent-green);
+    --route-main-color: var(--color-blue);
+    --route-text-color: var(--color-white);
+
     /* Utopia Steps */
     --step-0-h1: clamp(3.8125rem, 2.2407rem + 6.3992vw, 8rem);
     --step-0-h2: clamp(2.625rem, 2.32rem + 1.2416vw, 3.4375rem);
@@ -516,6 +521,7 @@ Image {
     font-family: "SunAntwerpen";
     font-size: var(--font-size-s);
     max-width: 55ch;
+    text-align: center;
 }
 
 .featured__more {
@@ -683,6 +689,7 @@ Image {
 .routes__title {
     font-family: "AntwerpRegular";
     font-size: var(--step-0-h2);
+    padding: 2rem 0;
 }
 
 .pov__list {
@@ -697,15 +704,47 @@ Image {
 }
 
 .pov__name {
-    background: var(--color-blue);
     color: var(--color-white);
     padding: 0.5rem 5rem;
     font-family: "AntwerpRegular";
     font-size: var(--font-size-s);
+    cursor: pointer;
+    transition: all 250ms ease;
+}
+
+.pov__name:hover {
+    box-shadow: 0rem 0rem;
+}
+
+.pov__name--fashion {
+    background: var(--color-accent-green);
+    box-shadow: var(--color-blue) 0.2rem 0.2rem;
+    color: var(--color-black);
+}
+
+.pov__name--mc {
+    background: var(--color-blue);
+    box-shadow: var(--color-accent-green) 0.2rem 0.2rem;
+}
+
+.pov__name--raver {
+    background: var(--color-accent-pink);
+    box-shadow: var(--color-accent-green) 0.2rem 0.2rem;
+    color: var(--color-black);
+}
+
+.pov__name--active {
+    box-shadow: #B7EA63 0rem 0rem;
+}
+
+.povroutes {
+    display: grid;
+    width: 100%;
 }
 
 /* Routes maps povs */
-.POV__route {
+.pov__route {
+    grid-area: 1/1/1/1;
     background: var(--color-blue);
     padding: 2rem 0;
     width: 100%;
@@ -713,7 +752,21 @@ Image {
     place-items: center;
     color: var(--color-white);
     gap: 5rem;
+    opacity: 0;
+    transition: all 250ms ease;
 }
+
+.pov__route--active {
+    opacity: 1;
+    z-index: 100;
+}
+
+#fashionista {}
+
+#mc {}
+
+#raver {}
+
 
 .POV__title {
     font-family: "AntwerpRegular";
@@ -771,6 +824,26 @@ Image {
     font-family: "AntwerpRegular";
     font-size: var(--font-size-s);
     padding: 0.75rem 0;
+}
+
+.route__image {
+    box-shadow: 0.5rem 0.5rem var(--route-shadow-color);
+}
+
+.route__stops {
+    padding: 2rem 0;
+    display: grid;
+    gap: 2rem;
+    place-items: center;
+    background: linear-gradient(to bottom,
+            var(--color-blue) 60%,
+            var(--bg-black) 60% 100%)
+}
+
+.stops__title {
+    font-size: var(--step-0-h2);
+    font-family: "AntwerpRegular";
+    color: var(--color-white);
 }
 
 /* More information section, bottom */

@@ -34,7 +34,20 @@ const handleToggleHero = () => {
 }
 
 const handleToggleRoute = (e) => {
-    console.log(e);
+    const $currentRoute = document.querySelector(".pov__route--active");
+    const $currentClicked = document.querySelector(".pov__name--active");
+    console.log($currentRoute);
+
+    const clickedTarget = e.target;
+
+    const clickedTargetRoute = document.querySelector(`#${clickedTarget.dataset.pov}`);
+
+    $currentClicked.classList.toggle("pov__name--active");
+    clickedTarget.classList.toggle("pov__name--active");
+
+    $currentRoute.classList.toggle("pov__route--active")
+    clickedTargetRoute.classList.toggle("pov__route--active");
+    
 }
 
 const init = () => {
