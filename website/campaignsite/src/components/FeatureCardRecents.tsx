@@ -102,45 +102,45 @@ export default function RecentSubmissions({
                         />
 
                         <div className="submission__details">
-                            {/* Upload icon */}
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="15"
-                                height="17"
-                                viewBox="0 0 15 17"
-                                fill="none"
-                            >
-                                <path
-                                    d="M2.25 6.75H1.5V5.25H2.25V4.5H3V3.75H3.75V3H4.5V2.25H5.25V1.5H6V0.75H6.75V0H8.25V0.75H9V1.5H9.75V2.25H10.5V3H11.25V3.75H12V4.5H12.75V5.25H13.5V6.75H12.75V7.5H11.25V6.75H10.5V6H9.75V5.25H9V12H6V5.25H5.25V6H4.5V6.75H3.75V7.5H2.25V6.75Z"
-                                    fill="#E37ED4"
-                                />
-                                <path
-                                    d="M15 14.25H0V16.5H15V14.25Z"
-                                    fill="#E37ED4"
-                                />
-                            </svg>
+                            <div className="submission__detail">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="15"
+                                    height="17"
+                                    viewBox="0 0 15 17"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M2.25 6.75H1.5V5.25H2.25V4.5H3V3.75H3.75V3H4.5V2.25H5.25V1.5H6V0.75H6.75V0H8.25V0.75H9V1.5H9.75V2.25H10.5V3H11.25V3.75H12V4.5H12.75V5.25H13.5V6.75H12.75V7.5H11.25V6.75H10.5V6H9.75V5.25H9V12H6V5.25H5.25V6H4.5V6.75H3.75V7.5H2.25V6.75Z"
+                                        fill="#E37ED4"
+                                    />
+                                    <path
+                                        d="M15 14.25H0V16.5H15V14.25Z"
+                                        fill="#E37ED4"
+                                    />
+                                </svg>
+                                <p className="submission__date">
+                                    {timeAgo(submission.created_at)}
+                                </p>
+                            </div>
 
-                            <p className="submission__date">
-                                {timeAgo(submission.created_at)}
-                            </p>
-
-                            {/* Location icon */}
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="12"
-                                height="17"
-                                viewBox="0 0 12 17"
-                                fill="none"
-                            >
-                                <path
-                                    d="M11.25 3.75V2.25H10.5V1.5H9.75V0.75H8.25V0H3.75V0.75H2.25V1.5H1.5V2.25H0.75V3.75H0V8.25H0.75V9.75H1.5V10.5H2.25V12H3V12.75H3.75V14.25H4.5V15H5.25V16.5H6.75V15H7.5V14.25H8.25V12.75H9V12H9.75V10.5H10.5V9.75H11.25V8.25H12V3.75H11.25ZM7.5 7.5H6.75V8.25H5.25V7.5H4.5V6.75H3.75V5.25H4.5V4.5H5.25V3.75H6.75V4.5H7.5V5.25H8.25V6.75H7.5V7.5Z"
-                                    fill="#E37ED4"
-                                />
-                            </svg>
-
-                            <p className="submission__location">
-                                {submission.capture_location}
-                            </p>
+                            <div className="submission__detail">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="12"
+                                    height="17"
+                                    viewBox="0 0 12 17"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M11.25 3.75V2.25H10.5V1.5H9.75V0.75H8.25V0H3.75V0.75H2.25V1.5H1.5V2.25H0.75V3.75H0V8.25H0.75V9.75H1.5V10.5H2.25V12H3V12.75H3.75V14.25H4.5V15H5.25V16.5H6.75V15H7.5V14.25H8.25V12.75H9V12H9.75V10.5H10.5V9.75H11.25V8.25H12V3.75H11.25ZM7.5 7.5H6.75V8.25H5.25V7.5H4.5V6.75H3.75V5.25H4.5V4.5H5.25V3.75H6.75V4.5H7.5V5.25H8.25V6.75H7.5V7.5Z"
+                                        fill="#E37ED4"
+                                    />
+                                </svg>
+                                <p className="submission__location">
+                                    {submission.capture_location}
+                                </p>
+                            </div>
                         </div>
                     </article>
                 </li>

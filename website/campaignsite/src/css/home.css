@@ -1,10 +1,9 @@
+:root {
+    --font-size-location-title: clamp(1.5rem, 1.3592rem + 0.5731vw, 1.875rem);
+}
+
 /* Hero stuff */
 .hero__subtitle {
-    color: var(--color-black);
-    font-family: "AntwerpRegular";
-    font-size: var(--font-size-s);
-    background: var(--color-accent-green);
-    padding: 0.2rem 2rem;
     justify-self: end;
     rotate: -3deg;
     translate: -1rem -2.5rem;
@@ -47,6 +46,66 @@
 
 .pov__cards {}
 
+/* Featured povs */
+.featured__submissions {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: max-content;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.submission__card {
+    flex-shrink: 0;
+    width: 320px;
+}
+
+.featured__submissions {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 2rem;
+    padding: 2 0rem;
+}
+
+.submission {
+    display: grid;
+    gap: 2rem;
+}
+
+.submission__location,
+.submission__date {
+    font-size: var(--font-size-s);
+    font-family: "SunAntwerpen";
+    font-weight: 500;
+}
+
+.submission__image {
+    box-shadow: 0.5rem 0.60rem var(--color-blue);
+}
+
+.submission__details {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.submission__detail {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.submission__details {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
 /* Citytrip stuff */
 .citytrip__container {
     display: flex;
@@ -60,6 +119,10 @@
     place-items: center;
 }
 
+.citytrip__installation {
+    translate: 0 4rem;
+}
+
 .citytrip__content {
     display: flex;
     flex-flow: column;
@@ -70,7 +133,6 @@
 
 .citytrip__title {
     font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
 }
 
 .citytrip__subtitle {
@@ -107,6 +169,50 @@
     gap: 2rem;
     color: var(--color-blue);
     font-weight: 700;
+}
+
+/* Locations */
+.locations {
+    place-items: center;
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden;
+}
+
+.locations__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-location-title);
+    color: var(--color-black);
+    text-align: center;
+    background: var(--color-accent-green);
+    padding: 0.25rem 2rem;
+    translate: 0 2rem;
+}
+
+.locations__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-white);
+    gap: var(--space-l);
+    background: var(--color-blue);
+    width: 100%;
+    padding: 5rem 0;
+}
+
+.location {
+    place-items: center;
+}
+
+.location__city {
+    font-family: "AntwerpRegular";
+    font-weight: 500;
+    color: var(--color-accent-green);
+    padding: 1rem 0;
+}
+
+.locations__bottom {
+    background: var(--color-blue);
 }
 
 /* Media queries, responsive design */
