@@ -56,7 +56,7 @@ var delayedEvent = script.createEvent("DelayedCallbackEvent");
 
 function loop() {
   requestState();
-  //every 0.2 seconds it asks the browser for state
+  //every 0.7 seconds it asks the browser for state
   //not best solution but good for debugging
   delayedEvent.reset(0.7);
 }
