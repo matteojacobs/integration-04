@@ -18,7 +18,6 @@ The project consists of two main parts:
 * **Figma design file:** [link](https://www.figma.com/design/WuQ3nN5vbBKCNYUfF5yM7p/INT4---City-of-Antwerp?node-id=1719-852&t=zVDxuZE4YmV3sONW-1)
 * **FigJam UX:** [link](https://www.figma.com/board/EzgXlMIdxYPIFoZuatYJjA/Int4-process?node-id=0-1&t=AjEZ9TUIYkobUMwI-1)
 * **Microsite website prototype:** [link](https://www.figma.com/proto/LT44wxRA6OS1oafZsf0DJV/Microsite-int4?node-id=1-24748&viewport=121%2C115%2C0.13&t=FuPnlHnyxwmaglzG-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A24748&page-id=1%3A24699)
-* **Supabase project:** [add Supabase project link here]
 * **Development process:** [link](https://www.figma.com/board/EzgXlMIdxYPIFoZuatYJjA/Int4-process?node-id=31-1533&t=AjEZ9TUIYkobUMwI-1)
 
 ---
