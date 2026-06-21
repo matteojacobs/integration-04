@@ -1,14 +1,99 @@
 ---
 import { Image } from "astro:assets";
 import Image1Fashion from "../../assets/routes/fashionista/picture-1.png";
+
+const fahsionistaImages = import.meta.glob(
+    "../../assets/routes/fashionista/*.{png,jpg,jpeg,webp}",
+    { eager: true },
+);
+
+const mcImages = import.meta.glob(
+    "../../assets/routes/mc/*.{png,jpg,jpeg,webp}",
+    {
+        eager: true,
+    },
+);
+
+const raverImages = import.meta.glob(
+    "../../assets/routes/raver/*.{png,jpg,jpeg,webp}",
+    { eager: true },
+);
+
+const fashionistaImageCollection = Object.entries(fahsionistaImages)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([, mod]) => mod.default);
+
+const mcImageCollection = Object.entries(mcImages)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([, mod]) => mod.default);
+
+const raverImageCollection = Object.entries(raverImages)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([, mod]) => mod.default);
 ---
 
 <article class="route__stops">
     <h3 class="stops__title">The route stops</h3>
-    <ul class="stops__list">
-        <li class="route__stop">
-            <Image src={Image1Fashion} alt="hey" />
-            <li class="route__stop">Item</li>
-        </li>
-    </ul>
+    <div class="stops__collection">
+        <ul class="stops__list pov__route--active" id="fashionista">
+            {
+                fashionistaImageCollection.map((fashionistaImage) => {
+                    return (
+                        <li>
+                            <ul>
+                                <li>
+                                    <Image
+                                        class="stop__image"
+                                        src={fashionistaImage}
+                                        alt="fashionistaImage"
+                                    />
+                                </li>
+                                <li class="route__stop">Item</li>
+                            </ul>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+        <ul class="stops__list" id="mc">
+            {
+                mcImageCollection.map((mcImage) => {
+                    return (
+                        <li>
+                            <ul>
+                                <li>
+                                    <Image
+                                        class="stop__image"
+                                        src={mcImage}
+                                        alt="mcImage"
+                                    />
+                                </li>
+                                <li class="route__stop">Item</li>
+                            </ul>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+        <ul class="stops__list" id="raver">
+            {
+                raverImageCollection.map((raverImage) => {
+                    return (
+                        <li>
+                            <ul>
+                                <li>
+                                    <Image
+                                        class="stop__image"
+                                        src={raverImage}
+                                        alt="raverImage"
+                                    />
+                                </li>
+                                <li class="route__stop">Item</li>
+                            </ul>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
 </article>

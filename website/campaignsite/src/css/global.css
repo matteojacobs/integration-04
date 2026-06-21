@@ -67,8 +67,12 @@
     --route-text-color: var(--color-white);
 
     /* Utopia Steps */
+    --step-0-bodytext: clamp(1.375rem, 1.3281rem + 0.191vw, 1.5rem);
+
     --step-0-h1: clamp(3.8125rem, 2.2407rem + 6.3992vw, 8rem);
-    --step-0-h2: clamp(2.625rem, 2.32rem + 1.2416vw, 3.4375rem);
+    --step-0-h2: clamp(2.5rem, 2.1481rem + 1.4327vw, 3.4375rem);
+
+    --hero-subtitle: clamp(1rem, 0.8592rem + 0.5731vw, 1.375rem);
 }
 
 html {
@@ -88,6 +92,7 @@ body {
     /* padding: var(--space-l) var(--space-s) var(--space-s); */
     color: var(--color-grey);
     background: var(--color-background);
+    font-size: var(--step-0-bodytext);
 }
 
 img,
@@ -126,6 +131,7 @@ Image {
 
 .nav__link {
     font-family: "AntwerpRegular";
+    font-size: 1.25rem;
     background: var(--color-primary);
     text-decoration: none;
     color: var(--color-white);
@@ -200,6 +206,16 @@ Image {
     font-family: "AntwerpRegular";
 }
 
+.hero__subtitle {
+    color: var(--color-black);
+    font-family: "AntwerpRegular";
+    font-size: var(--hero-subtitle);
+    background: var(--color-accent-green);
+    padding: 0.2rem 2rem;
+    justify-self: end;
+    rotate: -4deg;
+}
+
 .button__subtext {
     font-family: "SunAntwerpen";
     font-weight: 500;
@@ -246,7 +262,6 @@ Image {
 
 .intro__title {
     font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
     color: var(--color-light-text);
     text-align: center;
 }
@@ -326,50 +341,7 @@ Image {
     text-align: center;
     font-family: "SunAntwerpen";
     font-weight: 700;
-}
-
-/* Locations */
-.locations {
-    place-items: center;
-    display: flex;
-    flex-flow: column nowrap;
-    overflow: hidden;
-}
-
-.locations__title {
-    font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
-    color: var(--color-black);
-    text-align: center;
-    background: var(--color-accent-green);
-    padding: 0.25rem 2rem;
-    translate: 0 2rem;
-}
-
-.locations__list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--color-white);
-    gap: var(--space-l);
-    background: var(--color-blue);
-    width: 100%;
-    padding: 5rem 0;
-}
-
-.location {
-    place-items: center;
-}
-
-.location__city {
-    font-family: "AntwerpRegular";
-    font-weight: 500;
-    color: var(--color-accent-green);
-    padding: 1rem 0;
-}
-
-.locations__bottom {
-    background: var(--color-blue);
+    font-size: 1rem;
 }
 
 /* featured */
@@ -395,7 +367,6 @@ Image {
 
 .featured__title {
     font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
     font-weight: 500;
 }
 
@@ -423,7 +394,6 @@ Image {
 
 .information__title {
     font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
     font-weight: 500;
     text-align: center;
 }
@@ -455,50 +425,6 @@ Image {
 .featured__scroll {
     overflow-x: scroll;
     width: 100%;
-}
-
-.featured__submissions {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: max-content;
-    overflow: hidden;
-    max-width: 100%;
-}
-
-.submission__card {
-    flex-shrink: 0;
-    width: 320px;
-}
-
-.featured__submissions {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 2rem;
-    padding: 2 0rem;
-}
-
-.submission {
-    display: grid;
-    gap: 2rem;
-}
-
-.submission__image {
-    box-shadow: 0.5rem 0.60rem var(--color-blue);
-}
-
-.submission__details {
-    display: flex;
-    flex-flow: row nowrap;
-}
-
-.submission__details {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    padding: 0 2rem;
 }
 
 /* Footer */
@@ -579,221 +505,6 @@ Image {
     text-align: center;
 }
 
-/* Things for the routes page */
-
-/* Routes Hero */
-.hero__routes {
-    display: grid;
-}
-
-.hero__title {
-    font-family: "BacalarRegular";
-    font-size: var(--step-0-h1);
-    color: var(--color-white);
-    text-align: center;
-}
-
-.hero__top {
-    display: grid;
-    place-items: center;
-    background: var(--color-dark);
-}
-
-.routes__content {
-    display: grid;
-    place-items: center;
-    color: var(--color-white);
-    padding: 5rem 0;
-    gap: 1rem;
-    max-width: 35rem;
-}
-
-.hero__subtitle {
-    color: var(--color-black);
-    font-family: "AntwerpRegular";
-    font-size: var(--font-size-s);
-    background: var(--color-accent-green);
-    padding: 0.5rem 2rem;
-    justify-self: end;
-    rotate: -3deg;
-}
-
-.routes__subtext {
-    font-family: "SunAntwerpen";
-    font-weight: 500;
-    color: var(--color-white);
-    font-size: var(--font-size-s);
-    max-width: 55ch;
-    text-align: center;
-}
-
-/* Routes */
-.routes {
-    display: grid;
-    place-items: center;
-    padding: 2rem 0 0 0;
-}
-
-.routes__title {
-    font-family: "AntwerpRegular";
-    font-size: var(--step-0-h2);
-    padding: 2rem 0;
-}
-
-.pov__list {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 5rem;
-    background: var(--color-dark);
-    padding: 2rem 0;
-    width: 100%;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.pov__name {
-    color: var(--color-white);
-    padding: 0.5rem 5rem;
-    font-family: "AntwerpRegular";
-    font-size: var(--font-size-s);
-    cursor: pointer;
-    transition: all 250ms ease;
-}
-
-.pov__name:hover {
-    box-shadow: 0rem 0rem;
-}
-
-.pov__name--fashion {
-    background: var(--color-accent-green);
-    box-shadow: var(--color-blue) 0.2rem 0.2rem;
-    color: var(--color-black);
-}
-
-.pov__name--mc {
-    background: var(--color-blue);
-    box-shadow: var(--color-accent-green) 0.2rem 0.2rem;
-}
-
-.pov__name--raver {
-    background: var(--color-accent-pink);
-    box-shadow: var(--color-accent-green) 0.2rem 0.2rem;
-    color: var(--color-black);
-}
-
-.pov__name--active {
-    box-shadow: #B7EA63 0rem 0rem;
-}
-
-.povroutes {
-    display: grid;
-    width: 100%;
-}
-
-/* Routes maps povs */
-.pov__route {
-    grid-area: 1/1/1/1;
-    background: var(--color-blue);
-    padding: 2rem 0;
-    width: 100%;
-    display: grid;
-    place-items: center;
-    color: var(--color-white);
-    gap: 5rem;
-    opacity: 0;
-    transition: all 250ms ease;
-}
-
-.pov__route--active {
-    opacity: 1;
-    z-index: 100;
-}
-
-#fashionista {}
-
-#mc {}
-
-#raver {}
-
-
-.POV__title {
-    font-family: "AntwerpRegular";
-    font-size: var(--space-m);
-}
-
-.povroute__content {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 3rem;
-    align-items: center;
-}
-
-.route__stats {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 5rem;
-}
-
-.stat__list {
-    display: grid;
-    place-items: center;
-    gap: 1rem;
-}
-
-.stat__info {
-    color: var(--color-accent-green);
-    font-family: "AntwerpRegular";
-}
-
-.route__buttons {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 2rem;
-    width: 100%;
-    justify-content: center;
-}
-
-.route__download {
-    border: var(--color-accent-green) 0.2rem solid;
-    background: var(--color-accent-green);
-    color: var(--color-dark);
-}
-
-.route__save {
-    border: var(--color-white) 0.2rem solid;
-    color: var(--color-white);
-}
-
-.route__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font-family: "AntwerpRegular";
-    font-size: var(--font-size-s);
-    padding: 0.75rem 0;
-}
-
-.route__image {
-    box-shadow: 0.5rem 0.5rem var(--route-shadow-color);
-}
-
-.route__stops {
-    padding: 2rem 0;
-    display: grid;
-    gap: 2rem;
-    place-items: center;
-    background: linear-gradient(to bottom,
-            var(--color-blue) 60%,
-            var(--bg-black) 60% 100%)
-}
-
-.stops__title {
-    font-size: var(--step-0-h2);
-    font-family: "AntwerpRegular";
-    color: var(--color-white);
-}
-
 /* More information section, bottom */
 .information__button {
     background: var(--color-blue);
@@ -818,6 +529,14 @@ Image {
 .antwerplogo__bg {
     grid-area: 1 / 1 / 1 / 1;
     animation: spin 20s linear infinite;
+}
+
+.intro__title,
+.routes__title,
+.information__title,
+.citytrip__title,
+.featured__title {
+    font-size: var(--step-0-h2);
 }
 
 @keyframes spin {
@@ -852,15 +571,6 @@ Image {
 @media screen and (min-width: 36rem) {
     .container {
         max-width: 32rem;
-    }
-
-    /* POVS */
-    .route__buttons {
-        flex-flow: row nowrap;
-    }
-
-    .route__button {
-        padding: 0.75rem 2rem;
     }
 }
 

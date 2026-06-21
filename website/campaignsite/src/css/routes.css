@@ -1,13 +1,268 @@
+:root {
+    --current-pov-bg-color: #545CAB;
+    --current-pov-text-color: white;
+    --current-pov-secondary-color: #B7EA63;
+    --current-pov-shadow-color: #FF70E8;
+    --current-pov-download-color: #1E1E1E;
+}
+
 /* Hero stuff */
 .hero__subtitle {
-    color: var(--color-black);
-    font-family: "AntwerpRegular";
-    font-size: var(--font-size-s);
-    background: var(--color-accent-green);
-    padding: 0.2rem 2rem;
     justify-self: end;
     rotate: -4deg;
     translate: 0rem -4rem;
 }
 
-.hero__image {}
+.hero__image {
+    padding: 3rem 0;
+}
+
+/* POV section */
+#fashionista {}
+
+.pov__subtitle {
+    text-align: center;
+}
+
+/* Things for the routes page */
+
+/* Routes Hero */
+.hero__routes {
+    display: grid;
+}
+
+.hero__title {
+    font-family: "BacalarRegular";
+    font-size: var(--step-0-h1);
+    color: var(--color-white);
+    text-align: center;
+}
+
+.hero__top {
+    display: grid;
+    place-items: center;
+    background: var(--color-dark);
+}
+
+.routes__content {
+    display: grid;
+    place-items: center;
+    color: var(--color-white);
+    padding: 2rem 0 5rem 0;
+    gap: 1rem;
+    max-width: 35rem;
+}
+
+.routes__subtext {
+    font-family: "SunAntwerpen";
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: var(--font-size-s);
+    max-width: 55ch;
+    text-align: center;
+}
+
+/* Routes */
+.routes {
+    display: grid;
+    place-items: center;
+}
+
+.routes__title {
+    font-family: "AntwerpRegular";
+    padding: 2rem 0;
+    background: var(--bg-black);
+    text-align: center;
+    color: var(--color-white);
+    width: 100%;
+    height: 100%;
+}
+
+.pov__list {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+    background: var(--color-dark);
+    padding: 2rem 0;
+    width: 100%;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.pov__name {
+    color: var(--color-white);
+    padding: 0.5rem 5rem;
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-s);
+    cursor: pointer;
+    transition: all 250ms ease;
+}
+
+.pov__name:hover {
+    box-shadow: 0rem 0rem;
+}
+
+.pov__name--fashion {
+    background: var(--color-accent-green);
+    box-shadow: var(--color-blue) 0.2rem 0.2rem;
+    color: var(--color-black);
+}
+
+.pov__name--mc {
+    background: var(--color-blue);
+    box-shadow: var(--color-accent-green) 0.2rem 0.2rem;
+}
+
+.pov__name--raver {
+    background: var(--color-accent-pink);
+    box-shadow: var(--color-accent-green) 0.2rem 0.2rem;
+    color: var(--color-black);
+}
+
+.pov__name--active {
+    box-shadow: #B7EA63 0rem 0rem;
+}
+
+.povroutes {
+    display: grid;
+    width: 100%;
+}
+
+/* Routes maps povs */
+.pov__route {
+    grid-area: 1/1/1/1;
+    background: var(--current-pov-bg-color);
+    padding: 2rem 0;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--current-pov-text-color);
+    gap: 5rem;
+    opacity: 0;
+    transition: all 250ms ease;
+}
+
+#fashionista {}
+
+#mc {}
+
+#raver {}
+
+
+.POV__title {
+    font-family: "AntwerpRegular";
+    font-size: var(--space-m);
+}
+
+.povroute__content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3rem;
+    align-items: center;
+}
+
+.route__stats {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5rem;
+}
+
+.stat__list {
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+}
+
+.stat__icon {
+    fill: var(--current-pov-secondary-color);
+}
+
+.stat__info {
+    color: var(--current-pov-secondary-color);
+    font-family: "AntwerpRegular";
+}
+
+.route__buttons {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.route__download {
+    background: var(--current-pov-secondary-color);
+    color: var(--current-pov-download-color);
+}
+
+.route__save {
+    background: var(--color-white);
+    color: var(--color-blue);
+}
+
+.route__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-family: "AntwerpRegular";
+    font-size: var(--font-size-s);
+    padding: 0.5rem 0;
+}
+
+.route__image {
+    box-shadow: 0.5rem 0.5rem var(--current-pov-shadow-color);
+}
+
+.stops__collection {
+    display: grid;
+    place-content: center;
+    width: 100%;
+}
+
+.route__stops {
+    width: 100%;
+    grid-area: 1/1/1/1;
+    padding: 2rem 0;
+    display: grid;
+    gap: 2rem;
+    place-items: center;
+    background: linear-gradient(to bottom,
+            var(--current-pov-bg-color) 60%,
+            var(--bg-black) 60% 100%);
+}
+
+.stops__list {
+    grid-area: 1/1/1/1;
+    opacity: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 2rem;
+    transition: all 250ms ease;
+}
+
+.pov__route--active {
+    opacity: 1;
+    z-index: 100;
+}
+
+.stop__image {
+    box-shadow: 0.3rem 0.3rem var(--current-pov-shadow-color);
+}
+
+.stops__title {
+    font-family: "AntwerpRegular";
+    color: var(--current-pov-text-color);
+}
+
+@media screen and (min-width: 36rem) {
+
+    /* POVS */
+    .route__buttons {
+        flex-flow: row nowrap;
+    }
+
+    .route__button {
+        padding: 0.5rem 2rem;
+    }
+}
