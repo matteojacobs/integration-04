@@ -6,7 +6,7 @@
 .hero__subtitle {
     justify-self: end;
     rotate: -3deg;
-    translate: -1rem -2.5rem;
+    translate: -0.5rem -1.2rem;
 }
 
 .hero__images {
@@ -365,20 +365,40 @@
 @media screen and (min-width: 24rem) {}
 
 @media screen and (min-width: 36rem) {
+    .hero__subtitle {
+        translate: -0.5rem -1.2rem;
+    }
+
     .step__content {
         max-width: max-content;
     }
 }
 
 @media screen and (min-width: 50rem) {
+    .hero__subtitle {
+        translate: -3rem -1.75rem;
+    }
+
     .citytrip__container {
         flex-flow: row nowrap;
         justify-content: space-between;
     }
 }
 
-@media screen and (min-width: 60rem) {}
+@media screen and (min-width: 60rem) {
+    .hero__subtitle {
+        translate: -8rem -1.75rem;
+    }
+}
 
-@media screen and (min-width: 75rem) {}
+@media screen and (min-width: 75rem) {
+    .hero__subtitle {
+        translate: -11rem -2.2rem;
+    }
+}
 
-@media screen and (min-width: 90rem) {}
+@media screen and (min-width: 90rem) {
+    .hero__subtitle {
+        translate: -22rem -2.75rem;
+    }
+}

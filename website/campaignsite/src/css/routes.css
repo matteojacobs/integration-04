@@ -10,7 +10,7 @@
 .hero__subtitle {
     justify-self: end;
     rotate: -4deg;
-    translate: 0rem -4rem;
+    translate: -3rem -2.4rem;
 }
 
 .hero__image {
@@ -214,12 +214,20 @@
 
 .route__download {
     background: var(--current-pov-secondary-color);
+    border: var(--current-pov-secondary-color) 0.2rem solid;
     color: var(--current-pov-download-color);
+    transition: all 250ms ease;
+}
+
+.route__download:hover {
+    background: none;
 }
 
 .route__save {
     background: var(--color-white);
+    border: var(--color-white) 0.2rem solid;
     color: var(--color-blue);
+    transition: all 250ms ease;
 }
 
 .route__button {
@@ -259,6 +267,8 @@
     color: var(--color-white);
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
+    gap: 1rem;
 }
 
 .location__index {
@@ -266,6 +276,7 @@
         sans-serif;
     font-weight: 400;
     font-style: normal;
+    font-size: 1.8rem;
 }
 
 .location__text {
@@ -316,6 +327,11 @@
 
 @media screen and (min-width: 36rem) {
 
+    /* hero */
+    .hero__subtitle {
+        translate: -7rem -2.4rem;
+    }
+
     /* POVS */
     .route__buttons {
         flex-flow: row nowrap;
@@ -326,9 +342,37 @@
     }
 }
 
+@media screen and (min-width: 50rem) {
+
+    /* hero */
+    .hero__subtitle {
+        translate: -4rem -2.75rem;
+    }
+}
+
 @media screen and (min-width: 60rem) {
+
+    /* hero */
+    .hero__subtitle {
+        translate: -2rem -2.75rem;
+    }
+
     .pov__list {
         gap: 0rem;
         justify-content: space-between;
+    }
+}
+
+@media screen and (min-width: 75rem) {
+    /* hero */
+    .hero__subtitle {
+        translate: -1rem -3.5rem;
+    }
+}
+
+@media screen and (min-width: 90rem) {
+    /* hero */
+    .hero__subtitle {
+        translate: 0rem -3.75rem;
     }
 }
