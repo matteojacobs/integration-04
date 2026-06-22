@@ -27,6 +27,7 @@ type RemoteToDesktopMessage =
     contactMode:"email" | "phone";
     contactValue: string;
     featureMe: boolean;
+    captureLocation: string;
   };
 
 type DesktopToRemoteMessage =
@@ -77,7 +78,6 @@ let contactMode: ContactMode = "email";
 
 const INACTIVITY_TIME = 30000; // 30 seconds
 let inactivityTimeoutId: number | null = null;
-
 
 const $contactLabel = document.getElementById("contactLabel") as HTMLLabelElement | null;
 const $contactField = document.getElementById("contactField") as HTMLElement | null;
@@ -626,6 +626,7 @@ const checkButtons = () => {
       contactMode,
       contactValue: value,
       featureMe: $featureInput?.checked === true,
+      captureLocation: "Kortrijk"
     });
 
     window.setTimeout(() => {

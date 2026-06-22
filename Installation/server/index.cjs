@@ -69,6 +69,7 @@ app.post("/api/submissions", async (req, res) => {
       contactMode,
       contactValue,
       featureMe,
+      captureLocation,
     } = req.body;
 
     if (!povId || !decoratedImageDataUrl) {
@@ -112,8 +113,6 @@ app.post("/api/submissions", async (req, res) => {
       }
     }
 
-    const publishStatus = featureMe ? "pending" : "private";
-
     const { data, error: insertError } = await supabase
       .from("photo_submissions")
       .insert({
@@ -123,6 +122,7 @@ app.post("/api/submissions", async (req, res) => {
         contact_mode: contactMode,
         contact_value: contactValue,
         feature_me: featureMe,
+        capture_location: captureLocation,
       })
       .select()
       .single();

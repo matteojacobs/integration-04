@@ -32,6 +32,7 @@ type RemoteToDesktopMessage =
     contactMode: "email" | "phone";
     contactValue: string;
     featureMe: boolean;
+    captureLocation: string;
   };
 
 
@@ -543,6 +544,7 @@ async function saveCapturedImageToDatabase(message: {
   contactMode: "email" | "phone";
   contactValue: string;
   featureMe: boolean;
+  captureLocation: string;
 }) {
   if (!lastCaptureImages) {
     console.error("No captured image to save.");
@@ -562,6 +564,7 @@ async function saveCapturedImageToDatabase(message: {
         contactMode: message.contactMode,
         contactValue: message.contactValue,
         featureMe: message.featureMe,
+        captureLocation: message.captureLocation,
       }),
     });
 
