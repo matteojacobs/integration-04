@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-import Installation from "../assets/installation.png"
+import Installation from "../assets/installation.png";
 ---
 
 <section class="citytrip">
@@ -25,7 +25,7 @@ import Installation from "../assets/installation.png"
             <ul class="citytrip__steps">
                 <li class="citytrip__step">
                     <ul class="step__content">
-                        <li>
+                        <li class="step__icon">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="44"
@@ -38,12 +38,14 @@ import Installation from "../assets/installation.png"
                                     fill="#545CAB"></path>
                             </svg>
                         </li>
-                        <li class="citytrip__text">find installation</li>
+                        <li class="citytrip__text step__text">
+                            find installation
+                        </li>
                     </ul>
                 </li>
                 <li class="citytrip__step">
                     <ul class="step__content">
-                        <li>
+                        <li class="step__icon">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="71"
@@ -62,7 +64,7 @@ import Installation from "../assets/installation.png"
                                     fill="#545CAB"></path>
                             </svg>
                         </li>
-                        <li class="citytrip__text">customize</li>
+                        <li class="citytrip__text step__text">customize</li>
                     </ul>
                 </li>
                 <li class="citytrip__step">
@@ -86,11 +88,17 @@ import Installation from "../assets/installation.png"
                                     fill="#545CAB"></path>
                             </svg>
                         </li>
-                        <li class="citytrip__text">capture the moment</li>
+                        <li class="citytrip__text step__text">
+                            capture the moment
+                        </li>
                     </ul>
                 </li>
             </ul>
         </div>
-        <Image class="citytrip__installation" src={Installation} alt="Installationscreen" />
+        <Image
+            class="citytrip__installation"
+            src={Installation}
+            alt="Installationscreen"
+        />
     </div>
 </section>

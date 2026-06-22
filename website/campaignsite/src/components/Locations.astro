@@ -1,78 +1,42 @@
+---
+const locations = [
+    { city: "Amsterdam", place: "NDSM Wharf" },
+    { city: "Leuven", place: "Oude Markt" },
+    { city: "Rotterdam", place: "Schouwburgplein" },
+    { city: "Bruges", place: "Markt" },
+    { city: "Antwerp", place: "Groenplaats" },
+];
+---
+
 <section class="locations">
     <h2 class="locations__title">Where we are located</h2>
     <ul class="locations__list">
-        <li>
-            <ul class="location">
+        {
+            locations.map((location) => (
                 <li>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="54"
-                        height="75"
-                        viewBox="0 0 54 75"
-                        fill="none"
-                    >
-                        <path
-                            d="M50.625 16.875V10.125H47.25V6.75H43.875V3.375H37.125V0H16.875V3.375H10.125V6.75H6.75V10.125H3.375V16.875H0V37.125H3.375V43.875H6.75V47.25H10.125V54H13.5V57.375H16.875V64.125H20.25V67.5H23.625V74.25H30.375V67.5H33.75V64.125H37.125V57.375H40.5V54H43.875V47.25H47.25V43.875H50.625V37.125H54V16.875H50.625ZM33.75 33.75H30.375V37.125H23.625V33.75H20.25V30.375H16.875V23.625H20.25V20.25H23.625V16.875H30.375V20.25H33.75V23.625H37.125V30.375H33.75V33.75Z"
-                            fill="#E37ED4"></path>
-                    </svg>
+                    <ul class="location">
+                        <li>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="54"
+                                height="75"
+                                viewBox="0 0 54 75"
+                                fill="none"
+                            >
+                                <path
+                                    d="M50.625 16.875V10.125H47.25V6.75H43.875V3.375H37.125V0H16.875V3.375H10.125V6.75H6.75V10.125H3.375V16.875H0V37.125H3.375V43.875H6.75V47.25H10.125V54H13.5V57.375H16.875V64.125H20.25V67.5H23.625V74.25H30.375V67.5H33.75V64.125H37.125V57.375H40.5V54H43.875V47.25H47.25V43.875H50.625V37.125H54V16.875H50.625ZM33.75 33.75H30.375V37.125H23.625V33.75H20.25V30.375H16.875V23.625H20.25V20.25H23.625V16.875H30.375V20.25H33.75V23.625H37.125V30.375H33.75V33.75Z"
+                                    fill="#E37ED4"
+                                />
+                            </svg>
+                        </li>
+                        <div class="location__text">
+                            <li class="location__city">{location.city}</li>
+                            <li class="location__place">{location.place}</li>
+                        </div>
+                    </ul>
                 </li>
-                <li class="location__city">Antwerpen</li>
-            </ul>
-        </li>
-        <li>
-            <ul class="location">
-                <li>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="54"
-                        height="75"
-                        viewBox="0 0 54 75"
-                        fill="none"
-                    >
-                        <path
-                            d="M50.625 16.875V10.125H47.25V6.75H43.875V3.375H37.125V0H16.875V3.375H10.125V6.75H6.75V10.125H3.375V16.875H0V37.125H3.375V43.875H6.75V47.25H10.125V54H13.5V57.375H16.875V64.125H20.25V67.5H23.625V74.25H30.375V67.5H33.75V64.125H37.125V57.375H40.5V54H43.875V47.25H47.25V43.875H50.625V37.125H54V16.875H50.625ZM33.75 33.75H30.375V37.125H23.625V33.75H20.25V30.375H16.875V23.625H20.25V20.25H23.625V16.875H30.375V20.25H33.75V23.625H37.125V30.375H33.75V33.75Z"
-                            fill="#E37ED4"></path>
-                    </svg>
-                </li>
-                <li class="location__city">Antwerpen</li>
-            </ul>
-        </li>
-        <li>
-            <ul class="location">
-                <li>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="54"
-                        height="75"
-                        viewBox="0 0 54 75"
-                        fill="none"
-                    >
-                        <path
-                            d="M50.625 16.875V10.125H47.25V6.75H43.875V3.375H37.125V0H16.875V3.375H10.125V6.75H6.75V10.125H3.375V16.875H0V37.125H3.375V43.875H6.75V47.25H10.125V54H13.5V57.375H16.875V64.125H20.25V67.5H23.625V74.25H30.375V67.5H33.75V64.125H37.125V57.375H40.5V54H43.875V47.25H47.25V43.875H50.625V37.125H54V16.875H50.625ZM33.75 33.75H30.375V37.125H23.625V33.75H20.25V30.375H16.875V23.625H20.25V20.25H23.625V16.875H30.375V20.25H33.75V23.625H37.125V30.375H33.75V33.75Z"
-                            fill="#E37ED4"></path>
-                    </svg>
-                </li>
-                <li class="location__city">Antwerpen</li>
-            </ul>
-        </li>
-        <li>
-            <ul class="location">
-                <li>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="54"
-                        height="75"
-                        viewBox="0 0 54 75"
-                        fill="none"
-                    >
-                        <path
-                            d="M50.625 16.875V10.125H47.25V6.75H43.875V3.375H37.125V0H16.875V3.375H10.125V6.75H6.75V10.125H3.375V16.875H0V37.125H3.375V43.875H6.75V47.25H10.125V54H13.5V57.375H16.875V64.125H20.25V67.5H23.625V74.25H30.375V67.5H33.75V64.125H37.125V57.375H40.5V54H43.875V47.25H47.25V43.875H50.625V37.125H54V16.875H50.625ZM33.75 33.75H30.375V37.125H23.625V33.75H20.25V30.375H16.875V23.625H20.25V20.25H23.625V16.875H30.375V20.25H33.75V23.625H37.125V30.375H33.75V33.75Z"
-                            fill="#E37ED4"></path>
-                    </svg>
-                </li>
-                <li class="location__city">Antwerpen</li>
-            </ul>
-        </li>
+            ))
+        }
     </ul>
     <svg
         class="locations__bottom"
