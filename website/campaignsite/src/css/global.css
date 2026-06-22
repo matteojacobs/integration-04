@@ -71,6 +71,8 @@
 
     --step-0-h1: clamp(3.8125rem, 2.2407rem + 6.3992vw, 8rem);
     --step-0-h2: clamp(2.5rem, 2.1481rem + 1.4327vw, 3.4375rem);
+    --step-0-h3: clamp(1rem, 2rem + 1.5vw, 5rem);
+    --step-0-h4: clamp(1rem, 0.4rem + 1vw, 1.1rem);
 
     --hero-subtitle: clamp(1rem, 0.8592rem + 0.5731vw, 1.375rem);
 }
@@ -94,7 +96,7 @@ body {
     font-weight: 500;
     line-height: 1.4;
     /* padding: var(--space-l) var(--space-s) var(--space-s); */
-    color: var(--color-grey);
+    color: var(--color-dark);
     background: var(--color-background);
     font-size: var(--step-0-bodytext);
 }
@@ -168,9 +170,8 @@ Image {
 .hero__title {
     font-family: "BacalarRegular";
     font-size: var(--step-0-h1);
-    color: var(--color-light-text-alt);
-    grid-area: 1/1/1/1;
     text-align: center;
+    color: var(--color-white);
 }
 
 .carousel__content {
@@ -185,9 +186,6 @@ Image {
     display: grid;
 }
 
-.hero__content {
-    display: flex;
-}
 
 .hero__button {
     background: var(--color-accent-pink);
@@ -204,7 +202,7 @@ Image {
     font-family: "AntwerpRegular";
     font-size: var(--hero-subtitle);
     background: var(--color-accent-green);
-    padding: 0.2rem 2rem;
+    padding: 0.4rem 2.3rem;
     justify-self: end;
     rotate: -4deg;
 }
@@ -546,6 +544,10 @@ Image {
 }
 
 @media screen and (min-width: 75rem) {
+    .nav {
+        padding-top: 3rem;
+    }
+
     .container {
         max-width: 70rem;
     }
