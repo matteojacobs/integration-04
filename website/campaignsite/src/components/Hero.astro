@@ -1,10 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import HeroImg1 from "../assets/hero-home/hero-img-1.png";
-import HeroImg2 from "../assets/hero-home/hero-img2.png";
-import HeroImg3 from "../assets/hero-home/hero-img-3.png";
-
-// const heroImages = [HeroImg1, HeroImg2, HeroImg3];
+import AntwerpLogoUrl from "../assets/Hero-antwerp.svg?url";
 
 const imageModules = import.meta.glob(
     "../assets/hero-home/*.{png,jpg,jpeg,webp}",
@@ -13,31 +9,110 @@ const imageModules = import.meta.glob(
 
 const heroImages = Object.entries(imageModules)
     .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-    .map(([, mod]) => mod.default);
+    .map(([, mod]) => (mod as { default: ImageMetadata }).default);
+
+const columnCount = 5;
+
+const columns = Array.from(
+    { length: columnCount },
+    () => [] as ImageMetadata[],
+);
+
+heroImages.forEach((image, index) => {
+    columns[index % columnCount].push(image);
+});
 ---
 
 <section class="hero">
-    <h1 class="hero__title">AntwerPOV</h1>
-    <p class="hero__subtitle">View Antwerp through others</p>
-    <div class="hero__content">
-        <ul class="hero__images">
+    <div class="hero__top">
+        <h1 class="hero__title">AntwerPOV</h1>
+        <p class="hero__subtitle">View Antwerp through others</p>
+    </div>
+
+    <div class="hero__image-window" aria-hidden="true">
+        <div class="hero__columns">
             {
-                heroImages.map((heroImage) => {
-                    return (
-                        <li>
-                            <Image src={heroImage} alt="" />
-                        </li>
-                    );
-                })
+                columns.map((column, columnIndex) => (
+                    <ul
+                        class="hero__column"
+                        data-direction={columnIndex % 2 === 0 ? "up" : "down"}
+                    >
+                        {column.map((heroImage) => (
+                            <li class="hero__image-item">
+                                <Image
+                                    class="hero__image"
+                                    src={heroImage}
+                                    alt=""
+                                    loading="eager"
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                ))
             }
-        </ul>
+        </div>
+    </div>
+    <div class="hero__bottom">
+        <p class="hero__tagline">Experience POVs</p>
+        <div class="hero__credits">
+            <p>Brought to you by</p>
+            <img
+                class="credits__image"
+                src={AntwerpLogoUrl}
+                alt="Antwerp logo"
+            />
+            <a class="credits__link" href="https://visit.antwerpen.be/en"
+                >Visitantwerp.be
+            </a>
+        </div>
     </div>
 </section>
-<div class="hero__bottom">
-    <p class="hero__tagline">Experience POVs</p>
-    <div class="hero__credits">
-        <p>Brought to you by</p><p>A</p><a class="credits__link" href="https://visit.antwerpen.be/en"
-            >Visitantwerp.be</a
-        >
-    </div>
-</div>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+        const columns = gsap.utils.toArray<HTMLElement>(".hero__column");
+
+        columns.forEach((column) => {
+            const direction = column.dataset.direction === "up" ? -1 : 1;
+
+            gsap.to(column, {
+                y: direction * 500,
+                x: direction * -50,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true,
+                },
+            });
+        });
+    });
+
+    mm.add("(max-width: 767px)", () => {
+        const columns = gsap.utils.toArray<HTMLElement>(".hero__column");
+
+        columns.forEach((column) => {
+            const direction = column.dataset.direction === "up" ? -1 : 1;
+
+            gsap.to(column, {
+                y: direction * 180,
+                x: direction * -20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1.5,
+                },
+            });
+        });
+    });
+</script>
