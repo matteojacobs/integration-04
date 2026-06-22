@@ -390,8 +390,8 @@ function renderRoute() {
 
   if (!routeQr || !currentPov) return;
 
-  const url = new URL("https://antwerpov.com/routes");
-  url.searchParams.set("pov", currentPov.id);
+  const url = new URL("https://matteojacobs.github.io/integration-04/routes/");
+  url.searchParams.set("route", currentPov.id);
 
   const qr = qrcode(4, "L");
   qr.addData(url.toString());

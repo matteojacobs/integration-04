@@ -44,7 +44,7 @@ export const POVS: Pov[] = [
       { id: "bg2", label: "View on MAS", preview:"main-character-mas" },
       { id: "bg3", label: "Cozy street", preview: "main-character-cozystreet" },
     ],
-    routeLabel: "Main-character",
+    routeLabel: "mc",
   },
   {
     id: "raver",
@@ -63,7 +63,7 @@ export const POVS: Pov[] = [
       { id: "bg2", label: "Cafe", preview: "raver-cafe" },
       { id: "bg3", label: "Festival", preview: "raver-festival" },
     ],
-    routeLabel: "Nightlife",
+    routeLabel: "raver",
   },
   {
     id: "fashionista",
@@ -82,6 +82,6 @@ export const POVS: Pov[] = [
       { id: "bg2", label: "Meir", preview: "fashionista-meir" },
       { id: "bg3", label: "Fitting room", preview: "fashionista-fittingroom" },
     ],
-    routeLabel: "Fashion",
+    routeLabel: "fashionista",
   },
 ];
