@@ -301,49 +301,6 @@ Image {
     box-shadow: 0rem 0rem var(--color-accent-green);
 }
 
-.pov__cards {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-}
-
-.pov__card {
-    background: var(--color-white);
-    max-width: 18rem;
-    width: 100%;
-}
-
-.pov__image {
-    justify-self: end;
-}
-
-.pov__title {
-    font-family: "AntwerpRegular";
-    font-size: 24px;
-    padding: 1rem;
-}
-
-.pov__content {
-    display: grid;
-    place-items: center;
-    height: 100%;
-}
-
-.pov__bottom {
-    background: var(--color-accent-green);
-    padding: 1rem;
-    width: 100%;
-    min-height: 7rem;
-    align-self: end;
-}
-
-.pov__text {
-    text-align: center;
-    font-family: "SunAntwerpen";
-    font-weight: 700;
-    font-size: 1rem;
-}
-
 /* featured */
 .featured {}
 
