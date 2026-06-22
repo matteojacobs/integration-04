@@ -11,7 +11,7 @@ type Submission = {
     decorated_image_path: string;
 };
 
-function timeAgo(dateString: string) {
+const timeAgo = (dateString: string) => {
     const seconds = Math.floor(
         (Date.now() - new Date(dateString).getTime()) / 1000,
     );

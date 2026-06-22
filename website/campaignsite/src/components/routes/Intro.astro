@@ -1,6 +1,10 @@
 ---
 import { Image } from "astro:assets";
-import Route1 from "../../assets/routes/route_1.png";
+
+import Route1 from "../../assets/routes/fashionistaRoute.png";
+import Route2 from "../../assets/routes/mcRoute.png";
+import Route3 from "../../assets/routes/raverRoute.png";
+
 import RouteStops from "./RouteStops.astro";
 ---
 
@@ -102,7 +106,7 @@ import RouteStops from "./RouteStops.astro";
                     <li>
                         <a
                             class="route__download route__button"
-                            href="routes/route-fashionista.pdf"
+                            href="route-fashionista.pdf"
                             download="fashionista-route">Download PDF</a
                         >
                     </li>
@@ -128,7 +132,7 @@ import RouteStops from "./RouteStops.astro";
                     through their eyes.
                 </p>
                 <!-- Image thingie -->
-                <Image class="route__image" src={Route1} alt="meow" />
+                <Image class="route__image" src={Route2} alt="meow" />
                 <ul class="route__stats">
                     <li class="route__stat">
                         <ul class="stat__list">
@@ -196,7 +200,7 @@ import RouteStops from "./RouteStops.astro";
                     <li>
                         <a
                             class="route__download route__button"
-                            href="routes/route-mc.pdf"
+                            href="route-mc.pdf"
                             download="mc-route">Download PDF</a
                         >
                     </li>
@@ -223,7 +227,7 @@ import RouteStops from "./RouteStops.astro";
                     sunrise.
                 </p>
                 <!-- Image thingie -->
-                <Image class="route__image" src={Route1} alt="meow" />
+                <Image class="route__image" src={Route3} alt="meow" />
                 <ul class="route__stats">
                     <li class="route__stat">
                         <ul class="stat__list">
@@ -291,7 +295,7 @@ import RouteStops from "./RouteStops.astro";
                     <li>
                         <a
                             class="route__download route__button"
-                            href="routes/route-raver.pdf"
+                            href="route-raver.pdf"
                             download="raver-route">Download PDF</a
                         >
                     </li>
