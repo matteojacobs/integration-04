@@ -85,10 +85,14 @@ html {
     box-sizing: inherit;
 }
 
+main {
+    background: var(--bg-black);
+}
+
 body {
     font-family: "SunAntwerpen";
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.4;
     /* padding: var(--space-l) var(--space-s) var(--space-s); */
     color: var(--color-grey);
     background: var(--color-background);
@@ -167,17 +171,6 @@ Image {
     color: var(--color-light-text-alt);
     grid-area: 1/1/1/1;
     text-align: center;
-}
-
-.hero__bottom {
-    padding: var(--space-s) var(--space-m);
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    grid-area: 1/1/1/1;
-    align-items: center;
-    align-self: flex-end;
-    background: var(--color-dark);
 }
 
 .carousel__content {
@@ -341,6 +334,7 @@ Image {
     display: grid;
     padding: 0 0 0 0;
     place-items: center;
+    background: var(--color-white);
 }
 
 .information__container {

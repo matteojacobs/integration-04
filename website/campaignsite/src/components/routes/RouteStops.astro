@@ -2,6 +2,36 @@
 import { Image } from "astro:assets";
 import Image1Fashion from "../../assets/routes/fashionista/picture-1.png";
 
+const fashionistaLocations = [
+    "Graanmarkt",
+    "Korte gasthuisstraat",
+    "Lombardenvest",
+    "Kammenstraat",
+    "MoMu",
+    "Nationalestraat",
+    "Kloosterstraat",
+];
+
+const mcLocations = [
+    "Ampere",
+    "Mechelseplein",
+    "Kavka oudaan",
+    "Frituur n1",
+    "Linkeroever sunrise",
+    "Club vaag",
+    "Park spoor noord",
+];
+
+const raverLocations = [
+    "Central station",
+    "Trade fair",
+    "Stadsfeestzaal",
+    "Brabo fountain",
+    "Vlaeykensgang",
+    "Steenplijn",
+    "Vlaeykensgang",
+];
+
 const fahsionistaImages = import.meta.glob(
     "../../assets/routes/fashionista/*.{png,jpg,jpeg,webp}",
     { eager: true },
@@ -37,7 +67,7 @@ const raverImageCollection = Object.entries(raverImages)
     <div class="stops__collection">
         <ul class="stops__list pov__route--active" id="fashionista">
             {
-                fashionistaImageCollection.map((fashionistaImage) => {
+                fashionistaImageCollection.map((fashionistaImage, index) => {
                     return (
                         <li>
                             <ul>
@@ -48,7 +78,14 @@ const raverImageCollection = Object.entries(raverImages)
                                         alt="fashionistaImage"
                                     />
                                 </li>
-                                <li class="route__stop">Item</li>
+                                <li class="route__stop">
+                                    <div class="location__index">
+                                        {index + 1}
+                                    </div>
+                                    <div class="location__text">
+                                        {fashionistaLocations[index]}
+                                    </div>
+                                </li>
                             </ul>
                         </li>
                     );
@@ -57,7 +94,7 @@ const raverImageCollection = Object.entries(raverImages)
         </ul>
         <ul class="stops__list" id="mc">
             {
-                mcImageCollection.map((mcImage) => {
+                mcImageCollection.map((mcImage, index) => {
                     return (
                         <li>
                             <ul>
@@ -68,7 +105,14 @@ const raverImageCollection = Object.entries(raverImages)
                                         alt="mcImage"
                                     />
                                 </li>
-                                <li class="route__stop">Item</li>
+                                <li class="route__stop">
+                                    <div class="location__index">
+                                        {index + 1}
+                                    </div>
+                                    <div class="location__text">
+                                        {mcLocations[index]}
+                                    </div>
+                                </li>
                             </ul>
                         </li>
                     );
@@ -77,7 +121,7 @@ const raverImageCollection = Object.entries(raverImages)
         </ul>
         <ul class="stops__list" id="raver">
             {
-                raverImageCollection.map((raverImage) => {
+                raverImageCollection.map((raverImage, index) => {
                     return (
                         <li>
                             <ul>
@@ -88,7 +132,14 @@ const raverImageCollection = Object.entries(raverImages)
                                         alt="raverImage"
                                     />
                                 </li>
-                                <li class="route__stop">Item</li>
+                                <li class="route__stop">
+                                    <div class="location__index">
+                                        {index + 1}
+                                    </div>
+                                    <div class="location__text">
+                                        {raverLocations[index]}
+                                    </div>
+                                </li>
                             </ul>
                         </li>
                     );
