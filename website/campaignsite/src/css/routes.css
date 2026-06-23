@@ -50,10 +50,9 @@
     width: 100%;
     display: grid;
     place-items: center;
-    background: linear-gradient(to bottom,
-            var(--bg-black) 0% 10%,
-            #161616 10% 65%,
-            var(--bg-black) 65% 100%);
+    background-image: url(../assets/routes/routeHeroBgPhone.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 .routes__content {
@@ -387,6 +386,13 @@
     /* hero */
     .hero__subtitle {
         translate: -2rem -2.75rem;
+    }
+
+    .hero__bottom {
+        background-image: url(../assets/routes/routeHeroBg.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 0 3rem;
     }
 
     .pov__list {
