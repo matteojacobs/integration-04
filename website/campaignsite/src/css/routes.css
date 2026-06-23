@@ -377,6 +377,10 @@
     color: var(--current-pov-text-color);
 }
 
+.stops__list {
+    transform: translate(4%, 0);
+}
+
 @media screen and (min-width: 36rem) {
 
     /* hero */
@@ -391,6 +395,10 @@
 
     .route__button {
         padding: 0.5rem 2rem;
+    }
+
+    .stops__list {
+        transform: translate(19%, 0);
     }
 }
 
@@ -433,6 +441,10 @@
         gap: 0rem;
         justify-content: space-between;
     }
+
+    .stops__list {
+        transform: translate(0, 0);
+    }
 }
 
 @media screen and (min-width: 75rem) {
@@ -473,4 +485,12 @@
     .route__decoration {
         animation: none;
     }
+}
+
+.featured__bottom {
+    transform: translate(0, 3%);
+}
+
+.routes__subtext {
+    padding: 0 1rem;
 }
