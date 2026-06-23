@@ -157,6 +157,8 @@ Image {
 .nav__item {
     display: flex;
     width: 100%;
+
+    position: relative;
 }
 
 .nav__link {
@@ -170,6 +172,8 @@ Image {
     width: 100%;
     text-align: center;
     padding: 0.5rem 0;
+
+    position: relative;
 }
 
 .nav__link:hover {
@@ -181,7 +185,27 @@ Image {
     color: var(--color-accent-green);
 }
 
-.nav__link--active::backdrop {}
+.nav__item--active::before {
+    content: "";
+    position: absolute;
+
+    width: 3rem;
+    height: 3rem;
+
+    translate: 0 -1.5rem;
+
+    left: 35%;
+
+    background: url("../assets/navActive.svg") center/contain no-repeat;
+
+    z-index: 0;
+}
+
+.nav__item--active:hover {
+    &::before {
+        animation: spin 5s linear infinite;
+    }
+}
 
 
 /* Hero stuff */
@@ -513,7 +537,13 @@ Image {
 
 .footer__button {
     font-size: 1.3rem;
+    transition: all 250ms ease;
 }
+
+.footer__button:hover {
+    box-shadow: #b6ea636e 0.2rem 0.2rem;
+}
+
 
 /* More information section, bottom */
 .information__button {
@@ -524,6 +554,11 @@ Image {
     font-size: var(--font-size-s);
     font-family: "AntwerpRegular";
     max-width: fit-content;
+    transition: all 250ms ease;
+}
+
+.information__button:hover {
+    box-shadow: #545dab67 0.2rem 0.2rem;
 }
 
 .featured__bottom {
@@ -581,6 +616,20 @@ Image {
     }
 }
 
+@keyframes hovering {
+    0% {
+        transform: translateY(-1rem);
+    }
+
+    50% {
+        transform: translateY(1rem);
+    }
+
+    100% {
+        transform: translateY(-1rem);
+    }
+}
+
 
 
 /* Media queries, responsive design */
@@ -601,6 +650,15 @@ Image {
 }
 
 @media screen and (min-width: 36rem) {
+    .nav__item--active::before {
+        width: 3.5rem;
+        height: 3.5rem;
+
+        translate: 0 -1.75rem;
+
+        left: 35%;
+    }
+
     .container {
         max-width: 25rem;
     }
@@ -612,6 +670,7 @@ Image {
 
     .routes__title--arrow {
         display: inline;
+        animation: hovering 3s linear infinite;
     }
 
     .container__intro,
@@ -625,6 +684,15 @@ Image {
 }
 
 @media screen and (min-width: 50rem) {
+    .nav__item--active::before {
+        width: 4.5rem;
+        height: 4.5rem;
+
+        translate: 0 -2.25rem;
+
+        left: 37%;
+    }
+
     .container {
         max-width: 40rem;
     }
@@ -698,8 +766,17 @@ Image {
 }
 
 @media screen and (min-width: 75rem) {
+    .nav__item--active::before {
+        width: 5rem;
+        height: 5rem;
+
+        translate: 0 -2.5rem;
+
+        left: 37%;
+    }
+
     .container {
-        max-width: 55rem;
+        max-width: 57rem;
     }
 
     .nav {
@@ -740,11 +817,31 @@ Image {
 
 @media screen and (min-width: 90rem) {
     .container {
-        max-width: 65rem;
+        max-width: 67rem;
     }
 
     .citytrip__container {
-        max-width: 100%;
+        max-width: 100rem;
         margin-bottom: 0rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav__item--active:hover {
+        &::before {
+            animation: none;
+        }
+    }
+
+    .antwerplogo__bg {
+        animation: none;
+    }
+
+    .antwerplogo__bg--footer {
+        animation: none;
+    }
+
+    .routes__title--arrow {
+        animation: none;
     }
 }

@@ -237,10 +237,41 @@
     font-family: "AntwerpRegular";
     font-size: var(--font-size-s);
     padding: 0.5rem 0;
+    transition: all 250ms ease;
+}
+
+.route__button:hover {
+    background: none;
 }
 
 .route__image {
     box-shadow: 0.5rem 0.5rem var(--current-pov-shadow-color);
+    grid-area: 1/1/1/1;
+}
+
+.route__decoration {
+    grid-area: 1/1/1/1;
+    max-width: 5rem;
+    height: auto;
+    animation: spin 30s linear infinite;
+}
+
+.route__decoration--top {
+    translate: 1.5rem -1rem;
+    justify-self: end;
+    z-index: -1;
+    max-width: 3rem;
+}
+
+.route__decoration--bottom {
+    translate: -2rem 2rem;
+    align-self: end;
+    z-index: -1;
+}
+
+.route__image__display {
+    display: grid;
+
 }
 
 .stops__collection {
@@ -379,6 +410,19 @@
     .hero__subtitle {
         translate: -4rem -2.75rem;
     }
+
+    .route__decoration {
+        max-width: 7rem;
+    }
+
+    .route__decoration--top {
+        translate: 2.5rem -1.75rem;
+        max-width: 5rem;
+    }
+
+    .route__decoration--bottom {
+        translate: -3rem 3rem;
+    }
 }
 
 @media screen and (min-width: 60rem) {
@@ -407,6 +451,19 @@
     .hero__subtitle {
         translate: -1rem -3.5rem;
     }
+
+    .route__decoration {
+        max-width: 8rem;
+    }
+
+    .route__decoration--top {
+        translate: 3.5rem -2.5rem;
+        max-width: 6rem;
+    }
+
+    .route__decoration--bottom {
+        translate: -3.5rem 3.5rem;
+    }
 }
 
 @media screen and (min-width: 90rem) {
@@ -414,5 +471,16 @@
     /* hero */
     .hero__subtitle {
         translate: 0rem -3.75rem;
+    }
+
+    .pov__list {
+        padding-left: 10rem;
+        padding-right: 10rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .route__decoration {
+        animation: none;
     }
 }
