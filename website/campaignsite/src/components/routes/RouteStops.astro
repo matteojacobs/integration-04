@@ -32,6 +32,26 @@ const raverLocations = [
     "Vlaeykensgang",
 ];
 
+const colorCycleLocationIndex = [
+    "location__index--blue",
+    "location__index--pink",
+    "location__index--green",
+    "location__index--white",
+    "location__index--blue",
+    "location__index--pink",
+    "location__index--green",
+];
+
+const colorCycleStopImages = [
+    "stop__image--blue",
+    "stop__image--pink",
+    "stop__image--green",
+    "stop__image--white",
+    "stop__image--blue",
+    "stop__image--pink",
+    "stop__image--green",
+];
+
 const fahsionistaImages = import.meta.glob(
     "../../assets/routes/fashionista/*.{png,jpg,jpeg,webp}",
     { eager: true },
@@ -73,14 +93,16 @@ const raverImageCollection = Object.entries(raverImages)
                             <ul>
                                 <li>
                                     <Image
-                                        class="stop__image"
+                                        class={`stop__image ${colorCycleStopImages[index]}`}
                                         src={fashionistaImage}
                                         alt="fashionistaImage"
                                     />
                                 </li>
                                 <li class="route__stop">
-                                    <p class="location__index">
-                                        {index + 1}
+                                    <p
+                                        class={`location__index ${colorCycleLocationIndex[index]}`}
+                                    >
+                                        {index + 1}.
                                     </p>
                                     <p class="location__text">
                                         {fashionistaLocations[index]}
@@ -100,14 +122,16 @@ const raverImageCollection = Object.entries(raverImages)
                             <ul>
                                 <li>
                                     <Image
-                                        class="stop__image"
+                                        class={`stop__image ${colorCycleStopImages[index]}`}
                                         src={mcImage}
                                         alt="mcImage"
                                     />
                                 </li>
                                 <li class="route__stop">
-                                    <p class="location__index">
-                                        {index + 1}
+                                    <p
+                                        class={`location__index ${colorCycleLocationIndex[index]}`}
+                                    >
+                                        {index + 1}.
                                     </p>
                                     <p class="location__text">
                                         {mcLocations[index]}
@@ -127,14 +151,16 @@ const raverImageCollection = Object.entries(raverImages)
                             <ul>
                                 <li>
                                     <Image
-                                        class="stop__image"
+                                        class={`stop__image ${colorCycleStopImages[index]}`}
                                         src={raverImage}
                                         alt="raverImage"
                                     />
                                 </li>
                                 <li class="route__stop">
-                                    <p class="location__index">
-                                        {index + 1}
+                                    <p
+                                        class={`location__index ${colorCycleLocationIndex[index]}`}
+                                    >
+                                        {index + 1}.
                                     </p>
                                     <p class="location__text">
                                         {raverLocations[index]}

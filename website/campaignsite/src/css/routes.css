@@ -276,7 +276,23 @@
         sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1.8rem;
+    font-size: 3rem;
+}
+
+.location__index--blue {
+    color: var(--color-blue);
+}
+
+.location__index--green {
+    color: var(--color-accent-green);
+}
+
+.location__index--white {
+    color: var(--color-white);
+}
+
+.location__index--pink {
+    color: var(--color-accent-pink);
 }
 
 .location__text {
@@ -318,6 +334,22 @@
 
 .stop__image {
     box-shadow: 0.3rem 0.3rem var(--current-pov-shadow-color);
+}
+
+.stop__image--blue {
+    box-shadow: 0.3rem 0.3rem var(--color-blue);
+}
+
+.stop__image--pink {
+    box-shadow: 0.3rem 0.3rem var(--color-accent-pink);
+}
+
+.stop__image--green {
+    box-shadow: 0.3rem 0.3rem var(--color-accent-green);
+}
+
+.stop__image--white {
+    box-shadow: 0.3rem 0.3rem var(--color-white);
 }
 
 .stops__title {
@@ -364,6 +396,7 @@
 }
 
 @media screen and (min-width: 75rem) {
+
     /* hero */
     .hero__subtitle {
         translate: -1rem -3.5rem;
@@ -371,6 +404,7 @@
 }
 
 @media screen and (min-width: 90rem) {
+
     /* hero */
     .hero__subtitle {
         translate: 0rem -3.75rem;
