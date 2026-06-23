@@ -459,12 +459,13 @@
 
 
 .citytrip__step {
-    flex: 1;
+    justify-content: center;
 }
 
 .citytrip__container--svg {
     max-width: 100%;
     overflow: hidden;
+    margin-top: 0.1rem;
 }
 
 .step__content {
@@ -475,6 +476,7 @@
     font-weight: 700;
     max-width: 5rem;
     height: 100%;
+    align-items: center;
 }
 
 .step__index {
@@ -567,11 +569,39 @@
 
 .locations__bottom {
     background: var(--color-blue);
+    margin-bottom: -0.3rem;
+    margin-top: -0.1rem;
 }
 
 .featured {
     margin-bottom: -0.1rem;
 }
+
+.featured__top {
+    padding: 0 2rem;
+}
+
+.featured__submissions {
+    padding: 0 2rem;
+}
+
+.featured__title {
+    margin-bottom: var(--space-xs);
+}
+
+.feature__svg {
+    translate: 0 -0.1rem;
+}
+
+
+.information__container {
+    margin-bottom: var(--space-m);
+}
+
+.information__button {
+    margin-top: var(--space-m);
+}
+
 
 /* Media queries, responsive design */
 @media screen and (min-width: 24rem) {
@@ -590,6 +620,7 @@
     .hero__subtitle {
         z-index: 30;
         padding: 0.2rem 1.5rem;
+        margin-top: -1rem;
     }
 
     .hero__image-window {
@@ -671,6 +702,7 @@
 
     .citytrip__step {
         height: fit-content;
+        justify-content: center;
     }
 
     .installation__spikes {
@@ -705,6 +737,14 @@
         margin-bottom: -0.1rem;
         width: 100vw;
         margin-left: -0.2rem;
+    }
+
+    .container__intro{
+        padding: 0 4rem;
+    }
+
+    .citytrip__container--svg{
+    translate: 0 -0.1rem;
     }
 
 }
@@ -745,6 +785,10 @@
 
     .citytrip__svg {
         margin-bottom: var(--space-m);
+    }
+
+    .pov__cards{
+        padding: 0 7rem 1rem;
     }
 }
 
@@ -811,13 +855,25 @@
     .citytrip__svg {
         margin-bottom: var(--space-l);
     }
+
+    .featured__bottom{
+        margin: 0;
+    }
+
+    .information__bottom--svg{
+        translate: 0 0.2rem;
+    }
 }
 
 @media screen and (min-width: 90rem) {
     .hero__subtitle {
         translate: 1rem -1.75rem;
-    /*1440px*/
+        /*1440px*/
+    }
 
+    .citytrip__container--svg{
+        width: 100vw;
+    }
 }
 
 @media screen and (min-width: 110rem) {
@@ -836,24 +892,6 @@
         margin-bottom: var(--space-xl);
     }
 }
-
-/* @media screen and (min-width: 60rem) {
-    .hero__subtitle {
-        translate: -8rem -1.75rem;
-    }
-}
-
-@media screen and (min-width: 75rem) {
-    .hero__subtitle {
-        translate: -11rem -2.2rem;
-    }
-}
-
-@media screen and (min-width: 90rem) {
-    .hero__subtitle {
-        translate: -22rem -2.75rem;
-    }
-} */
 
 @media screen and (max-width: 48rem) {
 
