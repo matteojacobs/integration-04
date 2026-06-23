@@ -170,6 +170,8 @@ Image {
 .hero__title {
     font-family: "BacalarRegular";
     font-size: var(--step-0-h1);
+    color: var(--color-white);
+    grid-area: 1/1/1/1;
     text-align: center;
     color: var(--color-white);
 }

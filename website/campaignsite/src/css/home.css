@@ -5,6 +5,7 @@
 /* Hero stuff */
 .hero__subtitle {
     rotate: -3deg;
+    translate: -0.5rem -1.2rem;
     margin-right: -1rem;
     align-self: end;
 }
@@ -510,6 +511,10 @@
 }
 
 @media screen and (min-width: 36rem) {
+    .hero__subtitle {
+        translate: -0.5rem -1.2rem;
+    }
+
 
     /*576px*/
     .step__content {
@@ -518,6 +523,10 @@
 }
 
 @media screen and (min-width: 50rem) {
+    .hero__subtitle {
+        translate: -3rem -1.75rem;
+    }
+
 
     /*800px*/
     .citytrip__container {
@@ -598,6 +607,21 @@
 
 }
 
+@media screen and (min-width: 60rem) {
+    .hero__subtitle {
+        translate: -8rem -1.75rem;
+    }
+}
+
+@media screen and (min-width: 75rem) {
+    .hero__subtitle {
+        translate: -11rem -2.2rem;
+    }
+}
+
+@media screen and (min-width: 90rem) {
+    .hero__subtitle {
+        translate: -22rem -2.75rem;
 
 @media screen and (max-width: 48rem) {
 
