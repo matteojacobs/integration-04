@@ -41,20 +41,18 @@ After that, we make use of supabase to collect and display some images that were
 This means we have an api and some keys, that are collected in our .env file. This is also crucial for this function to work so this is what u need for our .env in order for it all to work:
 
 ```env
-API_KEY=sb_publishable_BIAwmCHUVCLJbyuaqkbnyw_LDBgPaqA
-SUPABASE_URL=https://lragbxqhqdxmejklvypd.supabase.co
-SUPABASE_KEY=sb_publishable_BIAwmCHUVCLJbyuaqkbnyw_LDBgPaqA
+API_KEY=APi-key
+SUPABASE_URL=supabase-url
+SUPABASE_KEY=supabase-service-key
 
-PUBLIC_SUPABASE_URL=https://lragbxqhqdxmejklvypd.supabase.co
-PUBLIC_SUPABASE_KEY=sb_publishable_BIAwmCHUVCLJbyuaqkbnyw_LDBgPaqA
+PUBLIC_SUPABASE_URL=supabase-url
+PUBLIC_SUPABASE_KEY=supabase-key
 
-STORAGE_URL=https://lragbxqhqdxmejklvypd.supabase.co/storage/v1/object/public/submissions/
-
-PUBLIC_STORAGE_URL=https://lragbxqhqdxmejklvypd.supabase.co/storage/v1/object/public/submissions/
+STORAGE_URL=storag-url
+PUBLIC_STORAGE_URL=public-storage-url
 ```
 
 ## Want to access supabase yourself?
-
 
 
 ---
