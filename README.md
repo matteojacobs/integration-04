@@ -24,8 +24,6 @@ The project consists of two main parts:
 
 # Setup guide — Campaign website
 
-text here
-
 Here are the steps on how to set up and start the campaign site on your own local computer!
 
 The campaignsite is an astro project which means there were some independencies installed, to install them, use 
@@ -52,7 +50,12 @@ STORAGE_URL=storag-url
 PUBLIC_STORAGE_URL=public-storage-url
 ```
 
-## Want to access supabase yourself?
+To run 
+```bash
+npm run dev
+```
+
+More information on supabase below
 
 
 ---
