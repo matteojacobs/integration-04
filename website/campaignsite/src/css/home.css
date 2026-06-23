@@ -57,6 +57,11 @@
     font-family: "AntwerpRegular";
     font-weight: 400;
     font-size: var(--step-0-bodytext);
+    transition: all 250ms ease;
+}
+
+.hero__tagline:hover {
+    box-shadow: #ff70e776 0.2rem 0.2rem;
 }
 
 .hero__credits {
@@ -368,6 +373,7 @@
 
 /* Citytrip stuff */
 .citytrip__container {
+    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -400,6 +406,7 @@
     align-self: end;
     margin-bottom: -3rem;
     margin-right: -2rem;
+    z-index: 6;
 }
 
 .installation__spikes2 {
@@ -408,11 +415,14 @@
     justify-self: start;
     align-self: center;
     margin-left: -2rem;
+    animation: spin 10s linear infinite;
+    z-index: 1;
 }
 
 .installation__img {
     grid-row: 1;
     grid-column: 1;
+    z-index: 5;
 }
 
 .citytrip__content {
@@ -521,6 +531,7 @@
     background: var(--color-accent-green);
     padding: 0.25rem 2rem;
     translate: 0 2rem;
+    z-index: 101;
 }
 
 .locations__list {
@@ -533,6 +544,8 @@
     width: 100%;
     padding: 5rem 2rem;
     overflow-x: auto;
+
+    z-index: 100;
 }
 
 .locations__list::-webkit-scrollbar {
@@ -739,12 +752,12 @@
         margin-left: -0.2rem;
     }
 
-    .container__intro{
+    .container__intro {
         padding: 0 4rem;
     }
 
-    .citytrip__container--svg{
-    translate: 0 -0.1rem;
+    .citytrip__container--svg {
+        translate: 0 -0.1rem;
     }
 
 }
@@ -787,7 +800,7 @@
         margin-bottom: var(--space-m);
     }
 
-    .pov__cards{
+    .pov__cards {
         padding: 0 7rem 1rem;
     }
 }
@@ -856,11 +869,11 @@
         margin-bottom: var(--space-l);
     }
 
-    .featured__bottom{
+    .featured__bottom {
         margin: 0;
     }
 
-    .information__bottom--svg{
+    .information__bottom--svg {
         translate: 0 0.2rem;
     }
 }
@@ -871,7 +884,7 @@
         /*1440px*/
     }
 
-    .citytrip__container--svg{
+    .citytrip__container--svg {
         width: 100vw;
     }
 }
@@ -912,6 +925,10 @@
 @media (prefers-reduced-motion: reduce) {
     .hero__column {
         transform: none !important;
+    }
+
+    .installation__spikes2 {
+        animation: none;
     }
 }
 
