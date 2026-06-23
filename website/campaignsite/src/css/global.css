@@ -125,6 +125,11 @@ Image {
     max-width: 100%;
 }
 
+.svg__spacer{
+    width: 100%;
+    height: auto;
+}
+
 .visually-hidden {
     display: none;
 }
@@ -343,7 +348,6 @@ Image {
 }
 
 /* featured */
-.featured {}
 
 .featured__pt1 {
     display: flex;
