@@ -982,9 +982,14 @@
     .container__intro {
         max-width: 100vw;
     }
+
+    .featured__bottom{
+     margin-bottom: -0.1rem
+    }
 }
 
 .citytrip__container {
     margin-inline: auto;
 }
+
 
