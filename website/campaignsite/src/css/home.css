@@ -271,6 +271,38 @@
 }
 
 /* Featured povs */
+.featured__pt1 {
+    display: flex;
+    flex-flow: column;
+    padding: 2rem 0;
+    background: var(--color-dark);
+    color: var(--color-white);
+    gap: 2rem;
+    place-items: center;
+    overflow: hidden;
+}
+
+.featured__container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5rem;
+    padding: 2rem 0;
+}
+
+.featured__title {
+    font-family: "AntwerpRegular";
+    font-weight: 500;
+}
+
+.featured__title--highlight {
+    color: var(--color-accent-pink);
+}
+
+.featured__subtitle {
+    font-family: "SunAntwerpen";
+    font-size: var(--font-size-s);
+    max-width: 55ch;
+}
 
 .featured {
     background: var(--color-white);
@@ -278,13 +310,15 @@
 
 .featured__submissions {
     display: flex;
-    gap: 1.5rem;
+    flex-flow: row nowrap;
+    gap: 2rem;
     list-style: none;
     padding: 0;
     margin: 0;
     width: max-content;
     overflow-x: auto;
     max-width: 100%;
+    padding: 2 0rem;
 }
 
 .featured__submissions::-webkit-scrollbar {
@@ -294,13 +328,6 @@
 .submission__card {
     flex-shrink: 0;
     width: 320px;
-}
-
-.featured__submissions {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 2rem;
-    padding: 2 0rem;
 }
 
 .submission {
@@ -432,7 +459,7 @@
 
 
 .citytrip__step {
-    height: 100%;
+    flex: 1;
 }
 
 .citytrip__container--svg {
@@ -447,6 +474,14 @@
     color: var(--color-accent-pink);
     font-weight: 700;
     max-width: 5rem;
+    height: 100%;
+}
+
+.step__index {
+    font-family: "Pixelify";
+    font-weight: 700;
+    text-align: start;
+    width: 100%;
 }
 
 .step__number {
@@ -553,9 +588,6 @@
     }
 
     .hero__subtitle {
-        margin-top: var(--space-m);
-        margin-bottom: 0rem;
-        margin-top: -1rem;
         z-index: 30;
         padding: 0.2rem 1.5rem;
     }
@@ -596,9 +628,24 @@
 
 }
 
+@media screen and (max-width: 48rem) {
+
+    .hero__columns {
+        grid-template-columns: repeat(5, 11rem);
+        gap: 1rem;
+        width: max-content;
+        translate: -9rem -1rem;
+    }
+
+    .intro__text {
+        max-width: 100%;
+        text-align: center;
+    }
+}
+
 @media screen and (min-width: 50rem) {
     .hero__subtitle {
-        margin-top: -1.5rem;
+        translate: 1rem -1.75rem;
     }
 
 
@@ -663,6 +710,9 @@
 }
 
 @media screen and (min-width: 60rem) {
+    .hero__subtitle {
+        translate: 1rem -1.75rem;
+    }
 
     /*960px*/
     .hero__image-window {
@@ -706,9 +756,7 @@
     }
 
     .hero__subtitle {
-        margin-top: var(--space-m);
-        margin-bottom: 1rem;
-        margin-top: -2.5rem;
+        translate: 1rem -1.75rem;
         z-index: 30;
         margin-right: -5rem;
     }
@@ -766,6 +814,8 @@
 }
 
 @media screen and (min-width: 90rem) {
+    .hero__subtitle {
+        translate: 1rem -1.75rem;
     /*1440px*/
 
 }
@@ -820,8 +870,6 @@
         margin-bottom: var(--space-m);
     }
 }
-
-/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
     .hero__column {

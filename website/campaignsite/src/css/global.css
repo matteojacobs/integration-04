@@ -32,6 +32,18 @@
     font-weight: 700;
 }
 
+@font-face {
+    font-family: "Pixelify";
+    src: url(../assets/fonts/PixelifySans-Regular.woff2);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Pixelify";
+    src: url(../assets/fonts/PixelifySans-Bold.woff2);
+    font-weight: 700;
+}
+
 :root {
     /* Colors */
     --color-primary: #545CAB;
@@ -339,6 +351,7 @@ Image {
     max-width: 55ch;
 }
 
+/* Information */
 .information {
     display: grid;
     padding: 0 0 0 0;
@@ -509,6 +522,10 @@ Image {
     max-width: fit-content;
 }
 
+.featured__bottom {
+    background: var(--color-white);
+}
+
 .antwerplogo {
     display: grid;
     place-items: center;
@@ -524,12 +541,26 @@ Image {
     animation: spin 20s linear infinite;
 }
 
+.antwerplogo__img--footer {
+    max-width: 3rem;
+}
+
+.antwerplogo__bg--footer {
+    grid-area: 1 / 1 / 1 / 1;
+    animation: spin 20s linear infinite;
+    max-width: 5rem;
+}
+
 .intro__title,
 .routes__title,
 .information__title,
 .citytrip__title,
 .featured__title {
     font-size: var(--step-0-h2);
+}
+
+.highlight__bold {
+    font-weight: 700;
 }
 
 @keyframes spin {
@@ -589,6 +620,19 @@ Image {
     .citytrip__container {
         max-width: 100%;
         margin-bottom: -2.75rem;
+    }
+
+    /* Footer */
+    .footer__top {
+        align-items: start;
+    }
+
+    .footer__container {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-end;
+        width: 100%;
+        justify-content: space-between;
     }
 }
 
