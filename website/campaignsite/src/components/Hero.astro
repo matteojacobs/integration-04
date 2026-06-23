@@ -53,7 +53,7 @@ heroImages.forEach((image, index) => {
         </div>
     </div>
     <div class="hero__bottom">
-        <p class="hero__tagline">Experience POVs</p>
+        <a class="hero__tagline" href="#featured">Experience POVs</a>
         <div class="hero__credits">
             <p>Brought to you by</p>
             <img
@@ -73,7 +73,7 @@ heroImages.forEach((image, index) => {
     import { ScrollTrigger } from "gsap/ScrollTrigger";
 
     gsap.registerPlugin(ScrollTrigger);
-    
+
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
