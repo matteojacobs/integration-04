@@ -131,11 +131,13 @@ Image {
 
 .container {
     width: 100%;
+    max-width: 20rem;
 }
 
 .container__intro,
 .featured__container {
     padding: 0 2rem;
+    width: 100%;
 }
 
 /* Navigation */
@@ -470,6 +472,7 @@ Image {
 }
 
 .footer__container {
+    width: 100%;
     position: relative;
 }
 
@@ -560,6 +563,10 @@ Image {
     font-size: var(--step-0-h2);
 }
 
+.routes__title--arrow {
+    display: none;
+}
+
 .highlight__bold {
     font-weight: 700;
 }
@@ -594,9 +601,17 @@ Image {
 }
 
 @media screen and (min-width: 36rem) {
+    .container {
+        max-width: 25rem;
+    }
+
     .citytrip__container {
         max-width: 100%;
         padding: 0 3rem;
+    }
+
+    .routes__title--arrow {
+        display: inline;
     }
 
     .container__intro,
@@ -610,6 +625,10 @@ Image {
 }
 
 @media screen and (min-width: 50rem) {
+    .container {
+        max-width: 40rem;
+    }
+
     .nav__list {
         display: flex;
         flex-flow: row nowrap;
@@ -641,6 +660,10 @@ Image {
     .citytrip__container {
         max-width: 100%;
         margin-bottom: -0.1rem;
+    }
+
+    .container {
+        max-width: 50rem;
     }
 
     .footer {
@@ -675,6 +698,10 @@ Image {
 }
 
 @media screen and (min-width: 75rem) {
+    .container {
+        max-width: 55rem;
+    }
+
     .nav {
         padding-top: 3rem;
     }
@@ -712,6 +739,10 @@ Image {
 }
 
 @media screen and (min-width: 90rem) {
+    .container {
+        max-width: 65rem;
+    }
+
     .citytrip__container {
         max-width: 100%;
         margin-bottom: 0rem;
