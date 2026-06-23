@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC lens studio</title>
+  <link rel="stylesheet" href="https://use.typekit.net/gxf5vfe.css">
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/remote.css">
+</head>
+
+<body>
+  <div class="explanation" id="explanation">
+    <h1 class="explanation__title">AntwerPOV</h1>
+    <button id="connectButton" class="connect__button">Start connection</button>
+  </div>
+
+  <section class="screen screen__start hidden" id="screenStart">
+    <div class="start__info">
+      <h1 class="start__title">AntwerPOV</h1>
+      <div class="start__action">
+      <p class="start__button" id="startPovButton">Tap to improve your <span class="bacalar">POV</span></p>
+      <img class="start__tap" src="./src/assets/remote/tap.png" alt="tap icon" width="125">
+      </div>
+    </div>
+    <div class="start__background">
+      <img class="background__bubble1" src="./src/assets/remote/purple-balloon.svg" alt="pixel balloon" width="130">
+      <img class="background__bubble2" src="./src/assets/remote/whitr.png" alt="pixel balloon" width="143">
+      <img class="background__bubble3" src="./src/assets/remote/green.png" alt="pixel balloon" width="105">
+    </div>
+  </section>
+
+  <section class="home screen hidden" id="screenHome">
+    <h2 class="home__title">Customize your POV</h2>
+    <div class="home__grid">
+        <div id="goAccessoriesButton" class="home__button">
+          <p class="button__text">Add extra <span class="button__text--green">accessories</span></p>
+          <img class="button__img" src="./src/assets/remote/acc-icon.png" alt="edit icon" width="140" height="104">
+        </div>
+        <div id="goBackgroundsButton" class="home__button">
+          <p class="button__text">Pick a <span class="button__text--green">background</span></p>
+          <img class="button__img" src="./src/assets/remote/bg-icon.png" alt="backround icon" width="140" height="104">
+        </div>
+        <div  id="goRouteButton" class="home__button">
+          <p class="button__text">Get a <span class="button__text--green">route</span><p> 
+          <img class="button__img" src="./src/assets/remote/location-icon.png" alt="location icon" width="140" height="104">
+        </div>
+        <div id="goPictureButton" class="home__button">
+          <p class="button__text">Gapture this <span class="button__text--green">POV</span></p>
+          <img class="button__img" src="./src/assets/remote/img-icon.png" alt="camera icon" width="140" height="104">
+        </div>
+    </div>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
+  </section>
+
+  <section class="accessories screen hidden" id="screenAccessories">
+    <div class="accessories__header">
+        <h2 class="accessories__title">Add extra accessories</h2>
+        <p class="accessories__subtitle">Upgrade the look, give your POV more attitude</p>
+    </div>
+    <button class="backButton">
+          <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
+    </button>
+    <div class="accessories__list" id="accessoryList">
+      <button class="accessory-card">
+        <img class="accessory-card__img" src="./src/assets/remote/accessory.png" alt="accessory">
+        <span class="accessory-card__label">Accessory 1</span>
+      </button>
+      <button class="accessory-card">
+        <img class="accessory-card__img" src="./src/assets/remote/accessory.png" alt="accessory">
+        <span class="accessory-card__label">Accessory 1</span>
+      </button>
+    </div>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
+  </section>
+
+  <section class="backgrounds screen hidden" id="screenBackgrounds">
+    <div class="background__header">
+      <h2 class="background__title">Pick a background</h2>
+      <p class="background__subtitle">Place your POV in a different Antwerp mood</p>
+    </div>
+    <button class="backButton">
+      <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
+    </button>
+    <div class="background__list" id="backgroundList">
+      <button class="background-card">
+        <img class="background-card__img" src="./src/assets/remote/accessory.png" alt="background">
+        <span class="background-card__label">background 1</span>
+      </button>
+      <button class="background-card">
+        <img class="background-card__img" src="./src/assets/remote/accessory.png" alt="background">
+        <span class="background-card__label">background 2</span>
+      </button>
+      <button class="background-card">
+        <img class="background-card__img" src="./src/assets/remote/accessory.png" alt="background">
+        <span class="background-card__label">background 3</span>
+      </button>
+    </div>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
+  </section>
+
+  <section class="picture screen hidden" id="screenPicture">
+    <div class="background__header">
+      <h2 class="background__title">Capture this moment</h2>
+      <p class="background__subtitle">Press the button, than look at the screen in front of you</p>
+    </div>
+    <button class="backButton">
+      <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
+    </button>
+    <button class="picture__button" id="captureButton">
+      <img class="picture__button--img" src="./src/assets/remote/picture.svg" alt="picture">
+    </button>
+    <div id="cancelDiv" class="picture__cancel hidden">
+      <p class="cancel__text">Look at the big screen!</p>
+      <button class="cancel__button" id="cancelImage">Cancel</button>
+    </div>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
+  </section>
+
+  <section class="picture__taken screen hidden" id="screenPictureTaken">
+    <h2 class="picture__title">Capture this moment</h2>
+    <button class="backButton">
+      <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
+    </button>
+    <div class="taken" id="taken">
+      <div class="taken__image" id="takenImageSection">
+        <img class="taken__photo" id="takenImage" alt="img that was taken" width="295" height="390">
+        <button  class="redo__button" id="redoImage">
+          <p class="redo__text">Redo</p>
+          <img class="redo__image" src="./src/assets/remote/redo.svg" alt="arrows circle" width="27" height="27">
+        </button>
+      </div>
+      <div class="taken__information" id="takenInformation">
+        <h3 class="imgInfo__title">Keep this POV?</h3>
+        <p class="imgInfo__subtitle">Want to get this photo in your own gallery? <br> Let us send it to you!</p>
+        <label class="imgInfo__label imgInfo__label--email" for="contactInput" id="contactLabel">
+          E-mail adress
+        </label>
+        <div class="contactField" id="contactField">
+          <input class="imgInfo__input" type="email" id="contactInput" placeholder="you@example.com" name="contact" minlength="4" maxlength="80" />
+        </div>
+        <p class="contactError hidden" id="contactError">
+          Please fill in a valid e-mail adress.
+        </p>
+        <button class="email__button" id="switchContactMode">
+          Send it to my number instead!
+        </button>
+        <div class="featureCheck">
+          <input class="featureCheck__input" type="checkbox" id="feature" name="feature">
+          <label class="featureCheck__label" for="feature">feature me on the site?</label>
+        </div>
+      </div>
+    </div>
+    <button class="send__button" id="sendImg" disabled>
+      <p class="send__text">Send</p>
+      <img class="send__image" src="./src/assets/remote/send.svg" alt="arrow" width="44" height="36">
+    </button>
+    <div class="after__send hidden" id="afterSend"> 
+      <p class="after__text">You will receive your image soon!</p>
+      <img class="after__img" src="./src/assets/remote/camera-purple.svg" width="112" height="103" alt="camera">
+    </div>
+    <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
+  </section>
+
+  <section class="route screen hidden" id="screenRoute">
+      <div class="route__header">
+        <h2 class="route__title">Get a route</h2>
+        <p class="route__subtitle">These POVs of stereotypes are only the start. Unlock routes that show Antwerp behind the clichés.</p>
+      </div>
+      <button class="backButton">
+        <img class="backbutton__img" src="./src/assets/remote/arrow.svg" alt="arrow" width="43" height="36">
+      </button>
+      <div class="route__scan"> 
+         <div class="route__qr" id="routeQr"></div>
+         <p class="route__text">AntwerPOV.com/routes</p>
+      </div>
+      <img class="home__bgimg" src="./src/assets/remote/pink.png" alt="pixel blob" width="77">
+  </section>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+  <script type="module" src="/src/remote/remote-webrtc.ts"></script>
+</body>
+
+</html>

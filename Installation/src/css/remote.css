@@ -1,0 +1,737 @@
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Antwerpen";
+  color: var(--white);
+  background: var(--more-black);
+}
+
+.bacalar {
+  font-family: var(--font-bacalar);
+}
+
+.explanation {
+  height: 100%;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-content: center;
+  justify-content: center;
+  gap: 1.2rem;
+  text-align: center;
+  background: var(--more-black);
+}
+
+.explanation__title {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 0.9;
+}
+
+.connect__button {
+  font-family: "sun antwerpen";
+  width: 22rem;
+  margin: 1rem auto;
+  padding: 1rem 1.4rem;
+  color: var(--black);
+  background: var(--pink);
+  border: none;
+  font-size: var(--text-s);
+  font-weight: 900;
+}
+
+.connect__button:active {
+  transform: scale(0.97);
+}
+
+.container {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+
+/* screens */
+
+.hidden {
+  display: none !important;
+}
+
+.screen__start {
+  display: grid;
+}
+
+.screen {
+  overflow: hidden;
+  height: 100vh; 
+}
+
+.start__info {
+  z-index: 1;
+  display: flex;
+  flex-flow: column;
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.start__action {
+  margin-top: 13rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.start__title {
+  font-family: var(--font-bacalar);
+  font-size: var(--text-xxl);
+  margin-top: 2rem;
+}
+
+.start__button {
+  color: var(--green-soft);
+  font-size: var(--text-l);
+  margin-bottom: 2rem;
+}
+
+.start__background {
+  grid-column: 1;
+  grid-row: 1;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+.background__bubble1 {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+}
+
+.background__bubble2 {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: end;
+  align-self: end;
+}
+
+.background__bubble3 {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: start;
+  align-self: end;
+}
+
+/* frame home */
+
+.home {
+  background: var(--soft-black);
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  align-items: center;
+}
+
+.home__bgimg {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.home__title {
+  font-size: var(--text-l);
+  margin-top: var(--sp-xl2);
+}
+
+.home__grid {
+  margin-top: var(--sp-l);
+  justify-content: center;
+  display: flex;
+  flex-flow: row wrap;
+  row-gap: var(--sp-xl);
+  column-gap: var(--sp-xl2);
+  width: 90%;
+}
+
+.home__button {
+  width: clamp(26rem, 28vw, 30rem);
+  min-height: clamp(15rem, 27vh, 20rem);
+  display: flex;
+  flex-flow: column;
+  justify-items: center;
+  align-items: center;
+  border: 0;
+  border-left: 0.45rem solid #5574df;
+  border-bottom: 0.45rem solid #5574df;
+  background: var(--black);
+  color: var(--white);
+}
+
+.button__text {
+  margin-top: var(--sp-m);
+  font-size: var(--text-m);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.button__text--green {
+  color: var(--green-soft);
+}
+
+.button__img {
+  align-self: center;
+  margin: clamp(1.2rem, 3vh, 2.3rem) 0;
+}
+
+/* accessories page */
+
+.accessories {
+  position: relative;
+
+  display: flex;
+  flex-flow: column;
+
+  padding: 4rem 6rem;
+  background: var(--soft-black);
+  color: var(--white);
+}
+
+.accessories__header,
+.background__header,
+.route__header {
+  text-align: center;
+}
+
+.accessories__title,
+.background__title,
+.route__title {
+  margin: 0;
+  font-size: var(--text-l);
+  line-height: 1;
+}
+
+.accessories__subtitle,
+.background__subtitle,
+.route__subtitle {
+  font-family: "sun antwerpen";
+  margin: 1.2rem 0 0;
+  font-size: var(--text-s);
+  line-height: 1.2;
+}
+
+.backButton {
+  width: 8.8rem;
+  height: 4.8rem;
+
+  display: grid;
+  place-items: center;
+
+  border: 0.12rem solid var(--green-soft);
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease;
+}
+
+.backButton:active {
+  transform: translateY(0.2rem) scale(0.98);
+  background-color: rgba(183, 243, 92, 0.12);
+}
+
+.backbutton__img {
+  width: 2.7rem;
+  height: auto;
+}
+
+.accessories__list,
+.background__list {
+  align-self: center;
+
+  display: flex;
+  flex-flow: row;
+  gap: var(--sp-xl2);
+  margin-top: var(--sp-xxl);
+}
+
+.accessory-card,
+.background-card {
+  display: flex;
+  flex-flow: column;
+  place-items: center;
+
+  border: 0;
+  border-left: 0.45rem solid #5574df;
+  border-bottom: 0.45rem solid #5574df;
+  background: var(--black);
+  color: var(--white);
+
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+  padding: var(--sp-m) var(--sp-xxl);
+  padding: clamp(1rem, 2vw, var(--sp-m)) clamp(3.5rem, 3vw, var(--sp-xxl));
+}
+
+.background__list{
+  gap: var(--sp-l);
+}
+
+.accessory-card:active,
+.background-card:active {
+  transform: translateY(0.25rem) scale(0.98);
+}
+
+.accessory-card.is-active,
+.background-card.is-active {
+  border: 0.45rem solid var(--green-soft);
+}
+
+.accessory-card__img {
+  margin-bottom: var(--sp-m);
+  width:clamp(14rem, 12vw, 16rem);
+  height: auto;
+}
+
+.background-card__img{
+  width: clamp(10rem, 12vw, 13rem);
+  margin-bottom: var(--sp-s);
+}
+
+.accessory-card__label,
+.background-card__label {
+  font-family: "sun antwerpen";
+  margin-top: -2rem;
+  font-size: var(--text-s);
+  color: var(--purple-text);
+  text-align: center;
+}
+
+
+/* backgrounds */
+
+.backgrounds,
+.picture,
+.route,
+.picture__taken {
+  position: relative;
+
+  display: flex;
+  flex-flow: column;
+
+  padding: 4rem 6rem;
+  background: var(--soft-black);
+  color: var(--white);
+}
+
+.background-card {
+  padding: var(--sp-m) var(--sp-xl);
+}
+
+.background__list {
+  gap: var(--sp-xl2);
+}
+
+.background-card__label {
+  font-family: "sun antwerpen";
+  margin-top: 0rem;
+  font-size: var(--text-s);
+  color: var(--purple-text);
+  text-align: center;
+  margin-bottom: -0.5rem;
+}
+
+/*picture */
+
+.picture__button {
+  padding: 1.5rem;
+
+  display: flex;
+  flex-flow: column;
+  place-items: center;
+
+  border: 0;
+  border-left: 0.45rem solid #5574df;
+  border-bottom: 0.45rem solid #5574df;
+  background: var(--black);
+  color: var(--white);
+
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+  padding: var(--sp-xl) var(--sp-xxl);
+  align-self: center;
+  margin-top: var(--sp-xxl);
+}
+
+.picture__button:active {
+  transform: translateY(0.25rem) scale(0.98);
+}
+
+.picture__button.is-active {
+  border: 0.45rem solid var(--green-soft);
+}
+
+.picture__cancel {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: var(--sp-xxxl);
+}
+
+.cancel__text {
+  font-size: var(--text-ml);
+}
+
+.cancel__button {
+  border: 0;
+  background: var(--purple);
+  font-family: "sun antwerpen";
+  font-weight: 700;
+  color: var(--black);
+  font-size: var(--text-m);
+  padding: var(--sp-s) var(--sp-xxl);
+  margin-top: var(--sp-xl);
+}
+
+/* route */
+
+.route__subtitle {
+  max-width: 35rem;
+  text-align: center;
+  align-self: center;
+  line-height: 130%;
+}
+
+.route__header {
+  display: flex;
+  flex-flow: column;
+}
+
+.route__qr {
+  width: fit-content;
+  margin: 1rem auto 0;
+  padding: 1rem;
+  border-radius: 1.25rem;
+}
+
+.route__qr svg {
+  color: var(--purple-text);
+  display: block;
+  height: auto;
+  width: 19rem;
+}
+
+.route__scan {
+  margin-top: var(--sp-m);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.route__text {
+  font-size: 1.75rem;
+  margin-top: var(--sp-s);
+}
+
+/* picture taken screen */
+
+.picture__taken {
+  background-color: var(--black);
+}
+
+
+.picture__title {
+  margin: 0;
+  font-size: var(--text-l);
+  line-height: 1;
+  align-self: center;
+}
+
+.taken {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  flex: 1;
+  gap: var(--sp-xxl);
+  margin-top: var(--sp-l);
+}
+
+.imgInfo__title {
+  font-size: 2.25rem;
+}
+
+.imgInfo__subtitle {
+  font-family: "sun antwerpen";
+  font-size: var(--text-s);
+  margin-top: var(--sp-s);
+  margin-bottom: var(--sp-xl);
+}
+
+.taken__image {
+  position: relative;
+}
+
+
+.taken__photo {
+  width: 295px;
+  height: 450px;
+  display: block;
+  object-fit: cover;
+
+  background: #d9d9d9;
+}
+
+.redo__button {
+  position: absolute;
+  right: 0rem;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.1rem 1.6rem;
+
+  border: 0;
+  background: var(--black);
+  color: var(--white);
+
+  font-family: inherit;
+  font-size: var(--text-s);
+  cursor: pointer;
+  touch-action: manipulation;
+
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease;
+}
+
+.redo__button:active {
+  transform: translateY(0.2rem) scale(0.98);
+  background-color: #252525;
+}
+
+.redo__button__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* Right information side */
+
+.taken__information {
+  height: 100%;
+
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+.imgInfo__label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  margin-bottom: 0.7rem;
+
+  font-family: "sun antwerpen";
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.contactField {
+  width: 100%;
+  height: 4rem;
+
+  background: var(--white);
+}
+
+.contactField__prefix {
+  padding-left: 1rem;
+
+  color: var(--black);
+  font-family: inherit;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.imgInfo__input {
+  flex: 1;
+  height: 100%;
+
+  padding: 0 1rem 0 0.3rem;
+
+  border: 0;
+  background: transparent;
+  color: var(--black);
+
+  font-family: inherit;
+  font-size: var(--text-s);
+}
+
+.imgInfo__input:focus {
+  outline: none;
+}
+
+.contactField:focus-within {
+  outline: 0.25rem solid var(--green-soft);
+  outline-offset: 0.2rem;
+}
+
+/* Email link */
+
+.email__button {
+  margin-top: 1rem;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  color: var(--purple-text);
+
+  font-family: "sun antwerpen";
+  font-size: var(--text-xs);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.email__button:active {
+  color: var(--green-soft);
+}
+
+/* Checkbox */
+
+.featureCheck {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  margin-top: var(--sp-l);
+
+  font-family: "sun antwerpen";
+  font-size: var(--text-s);
+}
+
+.featureCheck__input {
+  width: 1.7rem;
+  height: 1.7rem;
+
+  accent-color: var(--green-soft);
+}
+
+.featureCheck__label {
+  line-height: 1;
+}
+
+/* Send button */
+
+.send__button {
+  align-self: flex-end;
+
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  padding: 1.2rem 3rem;
+
+  border: 0;
+  background: var(--green-soft);
+  color: var(--black);
+
+  font-family: inherit;
+  font-size: 2.25rem;
+  line-height: 1;
+
+  cursor: pointer;
+  touch-action: manipulation;
+
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease;
+}
+
+.send__button:active {
+  transform: translateY(0.25rem) scale(0.98);
+  background-color: #9fe24d;
+}
+
+.send__image {
+  font-size: 3.5rem;
+  line-height: 0.8;
+}
+
+.contactField:focus-within {
+  outline: 0.25rem solid var(--green-soft);
+  outline-offset: 0.2rem;
+}
+
+.contactError {
+  margin-top: 0.6rem;
+
+  color: #ff4f6d;
+  font-family: "sun antwerpen";
+  font-size: var(--text-xs);
+}
+
+.send__button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.send__button:disabled:active {
+  transform: none;
+  background: var(--green-soft);
+}
+
+.contactField__prefix.hidden {
+  display: none;
+}
+
+.imgInfo__label::after {
+  content: "";
+  width: 1.7rem;
+  height: 1.7rem;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.imgInfo__label--phone::after {
+  background-image: url("../assets/remote/phone-icon.svg");
+}
+
+.imgInfo__label--email::after {
+  background-image: url("../assets/remote/email-icon.svg");
+}
+
+/* after send */
+
+.after__send {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: var(--sp-xxxl);
+}
+
+.after__text {
+  font-size: var(--text-m);
+  margin-bottom: var(--sp-xl);
+}

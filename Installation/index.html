@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC lens studio</title>
+  <link rel="stylesheet" href="https://use.typekit.net/gxf5vfe.css">
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/index.css">
+</head>
+
+<body>
+  <div class="welcome" id="welcome">
+    <button id="connectPedalButton" class="connect-arduino">-> Connect pedal before scanning</button>
+    <p class="welcome__sub">Scan the qr code with the Ipad</p>
+    <a class="welcome__url " id="url" href=""></a>
+    <div class="welcome__qr" id="qr"></div>
+  </div>
+  <div class="container">
+    <div class="container__header">
+      <p id="povTitle" class="POV__title">POV:</p>
+      <div id="povText" class="POV__text">
+        <span id="povTextBefore"></span>
+        <span id="povTextGreen" class="POV__text--green"></span>
+        <span id="povTextAfter"></span>
+      </div>   
+    </div>
+    <div class="webcam">
+      <img class="webcam__pixels" src="./src/assets/desktop/background.svg" alt="pixels" width="1080" height="144">
+      <p class="image__countdown hidden" id="imageCountdown">3</p>
+      <canvas id="canvas" class="canvas"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+  <script type="module" src="/src/desktop/script-cameraKit.ts"></script>
+  <script type="module" src="/src/desktop/script-webrtc.ts"></script>
+</body>
+
+</html>
