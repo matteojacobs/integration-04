@@ -89,6 +89,10 @@
     --hero-subtitle: clamp(1rem, 0.8592rem + 0.5731vw, 1.375rem);
 }
 
+.pixelfont {
+    font-family: "Pixelify Sans", sans-serif;
+}
+
 html {
     box-sizing: border-box;
 }
@@ -101,6 +105,7 @@ html {
 
 main {
     background: var(--bg-black);
+    overflow: hidden;
 }
 
 body {
@@ -125,7 +130,11 @@ Image {
 
 .container {
     width: 100%;
-    max-width: 15rem;
+}
+
+.container__intro,
+.featured__container {
+    padding: 0 2rem;
 }
 
 /* Navigation */
@@ -306,6 +315,41 @@ Image {
     box-shadow: 0rem 0rem var(--color-accent-green);
 }
 
+/* featured */
+.featured {}
+
+.featured__pt1 {
+    display: flex;
+    flex-flow: column;
+    padding: 2rem 0;
+    background: var(--color-dark);
+    color: var(--color-white);
+    gap: 2rem;
+    place-items: center;
+    overflow: hidden;
+}
+
+.featured__container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5rem;
+    padding: 2rem 2rem;
+}
+
+.featured__title {
+    font-family: "AntwerpRegular";
+    font-weight: 500;
+}
+
+.featured__title--highlight {
+    color: var(--color-accent-pink);
+}
+
+.featured__subtitle {
+    font-family: "SunAntwerpen";
+    font-size: var(--font-size-s);
+    max-width: 55ch;
+}
 
 /* Information */
 .information {
@@ -370,28 +414,30 @@ Image {
 .footer__title {
     font-size: var(--step-0-h1);
     font-family: "BacalarRegular";
+    margin-bottom: var(--space-s);
+    margin-top: var(--space-s);
 }
 
 .footer__subtitle {
     font-family: "AntwerpRegular";
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     translate: 0rem -1rem;
 }
 
-.footer__top {
+.footer__left {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     padding: 0 0 1rem 0;
 }
 
-.footer__bottom {
+.footer__right {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    margin-top: var(--space-m);
 }
 
 .footer__links {
@@ -422,6 +468,33 @@ Image {
     font-size: .8rem
 }
 
+.footer__container {
+    position: relative;
+}
+
+.footer__bubble {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(-60%, 80%);
+    width: 5rem;
+}
+
+.footer__spikes {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(70%, 80%);
+    width: 5rem;
+}
+
+.footer {
+    overflow: hidden;
+    padding: 0 2rem;
+}
+
+
+
 /* Utitlity classes */
 .button {
     background: var(--color-accent-green);
@@ -432,6 +505,10 @@ Image {
     color: var(--color-dark);
     font-family: "AntwerpRegular";
     text-align: center;
+}
+
+.footer__button {
+    font-size: 1.3rem;
 }
 
 /* More information section, bottom */
@@ -510,14 +587,24 @@ Image {
         overflow: hidden;
     }
 
-    .container {
+    .citytrip__container {
         max-width: 20rem;
     }
 }
 
 @media screen and (min-width: 36rem) {
-    .container {
-        max-width: 32rem;
+    .citytrip__container {
+        max-width: 100%;
+        padding: 0 3rem;
+    }
+
+    .container__intro,
+    .featured__container {
+        padding: 0 3rem;
+    }
+
+    .footer__right {
+        margin-top: var(--space-l);
     }
 }
 
@@ -530,8 +617,9 @@ Image {
         width: 100%;
     }
 
-    .container {
-        max-width: 42rem;
+    .citytrip__container {
+        max-width: 100%;
+        margin-bottom: -2.75rem;
     }
 
     /* Footer */
@@ -549,8 +637,39 @@ Image {
 }
 
 @media screen and (min-width: 60rem) {
-    .container {
-        max-width: 55rem;
+    .citytrip__container {
+        max-width: 100%;
+        margin-bottom: -0.1rem;
+    }
+
+    .footer {
+        margin-top: -0.2rem;
+    }
+
+    .footer__container {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        padding-top: var(--space-m);
+        padding: 0rem 2rem;
+    }
+
+    .footer__left {
+        align-items: start;
+    }
+
+    .footer__subtitle {
+        font-size: 1.2rem;
+        margin-bottom: var(--space-m);
+    }
+
+    .footer__title {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer__right {
+        gap: 0;
+        justify-content: end;
     }
 }
 
@@ -559,13 +678,41 @@ Image {
         padding-top: 3rem;
     }
 
-    .container {
-        max-width: 70rem;
+    .citytrip__container {
+        max-width: 100%;
+        margin-bottom: -0.2rem;
+        padding: 0 4rem;
+    }
+
+    .footer__container {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        padding-top: var(--space-m);
+        padding: 2rem 3rem;
+    }
+
+    .footer__spikes,
+    .footer__bubble {
+        width: 20rem;
+    }
+
+    .footer__spikes {
+        transform: translate(50%, 80%);
+    }
+
+    .footer__bubble {
+        transform: translate(-50%, 80%);
+    }
+
+    .footer__button{
+        padding: 0.5rem 3rem;
     }
 }
 
 @media screen and (min-width: 90rem) {
-    .container {
-        max-width: 85rem;
+    .citytrip__container {
+        max-width: 100%;
+        margin-bottom: 0rem;
     }
 }

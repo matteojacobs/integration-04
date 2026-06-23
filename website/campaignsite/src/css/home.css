@@ -5,7 +5,6 @@
 /* Hero stuff */
 .hero__subtitle {
     rotate: -3deg;
-    translate: -0.5rem -1.2rem;
     margin-right: -1rem;
     align-self: end;
 }
@@ -147,6 +146,7 @@
 
 .intro__text {
     margin-bottom: var(--space-l);
+    text-align: left;
 }
 
 .intro__meet {
@@ -381,7 +381,38 @@
 }
 
 .citytrip__installation {
-    translate: 0 4rem;
+    margin-bottom: -7rem;
+    display: grid;
+}
+
+.installation__bubble {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: end;
+    margin-top: -3rem;
+    margin-right: -2rem;
+}
+
+.installation__spikes {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: end;
+    align-self: end;
+    margin-bottom: -3rem;
+    margin-right: -2rem;
+}
+
+.installation__spikes2 {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+    align-self: center;
+    margin-left: -2rem;
+}
+
+.installation__img {
+    grid-row: 1;
+    grid-column: 1;
 }
 
 .citytrip__content {
@@ -415,20 +446,31 @@
 .citytrip__steps {
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: start;
     overflow: hidden;
     width: 100%;
 }
+
+.citytrip__svg {
+    max-width: 100%;
+    overflow: hidden;
+    height: auto;
+}
+
 
 .citytrip__step {
     flex: 1;
 }
 
+.citytrip__container--svg {
+    max-width: 100%;
+    overflow: hidden;
+}
 
 .step__content {
-    display: grid;
+    display: flex;
+    flex-flow: column;
     place-items: center;
-    gap: 2rem;
     color: var(--color-accent-pink);
     font-weight: 700;
     max-width: 5rem;
@@ -442,6 +484,10 @@
     width: 100%;
 }
 
+.step__number {
+    align-self: start;
+}
+
 .step__icon {
     display: flex;
     width: min-content;
@@ -451,6 +497,9 @@
 .step__text {
     text-align: center;
     font-size: 1rem;
+    font-weight: 600;
+    margin-top: var(--space-xs);
+    line-height: 125%;
 }
 
 /* Locations */
@@ -489,13 +538,18 @@
 }
 
 .location {
-    display: grid;
+    display: flex;
+    flex-flow: column;
     place-items: center;
 }
 
 .location__text {
-    display: grid;
+    display: flex;
+    flex-flow: column;
     place-items: center;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
 }
 
 .location__city {
@@ -507,10 +561,16 @@
 .location__place {
     font-size: 1rem;
     color: var(--color-white);
+    width: 100%;
+    text-align: center;
 }
 
 .locations__bottom {
     background: var(--color-blue);
+}
+
+.featured {
+    margin-bottom: -0.1rem;
 }
 
 /* Media queries, responsive design */
@@ -540,11 +600,24 @@
     .intro__meet {
         display: none;
     }
+
+    .featured__top {
+        margin-top: -0.2rem;
+        width: 100vw;
+        margin-left: -0.5rem;
+    }
+
+    .featured__bottom {
+        margin-bottom: -0.1rem;
+        width: 100vw;
+        margin-left: -0.2rem;
+    }
 }
 
 @media screen and (min-width: 36rem) {
     .hero__subtitle {
-        translate: -0.5rem -1.2rem;
+        margin-top: -1.3rem;
+        margin-bottom: 1rem;
     }
 
 
@@ -552,6 +625,7 @@
     .step__content {
         max-width: max-content;
     }
+
 }
 
 @media screen and (max-width: 48rem) {
@@ -586,6 +660,53 @@
         margin-inline: calc(50% - 50vw);
         margin-bottom: var(--space-m);
     }
+
+    .citytrip__steps {
+        display: flex;
+        justify-content: start;
+        gap: var(--space-m);
+        align-items: start;
+        overflow: hidden;
+    }
+
+    .citytrip__step {
+        height: fit-content;
+    }
+
+    .installation__spikes {
+        margin-bottom: -6rem;
+        margin-right: -2rem;
+    }
+
+    .citytrip__installation {
+        margin-bottom: -20rem;
+    }
+
+    .installation__spikes2 {
+        margin-bottom: -6rem;
+        margin-right: -2rem;
+    }
+
+    .citytrip__container--svg {
+        margin-top: 1rem;
+    }
+
+    .citytrip {
+        margin-top: -0.2rem;
+    }
+
+    .featured__top {
+        margin-top: -0.1rem;
+        width: 100vw;
+        margin-left: -0.2rem;
+    }
+
+    .featured__bottom {
+        margin-bottom: -0.1rem;
+        width: 100vw;
+        margin-left: -0.2rem;
+    }
+
 }
 
 @media screen and (min-width: 60rem) {
@@ -609,6 +730,22 @@
         max-width: 45rem;
         text-align: center;
     }
+
+    .citytrip__steps {
+        gap: var(--space-l);
+    }
+
+    .citytrip__installation {
+        margin-bottom: -7rem;
+    }
+
+    .installation__spikes2 {
+        margin-bottom: -8rem;
+    }
+
+    .citytrip__svg {
+        margin-bottom: var(--space-m);
+    }
 }
 
 @media screen and (min-width: 75rem) {
@@ -621,6 +758,7 @@
     .hero__subtitle {
         translate: 1rem -1.75rem;
         z-index: 30;
+        margin-right: -5rem;
     }
 
     .hero__bottom {
@@ -648,11 +786,88 @@
         text-align: center;
     }
 
+    .featured__container {
+        padding: 0 0;
+        gap: 3rem;
+    }
+
+    .featured__title,
+    .featured__subtitle {
+        margin-left: var(--space-l);
+    }
+
+    .featured__submissions {
+        place-self: center;
+    }
+
+    .citytrip__installation {
+        margin-bottom: -6rem;
+    }
+
+    .installation__spikes2 {
+        margin: 0 0 0 -3rem;
+    }
+
+    .citytrip__svg {
+        margin-bottom: var(--space-l);
+    }
 }
 
 @media screen and (min-width: 90rem) {
     .hero__subtitle {
         translate: 1rem -1.75rem;
+    /*1440px*/
+
+}
+
+@media screen and (min-width: 110rem) {
+    /*1440px*/
+
+    .citytrip__installation {
+        margin-right: var(--space-l);
+    }
+
+    .citytrip__container {
+        padding: 0 5rem;
+    }
+
+    .citytrip__svg {
+        width: 100vw;
+        margin-bottom: var(--space-xl);
+    }
+}
+
+/* @media screen and (min-width: 60rem) {
+    .hero__subtitle {
+        translate: -8rem -1.75rem;
+    }
+}
+
+@media screen and (min-width: 75rem) {
+    .hero__subtitle {
+        translate: -11rem -2.2rem;
+    }
+}
+
+@media screen and (min-width: 90rem) {
+    .hero__subtitle {
+        translate: -22rem -2.75rem;
+    }
+} */
+
+@media screen and (max-width: 48rem) {
+
+    .hero__columns {
+        grid-template-columns: repeat(5, 11rem);
+        gap: 1rem;
+        width: max-content;
+        translate: -9rem -1rem;
+    }
+
+    .intro__text {
+        max-width: 100%;
+        text-align: left;
+        margin-bottom: var(--space-m);
     }
 }
 
@@ -660,4 +875,12 @@
     .hero__column {
         transform: none !important;
     }
+}
+
+.pixelfont {
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+.hero__tagline {
+    text-decoration: none;
 }
